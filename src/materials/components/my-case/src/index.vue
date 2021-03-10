@@ -7,35 +7,72 @@
           <span @click="getComponentView(index, $event)">{{value.name}}</span>
         </div>
       </div>
-      <!--<keep-alive v-for="(v,i) in componentView" :key="i">
-        <div>
-          <component :is="v" :pass-cache="sss" obj="subComponent"></component>
-          <component :is="v" :pass-cache="sss" obj="subComponent"></component>
-        </div>
-      </keep-alive>-->
     </div>
     <div class="compDom">
-      <!--<is-components :id="id"></is-components>-->
       <div class="tab1">
-        <ul>
-          <li v-for="(value, index) in forAcceptData" :key="index" @click="showDetails">
-            <div class="header">
-              <span>案件号&nbsp;&nbsp;9A757DGJK34V5JDG</span>
-              <span>{{value.state}}</span>
+        <div ref="contentWrapper" class="content">
+          <div class="content-wrapper">
+            <!-- 态势案件 -->
+            <div class="situationcase-wrapper">
+              <div class="situationcase-title">
+                <span class="title">态势案件</span>
+                <span class="subtitle">群体案件</span>
+              </div>
+              <ul class="case">
+                <li v-for="(value,index) in [1,2,3]" :key="index" class="case-item">
+                  <div><svg-icon icon-class="q1" class="icon"/></div>
+                  <div class="content">
+                    <div class="name">湖南省公安厅</div>
+                    <div class="desc">
+                      <span class="count">案件号 9A757DGJK34V5JDG</span>
+                      <span class="date">2018.04.23</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="morecase" @click="showMoreCase">
+                查看更多
+              </div>
             </div>
-            <div class="police">湖南省公安厅</div>
-            <div class="footer">张三山&nbsp;&nbsp;13166568687</div>
-            <div class="operation">
-              <span v-for="(v, i) in value.operation" :key="i">{{v}}</span>
+
+            <!-- 态势感知 -->
+            <div class="situationcase-wrapper">
+              <div class="situationcase-title">
+                <span class="title">态势感知</span>
+                <span class="subtitle">群体洞察</span>
+              </div>
+              <ul class="case">
+                <li
+                  v-for="(value,index) in [1,2,3]"
+                  :key="index"
+                  class="case-item"
+                  style="height: 148px;">
+                  <div><svg-icon icon-class="q2" class="icon"/></div>
+                  <div class="content">
+                    <div class="name">湖南省公安厅</div>
+                    <div class="text">MSISDN：8613501978189</div>
+                    <div class="text">IMSI：460006234567890</div>
+                    <div class="text">IMEI：109698888877777</div>
+                    <div class="desct">
+                      <span class="date">2018.04.23</span>
+                      <span class="detail"><el-button type="primary" size="mini" round @click="showPersonelDetail">查看详情</el-button></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="morecase">
+                查看更多
+              </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import BScroll from 'better-scroll'
   export default {
     props: {
       passCache:
@@ -73,12 +110,21 @@
       }
     },
     mounted: function() {
+      this.$nextTick(() => {
+        this._initScroll()
+      })
       $('.mycase .tab-item:first-child span').addClass('active')
     },
     destroyed() {
       console.log('删除组件!!!!!!!!!!!!!')
     },
     methods: {
+      _initScroll() {
+        this.meunScroll = new BScroll(this.$refs.contentWrapper, {
+          click: true,
+          propTypes: 3
+        })
+      },
       getComponentView(index, event) {
         if (index === 0) {
           this.forAcceptData = [{
@@ -147,5 +193,6 @@
 </script>
 
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
+  @import "~@/styles/mixin.scss";
   @import "./main.scss";
 </style>
