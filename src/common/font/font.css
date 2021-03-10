@@ -1,0 +1,19 @@
+/*拓展字体*/
+@font-face {
+  font-family: 'NotoSansHans-Regular';
+  src: url('./NotoSansHans-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansHans-Bold';
+  src: url('./NotoSansHans-Bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansHans-Medium';
+  src: url('./NotoSansHans-Medium.otf');
+  font-weight: normal;
+  font-style: normal;
+}

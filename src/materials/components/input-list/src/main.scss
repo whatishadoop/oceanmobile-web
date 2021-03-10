@@ -1,0 +1,42 @@
+.inputlist{
+  font-family: NotoSansHans-Regular;
+  >ul{
+    list-style: none;
+    background: #FFFFFF;
+    >li{
+      height: 52px;
+      margin: 0 15px;
+      background: #FFFFFF;
+      line-height: 52px;
+      border-bottom: 1px solid #eee;
+
+      span{
+        float: left;
+        font-size: 16px;
+        color: #333333;
+        letter-spacing: 0;
+      }
+      input{
+        float: right;
+        font-size: 14px;
+        color: #333333;
+        letter-spacing: 0;
+        text-align: right;
+        border: none;
+        outline: none;
+        background: none;
+
+
+      }
+      input::-webkit-input-placeholder{
+        color: #999999;
+      }
+      input::-moz-placeholder{
+        color: #999999;
+      }
+      input:-ms-input-placeholder{
+        color: #999999;
+      }
+    }
+  }
+}

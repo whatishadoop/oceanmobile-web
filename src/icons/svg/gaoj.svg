@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="26px" viewBox="0 0 46 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>gaoj</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M30.260266,18 L4.37522341,18 C1.4448413,18 -0.67155546,15.3999957 0.196716347,12.8500032 L3.56122694,2.8500051 C4.10389126,1.1500044 5.84041261,0 7.73973401,0 L33.6247766,0 C36.5551587,0 38.6715555,2.60000429 37.8032837,5.1499968 L34.4387731,15.1499949 C33.8418445,16.8499956 32.1595874,18 30.260266,18 L30.260266,18 Z" id="path-1"></path>
+        <filter x="-17.1%" y="-30.6%" width="134.2%" height="172.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0.345098039   0 0 0 0 0.345098039  0 0 0 0.505736451 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="yem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home" transform="translate(-11.000000, -187.000000)">
+            <g id="gaoj" transform="translate(15.000000, 190.000000)">
+                <g id="路径" fill-rule="nonzero">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FF5858" xlink:href="#path-1"></use>
+                </g>
+                <text id="告警" font-family="FZZCHJW--GB1-0, FZZhengHeiS-B-GB" font-size="11" font-weight="normal" letter-spacing="1.1432146" fill="#FFFFFF">
+                    <tspan x="7.3567854" y="13">告警</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

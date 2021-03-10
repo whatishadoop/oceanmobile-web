@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="13px" viewBox="0 0 8 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Chevron</title>
+    <desc>Created with Sketch.</desc>
+    <g id="yem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="my" transform="translate(-351.000000, -93.000000)" fill="#CCCCCC">
+            <g id="head" transform="translate(0.000000, 56.000000)">
+                <polygon id="Chevron" points="352 37 351 38 356.75 43.5 351 49 352 50 359 43.5"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,43 @@
+<template>
+  <div id="app">
+    <v-header></v-header>
+    <div class="tab border-1px">
+      <div class="tab-item">
+        <span @click="getComponentView('goods')">商品</span>
+      </div>
+      <div class="tab-item">
+        <span @click="getComponentView('ratings')">评论</span>
+      </div>
+      <div class="tab-item">
+        <span @click="getComponentView('seller')">商家</span>
+      </div>
+    </div>
+    <component :is="componentView"></component>
+  </div>
+</template>
+
+<script>
+import header from '@/views/appmanage/header/header'
+import goods from '@/views/appmanage/goods/goods'
+import seller from '@/views/appmanage/seller/seller'
+import ratings from '@/views/appmanage/ratings/ratings'
+export default {
+  name: 'App',
+  components: {
+    'v-header': header,
+    'goods': goods,
+    'seller': seller,
+    'ratings': ratings
+  },
+  data() {
+    return {
+      componentView: 'goods'
+    }
+  },
+  methods: {
+    getComponentView(name) {
+      this.componentView = name
+    }
+  }
+}
+</script>

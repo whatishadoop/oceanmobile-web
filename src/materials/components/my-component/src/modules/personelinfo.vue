@@ -1,0 +1,179 @@
+<template>
+  <div :style="{ backgroundColor: editPersonelinfo.bgColor }" class="personelinfo-container" >
+    <ul>
+      <li v-for="(value,index) in personelinfo" :key="index">
+        <div class="content">
+          <span>{{value.name}}</span>
+          <span @click="showDetails(value.id)">{{value.info}}</span>
+        </div>
+      </li>
+    </ul>
+    <span v-if="showEdit" class="edit label label-default" @click="showEditConfig">
+      <i class="glyphicon glyphicon-edit"></i>
+      编辑
+		</span>
+    <span v-if="showEdit" class="remove label label-default" @click="removeComponent">
+      <i class="glyphicon glyphicon-remove"></i>
+      删除
+		</span>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios'
+  import { IsPC } from '@/utils/index'
+  export default {
+    components: {},
+    props: {
+      editPersonelinfo: {
+        type: Object,
+        default: function() {
+          return {
+            bgColor: '',
+            dataSource: 'personelInfo'
+          }
+        }
+      }
+    },
+    data() {
+      return {
+        personelinfo: [
+           /* {
+            'name': '所属部门',
+            'info': '公安部门'
+          },
+          {
+            'name': '岗位',
+            'info': '局长'
+          },
+          {
+            'name': '修改密码',
+            'info': ''
+          },
+          {
+            'name': '邮箱',
+            'info': '8643@163.com'
+          } */
+        ],
+        showEdit: false
+      }
+    },
+     watch: {
+       'editPersonelinfo.dataSource': {
+         handler(val) {
+           this.getData(val)
+         },
+         immediate: true
+       }
+    },
+    mounted: function() {
+      const $this = this
+      /* $('.personelinfo-container').mouseover(function() {
+        $this.showEdit = true
+      }).mouseout(function() {
+        $this.showEdit = false
+      }) */
+      let bgcolor = ''
+      if (IsPC()) {
+        $('.personelinfo-container').hover(function() {
+          $this.showEdit = true
+          bgcolor = this.style.backgroundColor
+          this.style.backgroundColor = '#000'
+          this.style.opacity = 0.5
+        }, function() {
+          $this.showEdit = false
+          this.style.backgroundColor = bgcolor
+          this.style.opacity = 1
+        })
+      }
+    },
+    /* created() {
+      this.getData()
+    }, */
+    methods: {
+      getData(url) {
+        url = url === '' ? 'personelInfo' : url
+        axios.get('/data/' + url)
+          .then(res => {
+            this.personelinfo = res.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      showEditConfig() {
+        // this.$bus.$emit('on-personelinfoconfig', this, 'personelInfo-config')
+        this.$bus.$emit('on-attraConfig', this, 'personelInfo-config')
+      },
+      removeComponent() {
+        this.$bus.$emit('on-showPersonelinfo', false)
+      },
+      showDetails(id) {
+        if (id) {
+          this.$bus.$emit('on-drawers', id, true)
+        } else {
+          console.log('无跳转')
+        }
+      }
+    }
+  }
+</script>
+<style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
+  .personelinfo-container{
+    @include zxsk_bg($color-bg-1,$color-bg-2);
+    margin-top: 11px;
+    position: relative;
+    /* &:hover{
+      @include zxsk_bg($color-bg-3,$color-bg-3);
+      opacity: 0.5;
+    } */
+    ul{
+      list-style: none;
+      li{
+        height: 52px;
+        overflow: hidden;
+        .content{
+          height: 30px;
+          margin: 11px 16px;
+          span:nth-child(1){
+            float: left;
+            line-height: 30px;
+            font-family: NotoSansHans-Regular;
+            font-size: 17px;
+            @include zxsk-font-color($font-color-1,$font-color-5);
+            letter-spacing: 0.29px;
+            text-align: left;
+          }
+          span:nth-child(2){
+            float: right;
+            min-height: 30px;
+            padding: 0 20px;
+            line-height: 30px;
+            font-family: NotoSansHans-Regular;
+            font-size: 16px;
+            @include zxsk-font-color($font-color-3,$font-color-4);
+            letter-spacing: 0.27px;
+            text-align: center;
+            cursor: pointer;
+            background: url("../images/rightarrow.svg") no-repeat right center;
+          }
+        }
+      }
+    }
+    >span{
+      position: absolute;
+      cursor: pointer;
+      z-index: 99;
+      /*pointer-events: none;*/
+    }
+    .edit{
+      right: 66px;
+      top: 10px;
+    }
+    .remove{
+      right: 10px;
+      top: 10px;
+      opacity: 1;
+    }
+  }
+</style>

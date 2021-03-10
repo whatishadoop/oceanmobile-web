@@ -1,0 +1,6 @@
+build/*.js
+config/*.js
+src/assets
+/dist/
+/src/utils/scripts.js
+/node_modules/*.js

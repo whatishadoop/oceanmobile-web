@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="59px" height="59px" viewBox="0 0 59 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>qunt_sj</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFE18D" offset="0%"></stop>
+            <stop stop-color="#FFC054" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="22.5" cy="22.5" r="22.5"></circle>
+        <filter x="-26.7%" y="-20.0%" width="153.3%" height="153.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="3" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0.756862745   0 0 0 0 0.333333333  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M35.0216635,29.0654872 L23.3841499,35.8686201 C23.0778996,36.0490891 22.7060241,36.0490891 22.3997738,35.8740889 L10.4942912,29.049081 C9.82710289,28.666268 9.83804041,27.7037669 10.5106974,27.3318915 L22.148211,20.9498528 C22.4380551,20.7912588 22.7935242,20.7857901 23.0888371,20.944384 L34.9943197,27.342829 C35.6669767,27.7092356 35.683383,28.6772055 35.0216635,29.0654872 L35.0216635,29.0654872 Z" id="path-4"></path>
+        <filter x="-27.4%" y="-32.9%" width="154.9%" height="192.2%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="yem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="home" transform="translate(-303.000000, -81.000000)">
+            <g id="qunt_sj" transform="translate(310.000000, 85.000000)">
+                <g id="Oval-10-Copy-8备份-7">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                    <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                </g>
+                <g id="路径" fill-rule="nonzero">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                    <use fill-opacity="0.4" fill="#FFFFFF" xlink:href="#path-4"></use>
+                </g>
+                <path d="M35.0216635,23.6514184 L23.3841499,30.4545513 C23.0778996,30.6350203 22.7060241,30.6350203 22.3997738,30.4600201 L10.4942912,23.6350122 C9.82710289,23.2521992 9.83804041,22.2896981 10.5106974,21.9178227 L22.148211,15.535784 C22.4380551,15.37719 22.7935242,15.3717213 23.0888371,15.5303152 L34.9943197,21.9287602 C35.6669767,22.2951668 35.683383,23.2631367 35.0216635,23.6514184 L35.0216635,23.6514184 Z" id="路径" fill-opacity="0.6" fill="#FFFFFF" fill-rule="nonzero"></path>
+                <path d="M35.0216635,18.2373496 L23.3841499,25.0404825 C23.0778996,25.2209515 22.7060241,25.2209515 22.3997738,25.0459513 L10.4942912,18.2209434 C9.82710289,17.8381304 9.83804041,16.8756293 10.5106974,16.5037539 L22.148211,10.1217152 C22.4380551,9.96312125 22.7935242,9.95765249 23.0888371,10.1162464 L34.9943197,16.5146914 C35.6669767,16.881098 35.683383,17.8490679 35.0216635,18.2373496 Z" id="路径" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
