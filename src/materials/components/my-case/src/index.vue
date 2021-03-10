@@ -1,8 +1,8 @@
 <template>
   <div :cache="cache" :cid="cid" ctype="my-case" obj="component" class="mycase">
     <div class="head">我的案件</div>
-    <div class="tabs">
-      <div class="tab">
+    <div ref="tabs" class="tabs">
+      <div ref="tab" class="tab">
         <div v-for="(value,index) in listItem" :key="index" class="tab-item">
           <span @click="getComponentView(index, $event)">{{value.name}}</span>
         </div>
@@ -112,6 +112,7 @@
     mounted: function() {
       this.$nextTick(() => {
         this._initScroll()
+        this.personScroll()
       })
       $('.mycase .tab-item:first-child span').addClass('active')
     },
@@ -187,6 +188,26 @@
       },
       showDetails() {
         this.$bus.$emit('on-drawers', 85, true)
+      },
+      personScroll() {
+        // 默认有六个li子元素，每个子元素的宽度为120px
+        let width = 5 * 80
+        this.$refs.tab.style.width = width + 'px'
+        // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.tabs, {
+              startX: 0,
+              click: true,
+              scrollX: true,
+              // 忽略竖直方向的滚动
+              scrollY: false,
+              eventPassthrough: 'vertical'
+            })
+          } else {
+            this.scroll.refresh()
+          }
+        })
       }
     }
   }
