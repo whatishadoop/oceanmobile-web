@@ -8,30 +8,28 @@
 import 'vis/dist/vis.css'
 import { DataSet, Network } from 'vis'
 let network = null
-let DIR = process.env.BASE_URL + 'indonesia/'
 export default {
   data() {
     return {
       nodesArray: [
-        { id: 1, shape: 'circularImage', image: DIR + '1.png', label: '公司名称' },
-        { id: 2, shape: 'circularImage', image: DIR + '2.png', label: '公司名称' },
-        { id: 3, shape: 'circularImage', image: DIR + '3.png', label: '公司名称' },
+        { id: 1, shape: 'circle', label: '公司名称' },
+        { id: 2, shape: 'circle', label: '公司名称' },
+        { id: 3, shape: 'circle', label: '公司名称' },
         {
           id: 4,
-          shape: 'circularImage',
-          image: DIR + '4.png',
+          shape: 'circle',
           label: '公司名称'
         },
-        { id: 5, shape: 'circularImage', image: DIR + '5.png', label: '公司名称' },
-        { id: 6, shape: 'circularImage', image: DIR + '6.png', label: '公司名称' },
-        { id: 7, shape: 'circularImage', image: DIR + '7.png', label: '公司名称' },
-        { id: 8, shape: 'circularImage', image: DIR + '8.png', label: '公司名称' },
-        { id: 9, shape: 'circularImage', image: DIR + '9.png', label: '公司名称' },
-        { id: 10, shape: 'circularImage', image: DIR + '10.png', label: '公司名称' },
-        { id: 11, shape: 'circularImage', image: DIR + '11.png', label: '公司名称' },
-        { id: 12, shape: 'circularImage', image: DIR + '12.png', label: '公司名称' },
-        { id: 13, shape: 'circularImage', image: DIR + '13.png', label: '公司名称' },
-        { id: 14, shape: 'circularImage', image: DIR + '14.png', label: '公司名称' }
+        { id: 5, shape: 'circle', label: '公司名称' },
+        { id: 6, shape: 'circle', label: '公司名称' },
+        { id: 7, shape: 'circle', label: '公司名称' },
+        { id: 8, shape: 'circle', label: '公司名称' },
+        { id: 9, shape: 'circle', label: '公司名称' },
+        { id: 10, shape: 'circle', label: '公司名称' },
+        { id: 11, shape: 'circle', label: '公司名称' },
+        { id: 12, shape: 'circle', label: '公司名称' },
+        { id: 13, shape: 'circle', label: '公司名称' },
+        { id: 14, shape: 'circle', label: '公司名称' }
       ],
       edgesArray: [
         { from: 1, to: 2, label: '关系' },
@@ -105,11 +103,11 @@ export default {
           enabled: true // 节点不能重叠,整体图回弹效果
         },
         nodes: {
-          borderWidth: 4,
+          borderWidth: 2,
           size: 30,
           color: {
-            border: '#222222',
-            background: '#666666',
+            border: '#5587FF',
+            background: '#e4e4e4',
             hover: {
               //节点鼠标滑过时状态颜色
               border: "#edb430",
@@ -120,7 +118,7 @@ export default {
         },
         edges: {
           width: 1,
-          length: 260,
+          length: 180,
           color: {
             color: '#848484',
             highlight: '#848484',
@@ -153,7 +151,7 @@ export default {
 
       // add event listeners
       network.on('selectNode', e => {
-        alert('selectNode')
+        this.showDetails()
       })
       network.on('selectEdge', params => {
         // 简化写法，上述逻辑在对话框点击确定后进行回调
@@ -165,6 +163,9 @@ export default {
         network.destroy()
         network = null
       }
+    },
+    showDetails() {
+      this.$bus.$emit('on-drawers', 85, true)
     }
   }
 }
