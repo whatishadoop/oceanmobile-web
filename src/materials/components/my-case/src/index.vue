@@ -1,6 +1,6 @@
 <template>
   <div :cache="cache" :cid="cid" ctype="my-case" obj="component" class="mycase">
-    <div class="head">我的案件</div>
+    <div class="head">舆情管家</div>
     <div ref="tabs" class="tabs">
       <div ref="tab" class="tab">
         <div v-for="(value,index) in listItem" :key="index" class="tab-item">
@@ -87,15 +87,15 @@
         cache: '',
         id: 47,
         listItem: [{
-          name: '待接受'
+          name: '舆情列表'
         }, {
-          name: '执行中'
+          name: '企业详情'
         }, {
-          name: '挂起'
+          name: '舆情日报'
         }, {
-          name: '已退回'
+          name: '舆情方案'
         }, {
-          name: '已结案'
+          name: '舆情预警'
         }],
         forAcceptData: [{
           state: '待接受',
