@@ -1,5 +1,5 @@
 <template>
-  <div :cache="cache" :cid="cid" ctype="main-page" obj="component">
+  <div>
     <div class="home">
       <div class="comp">
         <component :is="name"></component>

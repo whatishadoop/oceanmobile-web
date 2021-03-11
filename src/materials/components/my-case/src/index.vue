@@ -1,10 +1,17 @@
 <template>
-  <div :cache="cache" :cid="cid" ctype="my-case" obj="component" class="mycase">
+  <div class="mycase">
     <div class="head">舆情管家</div>
+    <div ref="sentiments" class="sentiments">
+      <div ref="sentiment" class="sentiment">
+        <div v-for="index in 5" :key="index" class="sentiment-item">
+          <el-tag type="info" style="background-color: #FFFFFF">南京中新</el-tag>
+        </div>
+      </div>
+    </div>
     <div ref="tabs" class="tabs">
       <div ref="tab" class="tab">
-        <div v-for="(value,index) in listItem" :key="index" class="tab-item">
-          <span @click="getComponentView(index, $event)">{{value.name}}</span>
+        <div v-for="(value,index) in listItem" :key="index" class="tab-item" @click="selectTab(value.comname)">
+          <span style="font-size: 14px;" @click="getComponentView(index, $event)">{{value.name}}</span>
         </div>
       </div>
     </div>
@@ -12,58 +19,8 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <!-- 态势案件 -->
-            <div class="situationcase-wrapper">
-              <div class="situationcase-title">
-                <span class="title">态势案件</span>
-                <span class="subtitle">群体案件</span>
-              </div>
-              <ul class="case">
-                <li v-for="(value,index) in [1,2,3]" :key="index" class="case-item">
-                  <div><svg-icon icon-class="q1" class="icon"/></div>
-                  <div class="content">
-                    <div class="name">湖南省公安厅</div>
-                    <div class="desc">
-                      <span class="count">案件号 9A757DGJK34V5JDG</span>
-                      <span class="date">2018.04.23</span>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <div class="morecase" @click="showMoreCase">
-                查看更多
-              </div>
-            </div>
-
-            <!-- 态势感知 -->
-            <div class="situationcase-wrapper">
-              <div class="situationcase-title">
-                <span class="title">态势感知</span>
-                <span class="subtitle">群体洞察</span>
-              </div>
-              <ul class="case">
-                <li
-                  v-for="(value,index) in [1,2,3]"
-                  :key="index"
-                  class="case-item"
-                  style="height: 148px;">
-                  <div><svg-icon icon-class="q2" class="icon"/></div>
-                  <div class="content">
-                    <div class="name">湖南省公安厅</div>
-                    <div class="text">MSISDN：8613501978189</div>
-                    <div class="text">IMSI：460006234567890</div>
-                    <div class="text">IMEI：109698888877777</div>
-                    <div class="desct">
-                      <span class="date">2018.04.23</span>
-                      <span class="detail"><el-button type="primary" size="mini" round @click="showPersonelDetail">查看详情</el-button></span>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <div class="morecase">
-                查看更多
-              </div>
-            </div>
+            <!-- 舆情列表 -->
+            <component :is="currentComponent"></component>
           </div>
         </div>
       </div>
@@ -73,7 +30,13 @@
 
 <script>
   import BScroll from 'better-scroll'
+  import sentimentlist from './sentimentlist'
+  import companydetail from './companydetail'
   export default {
+    components: {
+      sentimentlist,
+      companydetail
+    },
     props: {
       passCache:
         {
@@ -83,19 +46,22 @@
     },
     data() {
       return {
-        cid: 'C' + 0,
-        cache: '',
-        id: 47,
+        currentComponent: 'sentimentlist',
         listItem: [{
-          name: '舆情列表'
+          name: '舆情列表',
+          comname: 'sentimentlist'
         }, {
-          name: '企业详情'
+          name: '企业详情',
+          comname: 'companydetail'
         }, {
-          name: '舆情日报'
+          name: '舆情日报',
+          comname: 'sentimentlist'
         }, {
-          name: '舆情方案'
+          name: '舆情方案',
+          comname: 'sentimentlist'
         }, {
-          name: '舆情预警'
+          name: '舆情预警',
+          comname: 'sentimentlist'
         }],
         forAcceptData: [{
           state: '待接受',
@@ -112,7 +78,8 @@
     mounted: function() {
       this.$nextTick(() => {
         this._initScroll()
-        this.personScroll()
+        this._tabsScroll()
+        this._sentimentsScroll()
       })
       $('.mycase .tab-item:first-child span').addClass('active')
     },
@@ -120,6 +87,9 @@
       console.log('删除组件!!!!!!!!!!!!!')
     },
     methods: {
+      selectTab(comname) {
+        this.currentComponent = comname
+      },
       _initScroll() {
         this.meunScroll = new BScroll(this.$refs.contentWrapper, {
           click: true,
@@ -186,10 +156,7 @@
         $('.mycase .tab-item span').removeClass('active')
         event.srcElement.classList.add('active')
       },
-      showDetails() {
-        this.$bus.$emit('on-drawers', 85, true)
-      },
-      personScroll() {
+      _tabsScroll() {
         // 默认有六个li子元素，每个子元素的宽度为120px
         let width = 5 * 80
         this.$refs.tab.style.width = width + 'px'
@@ -206,6 +173,26 @@
             })
           } else {
             this.scroll.refresh()
+          }
+        })
+      },
+      _sentimentsScroll() {
+        // 默认有六个li子元素，每个子元素的宽度为120px
+        let width = 5 * 80
+        this.$refs.sentiment.style.width = width + 'px'
+        // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
+        this.$nextTick(() => {
+          if (!this.sentimentsScroll) {
+            this.sentimentsScroll = new BScroll(this.$refs.sentiments, {
+              startX: 0,
+              click: true,
+              scrollX: true,
+              // 忽略竖直方向的滚动
+              scrollY: false,
+              eventPassthrough: 'vertical'
+            })
+          } else {
+            this.sentimentsScroll.refresh()
           }
         })
       }
