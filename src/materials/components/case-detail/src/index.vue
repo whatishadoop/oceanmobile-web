@@ -1,30 +1,23 @@
 <template>
   <div class="casedetail">
-    <h1>{{casename}}</h1>
-    <div class="casestatusbox">
-      <span class="status">{{statusinfo}}</span>
-      <span style="display: inline-block;margin-left: 10px;"></span>
-      <span class="unit">{{unitinfo}}</span>
+    <div class="content" style="position: relative; top: 0px; width: 100%;height: 100%;bottom: 0px;">
+      <iframe
+        :src="url"
+        style="height: 100%;width:100%;
+        frameborder=no"
+        frameborder="no"
+        border="0"
+        marginWidth="0"
+        marginHeight="0"></iframe>
     </div>
-    <p>案件描述：{{casedes}}</p>
   </div>
 </template>
 
 <script>
   export default {
-    props: {
-      passCache:
-        {
-          type: String,
-          default: ''
-        }
-    },
     data() {
       return {
-        casename: '标题标题标题标题标题标题',
-        statusinfo: '环球网  张良菊',
-        unitinfo: '2018.04.23 12:00:00',
-        casedes: '案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述案件描述'
+        url: 'http://slide.news.sina.com.cn/slide_1_86058_510206.html#p=1'
       }
     },
     mounted: function() {

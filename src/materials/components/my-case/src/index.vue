@@ -31,9 +31,11 @@
 <script>
   import BScroll from 'better-scroll'
   import sentimentlist from './sentimentlist'
+  import sentimentlog from './sentimentlog'
   import companydetail from './companydetail'
   export default {
     components: {
+      sentimentlog,
       sentimentlist,
       companydetail
     },
@@ -46,7 +48,7 @@
     },
     data() {
       return {
-        currentComponent: 'sentimentlist',
+        currentComponent: 'companydetail',
         listItem: [{
           name: '舆情列表',
           comname: 'sentimentlist'
@@ -55,7 +57,7 @@
           comname: 'companydetail'
         }, {
           name: '舆情日报',
-          comname: 'sentimentlist'
+          comname: 'sentimentlog'
         }, {
           name: '舆情方案',
           comname: 'sentimentlist'

@@ -1,20 +1,13 @@
 <template>
   <div>
-    <div class="situationcase-wrapper">
-      <div class="situationcase-title">
-        <el-tag type="info" class="item">全部 121</el-tag>
-        <el-tag type="info" class="item">预警 20</el-tag>
-        <el-tag type="info" class="item">收藏 30</el-tag>
-        <el-tag type="info" class="item">帅选 <i class="el-icon-search"></i></el-tag>
-      </div>
+    <div class="industrycase-wrapper">
       <ul class="case">
         <li
-          v-for="(value,index) in [1,2,3,4]"
+          v-for="(value,index) in [1,2,3,4,6,7,8]"
           :key="index"
-          class="case-item"
-          style="height: 148px;">
+          class="case-item">
           <div class="content">
-            <div class="name">标题标题标题标题标题标题</div>
+            <div class="name">这里是标题竞品公司资讯</div>
             <div class="text" @click="showDetails">
               <span>这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
               </span>
@@ -25,13 +18,6 @@
             <div class="desct">
               <span class="source">环球网  张良菊</span>
               <span class="date">2018.04.23 12:00:00</span>
-            </div>
-            <div class="actions">
-              <div class="item"><span><i class="el-icon-delete"></i> 忽略</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 预警</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 收藏</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 报告</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 更多</span></div>
             </div>
           </div>
         </li>
@@ -52,35 +38,9 @@
 </script>
 
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-.situationcase-wrapper {
-    margin-top: 32px;
-
-    .situationcase-title {
-      padding-left: 20px;
-      padding-right: 16px;
-      display: flex;
-      .item {
-        margin-right: 10px;
-        text-align: center;
-        flex: 1;
-        &:last-child {
-          margin-right: 0px;
-          text-align: center;
-        }
-      }
-      .title {
-        font-size: 20px;
-        line-height: 28px;
-        color: #333333;
-      }
-      .subtitle {
-        margin-left: 8px;
-        font-size: 15px;
-        line-height: 21px;
-      }
-    }
-
+  @import "~@/styles/mixin.scss";
+  .industrycase-wrapper {
+    margin-top: 20px;
     .case {
       margin: 0;
       padding-left: 20px;
@@ -88,7 +48,7 @@
 
       .case-item {
         display: flex;
-        height: 74px;
+        height: 125px;
         margin: 14px 0px 14px 0px;
         list-style: none;
         overflow: hidden;
@@ -194,40 +154,8 @@
               float: left;
             }
           }
-          .actions {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 5px;
-            padding-left: 10px;
-            .item {
-              flex: 1 0 70px;
-              font-size: 14px;
-              text-align: left;
-              &:after {
-                content: " ";
-                border-left: 1px solid rgba(174, 174, 178, 100);;
-                margin-left: 12px;
-              }
-              &:last-child {
-                &:after{
-                  display: none;
-                }
-              }
-            }
-          }
         }
       }
-    }
-
-    .morecase {
-      margin: 18px 13px 26px 13px;
-      height: 47px;
-      line-height: 47px;
-      text-align: center;
-      background: #F2F3F7;
-      font-size: 18px;
-      color: #999999;
     }
   }
 </style>

@@ -2,9 +2,11 @@
   <div id="drawers">
     <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
       <div v-show="detailShow" class="detail">
-          <!--<component :is="comName"></component>-->
         <div class="content-wrapper">
-          <div id="mount-pointttt"></div>
+          <div class="leftarrowtitle" style="background-color: white;" @click="hideDetail">
+            {{title}}
+          </div>
+          <component :is="comName"></component>
         </div>
       </div>
     </transition>
@@ -12,47 +14,23 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Vue from 'vue'
-  import { get } from '@/api/appPage'
-
   export default {
     data() {
       return {
-        comName: 'm-detailshow',
+        title: '',
+        comName: '',
         detailShow: false
       }
     },
     mounted() {
-      this.$bus.$on('on-drawers', (comName, isdetailShow) => {
-        // this.comName = comName
-        // this.detailShow = isdetailShow
-        // 从后台读取预览区域内容
-        this.apppage = {
-          id: comName,
-          page: 0,
-          size: 9999
-        }
-        get(this.apppage).then(res => {
-          console.log('=============返回预览内容==============')
-          console.log(res)
-          const apppage = res.contentParse
-          const htmlContent = `<div>${apppage}</div>`
-          // 动态加载页面到手机区域
-          var PageComponent = Vue.extend({
-            template: htmlContent
-          })
-          new PageComponent().$mount('#mount-pointttt')
-
-          // 显示右侧弹出框
-          this.detailShow = isdetailShow
-        }).catch(err => {
-          console.log(err.response.date.message)
-        })
+      this.$bus.$on('on-drawers', (title ,comName, isdetailShow) => {
+        // 显示右侧弹出框
+        this.title = title
+        this.comName = comName
+        this.detailShow = isdetailShow
       })
       this.$bus.$on('on-hideSecondaryPage', () => {
         this.detailShow = false
-        $('#drawers .content-wrapper').empty()
-        $('#drawers .content-wrapper').append(`<div id="mount-pointttt"></div>`)
       })
     },
     methods: {
@@ -96,6 +74,16 @@
       left: 0px;
       width: 100%;
       height: 100%;
+      .leftarrowtitle {
+        height: 44px;
+        background: url("./images/leftarrow.png") no-repeat 15.1px center;
+        text-align: center;
+        font-size: 18px;
+        color: #333333;
+        letter-spacing: 0.29px;
+        line-height: 44px;
+        position: relative;
+      }
     }
   }
   .detail::-webkit-scrollbar { width: 0 !important }
