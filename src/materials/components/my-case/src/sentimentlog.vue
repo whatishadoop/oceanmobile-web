@@ -117,15 +117,5 @@
         }
       }
     }
-
-    .morecase {
-      margin: 18px 13px 26px 13px;
-      height: 47px;
-      line-height: 47px;
-      text-align: center;
-      background: #F2F3F7;
-      font-size: 18px;
-      color: #999999;
-    }
   }
 </style>

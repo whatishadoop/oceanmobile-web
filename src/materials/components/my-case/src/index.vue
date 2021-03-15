@@ -33,11 +33,13 @@
   import sentimentlist from './sentimentlist'
   import sentimentlog from './sentimentlog'
   import companydetail from './companydetail'
+  import caselist from './caselist'
   export default {
     components: {
       sentimentlog,
       sentimentlist,
-      companydetail
+      companydetail,
+      caselist
     },
     props: {
       passCache:
@@ -48,7 +50,7 @@
     },
     data() {
       return {
-        currentComponent: 'companydetail',
+        currentComponent: 'caselist',
         listItem: [{
           name: '舆情列表',
           comname: 'sentimentlist'
@@ -60,7 +62,7 @@
           comname: 'sentimentlog'
         }, {
           name: '舆情方案',
-          comname: 'sentimentlist'
+          comname: 'caselist'
         }, {
           name: '舆情预警',
           comname: 'sentimentlist'
