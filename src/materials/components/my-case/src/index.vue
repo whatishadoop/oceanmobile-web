@@ -160,7 +160,7 @@
       },
       _tabsScroll() {
         // 默认有六个li子元素，每个子元素的宽度为120px
-        let width = 5 * 80
+        const width = 5 * 80
         this.$refs.tab.style.width = width + 'px'
         // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
         this.$nextTick(() => {
@@ -180,7 +180,7 @@
       },
       _sentimentsScroll() {
         // 默认有六个li子元素，每个子元素的宽度为120px
-        let width = 5 * 80
+        const width = 5 * 80
         this.$refs.sentiment.style.width = width + 'px'
         // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
         this.$nextTick(() => {

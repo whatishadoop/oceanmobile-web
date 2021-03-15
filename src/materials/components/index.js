@@ -29,6 +29,7 @@ export default {
     Vue.component('filter-page', () => import('@/materials/components/filter-page/src/index'))
     Vue.component('search-page', () => import('@/materials/components/search-page/src/index'))
     Vue.component('echarts-tabs', () => import('@/materials/components/echarts-tabs/src/index'))
+    Vue.component('company-node-info', () => import('@/materials/components/my-case/src/drawer/companynodeinfo.vue'))
 
     // 全局异步注册配置组件
     Vue.component('echarts-config', () => import('@/materials/components/echarts-component/src/editors/echartsConfig'))

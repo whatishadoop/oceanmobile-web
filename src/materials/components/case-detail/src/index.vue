@@ -17,7 +17,7 @@
   export default {
     data() {
       return {
-        url: 'http://slide.news.sina.com.cn/slide_1_86058_510206.html#p=1'
+        url: 'https://www.baidu.com/'
       }
     },
     mounted: function() {

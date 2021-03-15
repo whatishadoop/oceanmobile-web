@@ -67,8 +67,6 @@
     },
     methods: {
       create(type) {
-        // 默认自左向右
-        const layoutType = type || 'RL'
         // create an array with nodes
         this.nodes = new DataSet(
           this.nodesArray
@@ -86,7 +84,7 @@
         const options = {
           layout: {
             randomSeed: 2, // 布局的随机种子，如果不设置，每次进来布局都是随机的；这个数值可以任意设置，只要是个数字就行
-            improvedLayout: true, // 使用【 Kamada Kawai】布局算法；如果不用这个算法，会出现很多交叉的线条
+            improvedLayout: true // 使用【 Kamada Kawai】布局算法；如果不用这个算法，会出现很多交叉的线条
           },
           physics: {
             enabled: true // 节点不能重叠,整体图回弹效果
@@ -98,9 +96,9 @@
               border: '#5587FF',
               background: '#e4e4e4',
               hover: {
-                //节点鼠标滑过时状态颜色
-                border: "#edb430",
-                background: "#D2E5FF"
+                // 节点鼠标滑过时状态颜色
+                border: '#edb430',
+                background: '#D2E5FF'
               }
             },
             font: { color: '#606c74' }
@@ -154,7 +152,7 @@
         }
       },
       showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22',  'case-detail', true)
+        this.$bus.$emit('on-drawers', '公司详情', 'company-node-info', true)
       }
     }
   }

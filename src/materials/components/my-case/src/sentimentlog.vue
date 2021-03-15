@@ -5,7 +5,9 @@
         <li
           v-for="(value,index) in [1,2,3,4,7,8,9,10]"
           :key="index"
-          class="case-item">
+          class="case-item"
+          @click="showDetails"
+        >
           <div class="content">
             <div class="name">标题标题标题标题标题标题</div>
             <div class="desct">
@@ -23,7 +25,7 @@
   export default {
     methods: {
       showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22',  'case-detail', true)
+        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
       }
     }
   }

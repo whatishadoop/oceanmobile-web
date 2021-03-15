@@ -20,7 +20,7 @@
       </div>
       <div class="detailcotent-wrapper">
         <div class="tabs">
-          <div v-for="(value, index) in tabs" @click="selectTab(index, value.key)" :class="['tab-item', isSelect === index ? 'active' : '']" :key="value.id">
+          <div v-for="(value, index) in tabs" :key="value.id" :class="['tab-item', isSelect === index ? 'active' : '']" @click="selectTab(index, value.key)">
             <div class="icon"><i class="el-icon-document"/></div>
             <div :class="['text', isSelect === index ? 'active' : '']"><span>{{value.name}}</span></div>
           </div>

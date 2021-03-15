@@ -45,7 +45,7 @@
   export default {
     methods: {
       showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22',  'case-detail', true)
+        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
       }
     }
   }
