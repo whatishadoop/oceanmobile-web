@@ -30,7 +30,9 @@ export default {
     Vue.component('search-page', () => import('@/materials/components/search-page/src/index'))
     Vue.component('echarts-tabs', () => import('@/materials/components/echarts-tabs/src/index'))
     Vue.component('company-node-info', () => import('@/materials/components/my-case/src/drawer/companynodeinfo.vue'))
-
+    Vue.component('sentiment-condition', () => import('@/materials/components/my-case/src/drawer/sentimentcondition.vue'))
+    Vue.component('competitive-company', () => import('@/materials/components/my-case/src/drawer/competitivecompany.vue'))
+    Vue.component('industry-info', () => import('@/materials/components/my-case/src/drawer/industryinfo.vue'))
     // 全局异步注册配置组件
     Vue.component('echarts-config', () => import('@/materials/components/echarts-component/src/editors/echartsConfig'))
     Vue.component('personelInfo-config', () => import('@/materials/components/my-component/src/editors/personelInfoConfig'))

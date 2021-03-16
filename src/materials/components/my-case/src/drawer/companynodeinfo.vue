@@ -272,6 +272,7 @@
         .title {
           display: flex;
           align-items: center;
+          margin-bottom: 0px;
           color: rgba(16, 16, 16, 100);
           font-size: 12px;
         }

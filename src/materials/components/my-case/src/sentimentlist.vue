@@ -5,7 +5,7 @@
         <el-tag type="info" class="item">全部 121</el-tag>
         <el-tag type="info" class="item">预警 20</el-tag>
         <el-tag type="info" class="item">收藏 30</el-tag>
-        <el-tag type="info" class="item">帅选 <i class="el-icon-search"></i></el-tag>
+        <el-tag type="info" class="item" @click="showCondition" >帅选 <i class="el-icon-search"></i></el-tag>
       </div>
       <ul class="case">
         <li
@@ -30,7 +30,6 @@
               <div class="item"><span><i class="el-icon-delete"></i> 忽略</span></div>
               <div class="item"><span><i class="el-icon-delete"></i> 预警</span></div>
               <div class="item"><span><i class="el-icon-delete"></i> 收藏</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 报告</span></div>
               <div class="item"><span><i class="el-icon-delete"></i> 更多</span></div>
             </div>
           </div>
@@ -45,7 +44,10 @@
   export default {
     methods: {
       showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
+        this.$bus.$emit('on-drawers', '舆情详情', 'case-detail', true)
+      },
+      showCondition() {
+        this.$bus.$emit('on-drawers', '帅选条件', 'sentiment-condition', true)
       }
     }
   }

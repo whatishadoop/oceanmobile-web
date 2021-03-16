@@ -4,42 +4,42 @@
       <div class="name">
         <div class="lable">方案名称:</div>
         <div class="input-wrapper">
-          <el-input v-model="input" placeholder="请输入方案名称"/>
+          <el-input v-model="input" placeholder="请选择方案名称"/>
         </div>
       </div>
       <div class="monitor-word">
         <div class="title">检测词设置</div>
         <div class="name">
           <div class="lable">企业名称:</div>
-          <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入企业名称"/>
+          <div class="input-wrapper" @click="showCompanyName">
+            <el-input v-model="input" :readonly="true" placeholder="请选择企业名称"/>
           </div>
         </div>
         <div class="name">
           <div class="lable">主要成员:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入主要成员"/>
+            <el-input v-model="input" :readonly="true"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">分支机构:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入分支机构"/>
+            <el-input v-model="input" :readonly="true"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">竞品公司:</div>
-          <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入竞品公司"/>
+          <div class="input-wrapper" @click="showCompetitiveCompany">
+            <el-input v-model="input" :readonly="true" placeholder="请选择竞品公司" />
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">所属行业:</div>
-          <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入所属行业"/>
+          <div class="input-wrapper" @click="showIndusryInfo">
+            <el-input v-model="input" :readonly="true" placeholder="请选择所属行业"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
@@ -95,8 +95,14 @@
       }
     },
     methods: {
-      showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
+      showCompanyName() {
+        this.$bus.$emit('on-drawers', '企业名称', 'competitive-company', true)
+      },
+      showCompetitiveCompany() {
+        this.$bus.$emit('on-drawers', '竞品公司', 'competitive-company', true)
+      },
+      showIndusryInfo() {
+        this.$bus.$emit('on-drawers', '所属行业', 'industry-info', true)
       }
     }
   }
@@ -130,10 +136,11 @@
     .monitor-word {
       background-color: rgba(247, 247, 247, 100);
       .title {
+        height: 45px;
         width: 100%;
         padding-top: 4px;
         padding-left: 10px;
-        height: 45px;
+        margin-bottom: 0px;
         line-height: 40px;
         color: rgba(16, 16, 16, 100);
         font-size: 14px;
