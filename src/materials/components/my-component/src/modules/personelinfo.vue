@@ -68,11 +68,6 @@
     },
     mounted: function() {
       const $this = this
-      /* $('.personelinfo-container').mouseover(function() {
-        $this.showEdit = true
-      }).mouseout(function() {
-        $this.showEdit = false
-      }) */
       let bgcolor = ''
       if (IsPC()) {
         $('.personelinfo-container').hover(function() {

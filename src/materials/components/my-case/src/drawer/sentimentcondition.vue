@@ -4,48 +4,48 @@
       <div class="monitor-word">
         <div class="title">时间</div>
         <div class="condition">
-          <div v-for="o in 7" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in dataType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(dataType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
       <div class="monitor-word">
         <div class="title">数据来源</div>
         <div class="condition">
-          <div v-for="o in 9" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in sourceType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;height: 28px;text-align: center" size="medium" type="info" @click="selectdata(sourceType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
       <div class="monitor-word">
         <div class="title">情感倾向性</div>
         <div class="condition">
-          <div v-for="o in 3" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in motionType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(motionType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
       <div class="monitor-word">
         <div class="title">噪音过滤</div>
         <div class="condition">
-          <div v-for="o in 3" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in filterType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(filterType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
       <div class="monitor-word">
         <div class="title">重复信息</div>
         <div class="condition">
-          <div v-for="o in 2" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in repeatType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(repeatType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
-      <div class="monitor-word">
+      <div class="monitor-word" style="height: 100px;">
         <div class="title">重大事件</div>
         <div class="condition">
-          <div v-for="o in 3" :key="o" class="item">
-            <el-button size="mini" style="padding-left: 10px;padding-right: 10px;">超小按钮</el-button>
+          <div v-for="(item, index) in eventType" :key="index" class="item">
+            <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(eventType, item)">{{item.value}}</el-tag>
           </div>
         </div>
       </div>
@@ -60,12 +60,164 @@
   export default {
     data() {
       return {
-        input: ''
+        dataType: [
+          {
+            key: 'today',
+            value: '今天',
+            isSelect: false
+          },
+          {
+            key: 'oneday',
+            value: '24小时',
+            isSelect: false
+          },
+          {
+            key: 'threeday',
+            value: '3天',
+            isSelect: false
+          },
+          {
+            key: 'sevenday',
+            value: '7天',
+            isSelect: false
+          },
+          {
+            key: 'fifteenday',
+            value: '15天',
+            isSelect: false
+          },
+          {
+            key: 'threemonth',
+            value: '近三个月',
+            isSelect: false
+          },
+          {
+            key: 'onemonth',
+            value: '近一个月',
+            isSelect: false
+          }
+        ],
+        sourceType: [
+          {
+            key: '1',
+            value: '全部',
+            isSelect: false
+          },
+          {
+            key: '2',
+            value: '报刊',
+            isSelect: false
+          },
+          {
+            key: '3',
+            value: '微信',
+            isSelect: false
+          },
+          {
+            key: '4',
+            value: '媒体1',
+            isSelect: false
+          },
+          {
+            key: '5',
+            value: '媒体2',
+            isSelect: false
+          },
+          {
+            key: '6',
+            value: '媒体3',
+            isSelect: false
+          },
+          {
+            key: '7',
+            value: '媒体4',
+            isSelect: false
+          },
+          {
+            key: '8',
+            value: '媒体5',
+            isSelect: false
+          },
+          {
+            key: '9',
+            value: '媒体6',
+            isSelect: false
+          }
+        ],
+        motionType: [
+          {
+            key: '1',
+            value: '全部',
+            isSelect: false
+          },
+          {
+            key: '2',
+            value: '正向',
+            isSelect: false
+          },
+          {
+            key: '3',
+            value: '中性',
+            isSelect: false
+          }
+        ],
+        filterType: [
+          {
+            key: '1',
+            value: '全部',
+            isSelect: false
+          },
+          {
+            key: '2',
+            value: '正向',
+            isSelect: false
+          },
+          {
+            key: '3',
+            value: '中性',
+            isSelect: false
+          }
+        ],
+        repeatType: [
+          {
+            key: '1',
+            value: '去重',
+            isSelect: false
+          },
+          {
+            key: '2',
+            value: '不去重',
+            isSelect: false
+          }
+        ],
+        eventType: [
+          {
+            key: '1',
+            value: '全部',
+            isSelect: false
+          },
+          {
+            key: '2',
+            value: '包含',
+            isSelect: false
+          },
+          {
+            key: '3',
+            value: '不包含',
+            isSelect: false
+          }
+        ]
       }
     },
     methods: {
-      showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
+      selectdata(target, item) {
+        target.forEach((currentObj, index, array) => {
+          if (currentObj.key === item.key) {
+            currentObj.isSelect = true
+          } else {
+            currentObj.isSelect = false
+          }
+        })
       }
     }
   }
@@ -102,6 +254,11 @@
           flex: none;
           margin-right: 14px;
           margin-top: 10px;
+          .active {
+            color: rgb(64, 158, 255);
+            background: rgb(236, 245, 255);
+            border-color: rgb(179, 216, 255);
+          }
         }
       }
     }
@@ -113,11 +270,5 @@
       margin-bottom: 10px;
       padding-left: 10px;
     }
-  }
-  /*修改输入框样式*/
-  .input-wrapper /deep/ .el-input__inner {
-    border-radius: 0px;
-    border: 0;
-    padding: 0;
   }
 </style>

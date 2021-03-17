@@ -28,17 +28,16 @@
     },
     mounted() {
       this.$bus.$on('on-drawers', (title, comName, isdetailShow) => {
-        this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = this._initScroll()
-          } else {
-            this.scroll.refresh()
-          }
-        })
         // 显示右侧弹出框
         this.title = title
         this.comName = comName
         this.detailShow = isdetailShow
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.contentWrapper, {
+            click: true,
+            propTypes: 3
+          })
+        })
       })
       this.$bus.$on('on-hideSecondaryPage', () => {
         this.detailShow = false
@@ -47,12 +46,6 @@
     methods: {
       hideDetail() {
         this.detailShow = false
-      },
-      _initScroll() {
-        this.meunScroll = new BScroll(this.$refs.contentWrapper, {
-          click: true,
-          propTypes: 3
-        })
       }
     }
   }

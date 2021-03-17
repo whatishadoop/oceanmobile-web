@@ -8,22 +8,12 @@
           <div class="details">
             <div class="nameJob">
               <span>刘璞</span>
-              <span>局长</span>
             </div>
             <div class="phoneNum">
               <span>19082317723</span>
             </div>
           </div>
-          <div class="rightarrow" @click="showPersonelInfo"></div>
         </div>
-      </div>
-      <div class="informationDiv">
-        <ul>
-          <li v-for="(value,index) in details" :key="index">
-            <div class="detailsNum">{{value.num}}</div>
-            <div class="detailsName">{{value.name}}</div>
-          </li>
-        </ul>
       </div>
   </div>
 </template>
@@ -34,40 +24,14 @@
     props: {},
     data() {
       return {
-        details: [
-          {
-            'name': '待接受',
-            'num': 50
-          },
-          {
-            'name': '执行中',
-            'num': 100
-          },
-          {
-            'name': '挂起',
-            'num': 32
-          },
-          {
-            'name': '已退回',
-            'num': 2
-          },
-          {
-            'name': '已结案',
-            'num': 132
-          }
-        ]
       }
     },
     methods: {
-      showPersonelInfo() {
-        this.$bus.$emit('on-drawers', 86, true)
-      }
     }
   }
 </script>
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
   .avatar-container{
-    height: 200px;
     /*background-color: #fff;*/
     @include zxsk_bg($color-bg-1,$color-bg-2);
     .avatarDiv{

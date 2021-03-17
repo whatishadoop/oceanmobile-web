@@ -170,7 +170,7 @@
       top: 0px;
       bottom: 60px;
       width: 100%;
-      height: 540px;
+      height: calc(100vh - 130px);
       margin-top: 25px;
       overflow: hidden;
 

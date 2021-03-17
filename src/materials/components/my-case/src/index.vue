@@ -50,7 +50,7 @@
     },
     data() {
       return {
-        currentComponent: 'caselist',
+        currentComponent: 'sentimentlist',
         listItem: [{
           name: '舆情列表',
           comname: 'sentimentlist'
@@ -65,20 +65,13 @@
           comname: 'caselist'
         }, {
           name: '舆情预警',
-          comname: 'sentimentlist'
-        }],
-        forAcceptData: [{
-          state: '待接受',
-          operation: ['退回', '处理']
-        }, {
-          state: '待接受',
-          operation: ['退回', '处理']
-        }, {
-          state: '待接受',
-          operation: ['退回', '处理']
+          comname: ''
         }]
       }
     },
+    // beforeMount() {
+    //   window.addEventListener('resize', this._refreshScroll)
+    // },
     mounted: function() {
       this.$nextTick(() => {
         this._initScroll()
