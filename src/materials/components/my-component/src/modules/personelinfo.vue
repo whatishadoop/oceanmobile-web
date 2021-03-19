@@ -1,6 +1,6 @@
 <template>
-  <div :style="{ backgroundColor: editPersonelinfo.bgColor }" class="personelinfo-container" >
-    <ul>
+  <div class="personelinfo-container" >
+    <ul style="padding-left: 10px;">
       <li v-for="(value,index) in personelinfo" :key="index">
         <div class="content">
           <span>{{value.name}}</span>
@@ -20,31 +20,18 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import { IsPC } from '@/utils/index'
   export default {
     components: {},
-    props: {
-      editPersonelinfo: {
-        type: Object,
-        default: function() {
-          return {
-            bgColor: '',
-            dataSource: 'personelInfo'
-          }
-        }
-      }
-    },
     data() {
       return {
         personelinfo: [
-           /* {
+           {
             'name': '所属部门',
-            'info': '公安部门'
+            'info': '大数据部门'
           },
           {
             'name': '岗位',
-            'info': '局长'
+            'info': '项目管理'
           },
           {
             'name': '修改密码',
@@ -52,50 +39,13 @@
           },
           {
             'name': '邮箱',
-            'info': '8643@163.com'
-          } */
+            'info': 'xxxxxxxxx@163.com'
+          }
         ],
         showEdit: false
       }
     },
-     watch: {
-       'editPersonelinfo.dataSource': {
-         handler(val) {
-           this.getData(val)
-         },
-         immediate: true
-       }
-    },
-    mounted: function() {
-      const $this = this
-      let bgcolor = ''
-      if (IsPC()) {
-        $('.personelinfo-container').hover(function() {
-          $this.showEdit = true
-          bgcolor = this.style.backgroundColor
-          this.style.backgroundColor = '#000'
-          this.style.opacity = 0.5
-        }, function() {
-          $this.showEdit = false
-          this.style.backgroundColor = bgcolor
-          this.style.opacity = 1
-        })
-      }
-    },
-    /* created() {
-      this.getData()
-    }, */
     methods: {
-      getData(url) {
-        url = url === '' ? 'personelInfo' : url
-        axios.get('/data/' + url)
-          .then(res => {
-            this.personelinfo = res.data
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      },
       showEditConfig() {
         // this.$bus.$emit('on-personelinfoconfig', this, 'personelInfo-config')
         this.$bus.$emit('on-attraConfig', this, 'personelInfo-config')

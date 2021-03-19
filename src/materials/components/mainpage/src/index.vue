@@ -6,16 +6,15 @@
       </div>
       <div class="tabs">
         <div class="tab">
-
-          <div class="tab-item" @click="changeView('home-page')">
-            <div><svg-icon :icon-class="icon_home" class="icon"/></div>
-            <p class="name">首页</p>
-          </div>
-          <div class="tab-item" @click="changeView('map-ol')">
+          <!--<div class="tab-item" @click="changeView('home-page')">-->
+            <!--<div><svg-icon :icon-class="icon_home" class="icon"/></div>-->
+            <!--<p class="name">首页</p>-->
+          <!--</div>-->
+          <div class="tab-item" @click="changeView('my-case')">
             <div><svg-icon :icon-class="icon_qtts" class="icon"/></div>
             <p class="name">监控</p>
           </div>
-          <div class="tab-item" @click="changeView('my-case')">
+          <div class="tab-item" @click="changeView('sentimentlog')">
             <div><svg-icon :icon-class="icon_case" class="icon"/></div>
             <p class="name">报告</p>
           </div>
@@ -35,7 +34,7 @@
     data() {
       return {
         id: 47,
-        name: 'home-page',
+        name: 'my-case',
         icon_home: 'icon_home_new_pre',
         icon_qtts: 'icon_map_new_normal',
         icon_case: 'icon_case_new_normal',
@@ -43,7 +42,7 @@
       }
     },
     mounted() {
-
+      this.changeView('my-case')
     },
     methods: {
       changeView(val) {
@@ -53,12 +52,12 @@
           this.icon_qtts = 'icon_map_new_normal'
           this.icon_case = 'icon_case_new_normal'
           this.icon_me = 'icon_me_new_normal'
-        } else if (val === 'map-ol') {
+        } else if (val === 'my-case') {
           this.icon_home = 'icon_home_new_normal'
           this.icon_qtts = 'icon_map_new_pre'
           this.icon_case = 'icon_case_new_normal'
           this.icon_me = 'icon_me_new_normal'
-        } else if (val === 'my-case') {
+        } else if (val === 'sentimentlog') {
           this.icon_home = 'icon_home_new_normal'
           this.icon_qtts = 'icon_map_new_normal'
           this.icon_case = 'icon_case_new_pre'
@@ -85,7 +84,7 @@
     height: 667px;
 
     .comp{
-      height: calc(100% - 58px);
+      height: calc(100vh - 58px);
       overflow: hidden;
     }
 

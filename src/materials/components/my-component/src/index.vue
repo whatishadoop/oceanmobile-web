@@ -1,7 +1,8 @@
 <template>
-  <div :cache="cache" :cid="cid" ctype="my-component" obj="component" class="myinformation">
+  <div class="myinformation">
+    <div class="head">个人中心</div>
     <avatar></avatar>
-    <personel-info :edit-personelinfo="editPersonelInfo"></personel-info>
+    <personel-info></personel-info>
     <button @click="logout">退出登录</button>
   </div>
 </template>
@@ -20,33 +21,10 @@
     },
     data() {
       return {
-        cid: 'C' + 0,
-        cache: '',
-        showPersonelinfo: true, // 是否展示个人信息组件
-        editPersonelInfo: {
-          bgColor: '',
-          dataSource: 'personelInfo'
-        } // 编辑个人信息组件数据
+        showPersonelinfo: true // 是否展示个人信息组件
       }
     },
     mounted: function() {
-      if (this.passCache !== '') {
-        const passCacheJson = JSON.parse(this.passCache)
-        this.showPersonelinfo = passCacheJson.showPersonelinfo ? passCacheJson.showPersonelinfo : this.showPersonelinfo
-        this.editPersonelInfo = passCacheJson.editPersonelInfo ? passCacheJson.editPersonelInfo : this.editPersonelInfo
-      }
-      const newObj = {}
-      this.$bus.$on('on-showPersonelinfo', res => {
-        this.showPersonelinfo = res
-        newObj.showPersonelinfo = this.showPersonelinfo
-        this.cache = JSON.stringify(newObj)
-      })
-
-      this.$bus.$on('on-editPersonelInfo', res => {
-        this.editPersonelInfo = res
-        newObj.editPersonelInfo = this.editPersonelInfo
-        this.cache = JSON.stringify(newObj)
-      })
     },
     destroyed() {
       console.log('删除组件!!!!!!!!!!!!!')
@@ -63,5 +41,40 @@
 </script>
 
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
-  @import "./main.scss";
+  .myinformation{
+    @include zxsk_bg($color-bg-1,$color-bg-2);
+    .head{
+      height: 44px;
+      line-height: 44px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #5584FF;
+      letter-spacing: 0.29px;
+      text-align: center;
+    }
+    button{
+      width: 342px;
+      height: 47px;
+      background: #5584FF;
+      border-radius: 23.5px;
+      margin: 44.5px calc(50% - 171px) 106px;
+      border: 0;
+      font-family: PingFangSC-Regular;
+      font-size: 17px;
+      color: #FFFFFF;
+      letter-spacing: 0;
+      text-align: center;
+    }
+    span{
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      opacity: 0.3;
+      cursor: pointer;
+    }
+    &:hover span{
+      opacity: 1;
+    }
+  }
 </style>

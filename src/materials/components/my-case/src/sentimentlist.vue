@@ -12,11 +12,18 @@
           v-for="(value,index) in [1,2,3,4]"
           :key="index"
           class="case-item"
-          style="height: 148px;">
+          style="height: 160px;">
           <div class="content">
             <div class="name">标题标题标题标题标题标题</div>
-            <div class="text" @click="showDetails">
-              <span>这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
+            <div class="motion-type">
+              <el-tag style="margin-right: 6px;" size="mini">正向</el-tag>
+              <el-tag type="danger" style="margin-right: 6px;" size="mini">重大事件</el-tag>
+              <el-tag type="danger" style="margin-right: 6px;" size="mini">重大事件</el-tag>
+              <el-tag type="success" style="margin-right: 6px;" size="mini">关键词</el-tag>
+              <el-tag type="success" style="margin-right: 6px;" size="mini">关键词</el-tag>
+            </div>
+            <div class="text-wrapper" @click="showDetails">
+              <span class="text">这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
               </span>
               <div class="detail">
                 <i class="el-icon-arrow-right" style="font-size: 14px;"></i>
@@ -56,8 +63,6 @@
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 .situationcase-wrapper {
-    margin-top: 32px;
-
     .situationcase-title {
       padding-left: 20px;
       padding-right: 16px;
@@ -113,7 +118,7 @@
           margin-top: 0;
 
           .name {
-            margin: 2px 0 8px 0;
+            margin: 2px 0 6px 0;
             left: 19px;
             top: 139px;
             width: 180px;
@@ -126,22 +131,26 @@
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-
-          .text {
+          .motion-type {
+            display: flex;
+            margin-bottom: 10px;
+          }
+          .text-wrapper {
             position: relative;
-            height: 56px;
-            color: #828283;
-            font-size: 12px;
-            text-align: left;
-            font-family: PingFangSC-regular;
-            padding-right: 28px;
-            /*多行文本溢出*/
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-            &:last-child {
-              margin-bottom: 13px;
+            .text {
+              color: #828283;
+              font-size: 12px;
+              text-align: left;
+              font-family: PingFangSC-regular;
+              padding-right: 28px;
+              /*多行文本溢出*/
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 3;
+              overflow: hidden;
+              &:last-child {
+                margin-bottom: 13px;
+              }
             }
             .detail {
               position: absolute;
@@ -149,7 +158,6 @@
               right: 1px;
             }
           }
-
           .desc {
             margin-bottom: 8px;
             margin-top: 11px;

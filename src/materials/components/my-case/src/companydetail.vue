@@ -66,7 +66,6 @@
     padding-left: 15px;
     padding-right: 15px;
     .content-wrapper {
-      width: 345px;
       height: 146px;
       background: #FFFFFF;
       box-shadow: 0 2px 6px 0 rgba(0,0,0,0.12);
@@ -77,10 +76,10 @@
         .logo {
           flex: 0 1 56px;
           margin: 10px;
-          background-color: red;
+          background-color: #e2e1e1;
         }
         .detail {
-          margin: 10px;
+          margin: 12px 10px 10px 10px;
           .name {
             text-align: left;
             font-family: PingFangSC-Medium;
@@ -118,10 +117,10 @@
       }
     }
     .detailcotent-wrapper {
-      height: 58px;
+      height: 55px;
       padding-left: 12px;
       padding-right: 12px;
-      margin-top: 16px;
+      margin-top: 14px;
       border-bottom: 2px solid #e4e7ed;
       .tabs {
         display: flex;
@@ -141,7 +140,7 @@
             font-size: 25px;
           }
           .text {
-            margin-top: -5px;
+            margin-top: 6px;
             padding-bottom: 4px;
             flex: 1;
             font-family: PingFangSC-Regular;
@@ -156,7 +155,7 @@
       }
     }
     .tab-content {
-      width: 345px;
+      width: 100%;
       height: 700px;
     }
   }

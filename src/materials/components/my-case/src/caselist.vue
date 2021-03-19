@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="btn-wrapper">
-        <el-button style="width: 310px;" type="primary" round>确认</el-button>
+        <el-button style="width: 310px;background-color: #5584FF;color: #FFFFFF;font-size: 16px;" round>确认</el-button>
       </div>
     </div>
   </div>
@@ -185,7 +185,6 @@
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 .case-wrapper {
-  width: 375px;
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
@@ -245,7 +244,8 @@
       display: flex;
       justify-content: center;
       width: 100%;
-      margin-top: 30px;
+      padding-top: 15px;
+      padding-bottom: 15px;
       padding-left: 10px;
     }
   }

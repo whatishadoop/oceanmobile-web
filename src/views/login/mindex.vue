@@ -2,7 +2,6 @@
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
       <div class="logo-wrapper"><svg-icon icon-class="logo2" class="icon"/></div>
-      <!--<h3 class="title">湖南省公安厅</h3>-->
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 10px;" />
@@ -147,14 +146,14 @@
   }
 
   .logo-wrapper {
-    margin: 0px auto 85px auto;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 50px;
     .icon {
-      width: 120px;
-      height: 120px;
-      margin-top: 0px;
+      width: 100%;
+      height: 100%;
     }
   }
 </style>

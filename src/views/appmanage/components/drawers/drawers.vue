@@ -3,7 +3,7 @@
     <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
       <div v-show="detailShow" class="detail">
         <div class="main-wrapper">
-          <div class="leftarrowtitle" style="background-color: #007AFF;" @click="hideDetail">
+          <div class="leftarrowtitle" style="background-color: #5584FF;" @click="hideDetail">
             {{title}}
           </div>
           <div ref="contentWrapper" class="contentwrapper">

@@ -118,7 +118,7 @@
         .logo {
           flex: 0 1 56px;
           margin: 10px 10px 10px 0px;
-          background-color: red;
+          background-color: #e2e1e1;
         }
         .detail {
           margin: 10px;

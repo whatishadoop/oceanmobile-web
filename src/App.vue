@@ -21,5 +21,5 @@ export default {
 </script>
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
   /*全局引入字体文件*/
-  @import "./common/font/font.css";
+  /*@import "./common/font/font.css";*/
 </style>

@@ -7,9 +7,13 @@
           :key="index"
           class="case-item">
           <div class="content">
-            <div class="name">这里是标题竞品公司资讯</div>
-            <div class="text" @click="showDetails">
-              <span>这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
+            <div class="name">这里是商业资讯标题</div>
+            <div class="motion-type">
+              <el-tag style="margin-right: 6px;" size="mini">自动驾驶</el-tag>
+              <el-tag style="margin-right: 6px;" size="mini">物联网</el-tag>
+            </div>
+            <div class="text-wrapper" @click="showDetails">
+              <span class="text">这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
               </span>
               <div class="detail">
                 <i class="el-icon-arrow-right" style="font-size: 14px;"></i>
@@ -31,7 +35,7 @@
   export default {
     methods: {
       showDetails() {
-        this.$bus.$emit('on-drawers', '案件详情22', 'case-detail', true)
+        this.$bus.$emit('on-drawers', '商业资讯', 'case-detail', true)
       }
     }
   }
@@ -48,7 +52,7 @@
 
       .case-item {
         display: flex;
-        height: 125px;
+        height: 134px;
         margin: 14px 0px 14px 0px;
         list-style: none;
         overflow: hidden;
@@ -84,22 +88,26 @@
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-
-          .text {
+          .motion-type {
+            display: flex;
+            margin-bottom: 10px;
+          }
+          .text-wrapper {
             position: relative;
-            height: 56px;
-            color: #828283;
-            font-size: 12px;
-            text-align: left;
-            font-family: PingFangSC-regular;
-            padding-right: 28px;
-            /*多行文本溢出*/
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-            &:last-child {
-              margin-bottom: 13px;
+            .text {
+              color: #828283;
+              font-size: 12px;
+              text-align: left;
+              font-family: PingFangSC-regular;
+              padding-right: 28px;
+              /*多行文本溢出*/
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 3;
+              overflow: hidden;
+              &:last-child {
+                margin-bottom: 13px;
+              }
             }
             .detail {
               position: absolute;

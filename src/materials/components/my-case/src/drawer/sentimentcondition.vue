@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="monitor-word" style="height: 100px;">
+      <div class="monitor-word">
         <div class="title">重大事件</div>
         <div class="condition">
           <div v-for="(item, index) in eventType" :key="index" class="item">
@@ -226,7 +226,7 @@
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
   @import "~@/styles/mixin.scss";
   .condition-wrapper {
-    height: 100%;
+    height: calc(100% - 100px);
     padding-left: 15px;
     padding-right: 15px;
     .monitor-word {
@@ -250,6 +250,9 @@
         flex-wrap: wrap;
         background-color: rgba(255, 255, 255, 100);
         margin-bottom: 12px;
+        &.last-child {
+          margin-bottom: 0px;
+        }
         .item {
           flex: none;
           margin-right: 14px;
@@ -266,7 +269,8 @@
       display: flex;
       justify-content: center;
       width: 100%;
-      margin-top: 30px;
+      padding-top: 15px;
+      padding-bottom: 70px;
       margin-bottom: 10px;
       padding-left: 10px;
     }
