@@ -2,14 +2,16 @@
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
       <div class="logo-wrapper"><svg-icon icon-class="logo2" class="icon"/></div>
-      <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号11">
+      <el-form-item prop="username" class="username">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="请输入手机号码">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 10px;" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin">
+      <el-form-item prop="password" class="password">
+        <el-input v-model="loginForm.password" type="password" placeholder="请输入验证码" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 10px;" />
+
+          <template slot="append"><div @click="getVerifyCode">{{btnTitle}}</div></template>
         </el-input>
       </el-form-item>
       <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
@@ -31,14 +33,16 @@
     name: 'Login',
     data() {
       return {
+        btnTitle: '获取验证码',
+        disabled: false, // 是否可点击
         loginForm: {
           username: 'admin',
           password: '123456',
           rememberMe: false
         },
         loginRules: {
-          username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
-          password: [{ required: true, trigger: 'blur', message: '密码不能为空' }]
+          username: [{ required: true, trigger: 'blur', message: '手机号不能为空' }],
+          password: [{ required: true, trigger: 'blur', message: '验证码不能为空' }]
         },
         loading: false,
         redirect: undefined
@@ -92,12 +96,67 @@
             return false
           }
         })
+      },
+      getVerifyCode() {
+        if (this.disabled === false) {
+          this.disabled = true
+          // 获取验证码
+          this.validateBtn()
+          // 发送验证码http请求接口
+          // this.axios.get('http://127.0.0.1/your_url')
+          //   .then(res => {
+          //     console.log(res)
+          //   }).catch(err => {
+          //   this.$notify({ title: '错误', message: err, type: 'warning' })
+          //   return false
+          // })
+        }
+      },
+      validatePhone() {
+        // 判断输入的手机号是否合法
+        if (!this.username) {
+          this.errors = {
+            phone: '手机号码不能为空'
+          }
+          // return false
+        } else if (!/^1[345678]\d{9}$/.test(this.username)) {
+          this.errors = {
+            phone: '请输入正确是手机号'
+          }
+          // return false
+        } else {
+          this.errors = {}
+          return true
+        }
+      },
+      validateBtn() {
+        // 倒计时
+        let time = 10
+        const timer = setInterval(() => {
+          if (time === 0) {
+            clearInterval(timer)
+            this.disabled = false
+            this.btnTitle = '获取验证码'
+          } else {
+            this.btnTitle = time + '秒后重试'
+            time--
+          }
+        }, 1000)
       }
     }
   }
 </script>
 
-<style type="text/scss" rel="stylesheet/scss" lang="scss">
+<style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
+  .username /deep/ .el-input__inner {
+    border-radius: 20px;
+  }
+  .password /deep/ .el-input__inner {
+    border-radius: 20px 0px 0px 20px;
+  }
+  .password /deep/ .el-input-group__append {
+    border-radius: 0px 20px 20px 0px;
+  }
   .login {
     position: absolute;
     top: 0;
@@ -130,14 +189,6 @@
   .login-form {
     width: 340px;
     padding: 25px 25px 5px 25px;
-    .el-input {
-      height: 38px;
-      input {
-        height: 38px;
-        border-radius: 19px;
-        padding-left: 35px;
-      }
-    }
   }
   .login-tip {
     font-size: 13px;
