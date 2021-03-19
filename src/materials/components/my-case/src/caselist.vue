@@ -113,12 +113,6 @@
       this.restaurants = this.loadAll()
     },
     methods: {
-      showCompanyName() {
-        this.$bus.$emit('on-drawers', '企业名称', 'competitive-company', true)
-      },
-      showCompetitiveCompany() {
-        this.$bus.$emit('on-drawers', '竞品公司', 'competitive-company', true)
-      },
       showIndusryInfo() {
         this.$bus.$emit('on-drawers', '所属行业', 'industry-info', true)
       },

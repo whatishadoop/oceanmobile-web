@@ -21,7 +21,7 @@ export default {
   /**
    * @description token key
    */
-  TokenKey: 'EL-ADMIN-TOEKN',
+  TokenKey: 'RUIQI-TOEKN',
 
   /**
    * @description 请求超时时间，毫秒（默认2分钟）

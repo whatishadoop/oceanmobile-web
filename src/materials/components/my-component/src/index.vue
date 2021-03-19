@@ -32,7 +32,7 @@
     methods: {
       logout() {
         this.$store.dispatch('LogOut').then(() => {
-          this.$router.push({ path: '/mlogin' })
+          this.$router.push({ path: '/login' })
         }).catch(() => {
         })
       }

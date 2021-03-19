@@ -122,22 +122,16 @@
         })
       },
       showDetail() {
-        this.$bus.$emit('on-drawers', 52, true)
       },
       showMoreCase() {
-        this.$bus.$emit('on-drawers', 34, true)
       },
       showPersonelDetail() {
-        this.$bus.$emit('on-drawers', 50, true)
       },
       showTsgz() {
-        this.$bus.$emit('on-drawers', 82, true)
       },
       showTssj() {
-        this.$bus.$emit('on-drawers', 102, true)
       },
       showInput() {
-        this.$bus.$emit('on-drawers', 101, true)
       }
     }
   }

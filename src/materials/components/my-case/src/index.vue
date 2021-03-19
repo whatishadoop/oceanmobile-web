@@ -19,8 +19,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <!-- 舆情列表 -->
-            <component :is="currentComponent"></component>
+            <router-view keep-alive></router-view>
           </div>
         </div>
       </div>
@@ -30,15 +29,7 @@
 
 <script>
   import BScroll from 'better-scroll'
-  import sentimentlist from './sentimentlist'
-  import companydetail from './companydetail'
-  import caselist from './caselist'
   export default {
-    components: {
-      sentimentlist,
-      companydetail,
-      caselist
-    },
     props: {
       passCache:
         {
@@ -62,9 +53,17 @@
         }]
       }
     },
-    // beforeMount() {
-    //   window.addEventListener('resize', this._refreshScroll)
-    // },
+    watch: {
+      '$route.path': {
+        handler: function(newPath, oldPath) {
+          if (newPath === '/my-case') {
+            this.isActived = 0
+            this.$router.push({ name: 'sentimentlist' })
+          }
+        },
+        immediate: true // 最初绑定值的时候也执行函数
+      }
+    },
     mounted: function() {
       this.$nextTick(() => {
         this._initScroll()
@@ -77,8 +76,8 @@
     },
     methods: {
       selectTab(comname, index) {
+        this.$router.push({ name: comname })
         this.isActived = index
-        this.currentComponent = comname
       },
       _initScroll() {
         this.meunScroll = new BScroll(this.$refs.contentWrapper, {
