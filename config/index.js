@@ -9,7 +9,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/oauth': {
+        target: 'http://10.45.176.53:8201', // 此处可以换成自己需要的地址
+        changeOrigin: true,
+        pathRewrite: {
+          '^/oauth': 'oauth'
+        },
+        headers: {
+          Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA==',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
@@ -80,5 +92,6 @@ module.exports = {
 
     // `npm run build:prod --generate_report`
     generateAnalyzerReport: process.env.npm_config_generate_report || false
-  }
+  },
+  MESSAGE_CODE_API: 'http://10.45.176.53:8201'
 }

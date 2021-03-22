@@ -4,3 +4,6 @@ vue路由跳转页面的几种方式及其区别
 https://www.jianshu.com/p/ea0e39a8401b
 
 https://www.imooc.com/article/272021
+
+前端（8）vue中router-view与父组件之间的通信
+https://www.jianshu.com/p/52b36da0afc5

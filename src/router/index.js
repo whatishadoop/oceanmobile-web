@@ -17,18 +17,7 @@ router.beforeEach((to, from, next) => {
       next({ path: '/index' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        store.dispatch('GetInfo').then(res => { // 拉取user_info
-          next()
-        }).catch((err) => {
-          console.log(err)
-          store.dispatch('LogOut').then(() => {
-            location.reload() // 为了重新实例化vue-router对象 避免bug
-          })
-        })
-      } else {
-        next()
-      }
+      next()
     }
   } else {
     /* has no token*/

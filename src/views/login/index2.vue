@@ -8,13 +8,14 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="password" class="password">
-        <el-input v-model="loginForm.password" type="text" placeholder="请输入验证码" @keyup.enter.native="handleLogin">
+        <el-input v-model="loginForm.password" type="password" placeholder="请输入验证码" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 10px;" />
 
           <template slot="append"><div @click="getVerifyCode">{{btnTitle}}</div></template>
         </el-input>
       </el-form-item>
-      <el-form-item style="width:100%;margin-top: 50px">
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <el-form-item style="width:100%;">
         <el-button :loading="loading" size="medium" type="primary" style="width:100%;" round @click.native.prevent="handleLogin">
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
@@ -26,17 +27,16 @@
 </template>
 
 <script>
-  import { setToken } from '@/utils/auth'
+  const messageCodeUrl = process.env.MESSAGE_CODE_API
   export default {
     name: 'Login',
     data() {
       return {
         btnTitle: '获取验证码',
-        disabled: false, // 是否可点击,
-        uuid: '',
+        disabled: false, // 是否可点击
         loginForm: {
-          username: '17512563286',
-          password: '1234',
+          username: 'admin',
+          password: '123456',
           rememberMe: false
         },
         loginRules: {
@@ -59,10 +59,39 @@
       // this.getCookie()
     },
     methods: {
+      handleLogin() {
+        this.$router.push({ path: this.redirect || '/index' })
+        // const url = messageCodeUrl + '/authority/sendSMSVerifiCode'
+        // this.$refs.loginForm.validate(valid => {
+        //   if (valid) {
+        //     this.loading = true
+        //     this.axios.post(url, {
+        //       phoneNumber: '17542563286',
+        //       smsVerifiCode: '123456',
+        //       grant_type: 'phone',
+        //       scope: 'all',
+        //       imgCode: '',
+        //       uuid: 'a10abe5f2cef4b018198abfb63bfe29d'
+        //     }, {
+        //       headers: {
+        //         Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA=='
+        //       }
+        //     }).then(res => {
+        //       debugger
+        //       this.loading = false
+        //       this.$router.push({ path: this.redirect || '/index' })
+        //     }).catch(err => {
+        //       this.$notify({ title: '错误', message: err, type: 'warning' })
+        //       return false
+        //     })
+        //   } else {
+        //     console.log('error submit!!')
+        //     return false
+        //   }
+        // })
+      },
       getVerifyCode() {
-        const messageCodeUrl = 'http://10.45.176.53:8201'
         if (this.disabled === false) {
-          debugger
           this.disabled = true
           // 获取验证码
           this.validateBtn()
@@ -70,17 +99,15 @@
           const uuid = this._uuid()
           console.log(uuid)
           const url = messageCodeUrl + '/authority/sendSMSVerifiCode'
-          this.uuid = this._uuid()
-          this.$axios.get(url, {
+          this.axios.get(url, {
             params: { // 携带的数据
-              receiver: this.loginForm.username,
-              uuid: uuid
+              receiver: '17512563285',
+              uuid: 'a10abe5f2cef4b018198abfb63bfe29d'
             }
           }).then(res => {
-            debugger
-            console.log(res)
-            this.loginForm.password = '1234'
-          }).catch(err => {
+              debugger
+              console.log(res)
+            }).catch(err => {
             this.$notify({ title: '错误', message: err, type: 'warning' })
             return false
           })
@@ -117,43 +144,6 @@
           }
         }, 1000)
       },
-      handleLogin() {
-        this.$router.push({ path: this.redirect || '/index' })
-        const messageCodeUrl = 'http://localhost:8013'
-        const url = messageCodeUrl + '/oauth/token'
-        this.$refs.loginForm.validate(valid => {
-          setToken('1111', false)
-          this.$router.push({ path: this.redirect || '/index' })
-          // if (valid) {
-          //   this.loading = true
-          //   debugger
-          //   this.$axios.post(url, {
-          //     phoneNumber: '17512563286',
-          //     smsVerifiCode: '1234',
-          //     grant_type: 'phone',
-          //     scope: 'all',
-          //     imgCode: '',
-          //     uuid: '242abe5f2cef4b018198abfb63bfe29d'
-          //   }, {
-          //     headers: {
-          //       Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA==',
-          //       'Content-Type': 'application/x-www-form-urlencoded'
-          //     }
-          //   }).then(res => {
-          //     debugger
-          //     this.loading = false
-          //     setToken('1111', false)
-          //     this.$router.push({ path: this.redirect || '/index' })
-          //   }).catch(err => {
-          //     this.$notify({ title: '错误', message: err, type: 'warning' })
-          //     return false
-          //   })
-          // } else {
-          //   console.log('error submit!!')
-          //   return false
-          // }
-        })
-      },
       _uuid() {
         var s = []
         var hexDigits = '0123456789abcdef'
@@ -162,7 +152,7 @@
         }
         s[14] = '4'
         s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1)
-        s[8] = s[13] = s[18] = s[23] = ''
+        s[8] = s[13] = s[18] = s[23] = '-'
 
         this.uuidA = s.join('')
         console.log(s.join(''), 's.join("")')

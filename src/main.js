@@ -34,7 +34,7 @@ interceptor(Axios)
 
 Vue.prototype.$uuid = uuid
 Vue.prototype.$bus = Bus
-
+Vue.prototype.$axios = Axios
 Vue.use(animated)
 Vue.use(webAppPlugin)
 Vue.use(oceaneyePlugin)
