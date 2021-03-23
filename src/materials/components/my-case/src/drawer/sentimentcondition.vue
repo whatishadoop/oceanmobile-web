@@ -70,7 +70,7 @@
   export default {
     data() {
       return {
-        title: '行业资讯',
+        title: '筛选条件',
         comName: 'company-node-info',
         showFlag: false,
         dataType: [

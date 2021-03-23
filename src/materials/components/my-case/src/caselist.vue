@@ -114,7 +114,7 @@
     },
     methods: {
       showIndusryInfo() {
-        this.$bus.$emit('on-drawers', '所属行业', 'industry-info', true)
+        this.$emit('showdetail', 'industryinfo')
       },
       loadAll() {
         return [

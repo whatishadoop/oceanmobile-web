@@ -27,7 +27,24 @@ export const constantRouterMap = [
           {
             name: 'companydetail',
             path: '/companydetail',
-            component: () => import('@/materials/components/my-case/src/companydetail')
+            component: () => import('@/materials/components/my-case/src/companydetail'),
+            children: [
+              {
+                name: 'busigraph',
+                path: '/busigraph',
+                component: () => import('@/materials/components/my-case/src/busigraph')
+              },
+              {
+                name: 'industrydetail',
+                path: '/industrydetail',
+                component: () => import('@/materials/components/my-case/src/industrydetail')
+              },
+              {
+                name: 'busidetail',
+                path: '/busidetail',
+                component: () => import('@/materials/components/my-case/src/busidetail')
+              }
+            ]
           },
           {
             name: 'caselist',

@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "f6027f28-1f05-4801-90e0-eeb7397b54fc",
+		"name": "移动端api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "保存方案接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"data\": {\r\n\t\t\"userid\": \"test_3\",\r\n\t\t\"caseid\": \"\",\r\n\t\t\"name\": \"中新赛克11\",\r\n\t\t\"monitorwords\": {\r\n\t\t\t\"company_name\": \"南京中新赛克有限责任有限公司\",\r\n\t\t\t\"company_id\": \"1234\",\r\n\t\t\t\"staff\": [\"凌东胜\", \"王明意\"],\r\n\t\t\t\"sub_company\": [\"南京中新赛克有限责任公司北京分公司\", \"南京中新赛克有限责任北京分公司\"],\r\n\t\t\t\"competitor_company\": [\"凯申物流股份有限公司\"],\r\n\t\t\t\"competitor_company_id\": [\"1\"],\r\n\t\t\t\"industry_names\": [\"计算机软件\"],\r\n\t\t\t\"industry_ids\": [\"1\"],\r\n\t\t\t\"technology\": [\"java\", \"c++\"]\r\n\t\t},\r\n\t\t\"excludewords\": {\r\n\t\t\t\"words\": [\"排除词1\"]\r\n\t\t},\r\n\t\t\"alarmmode\": {\r\n\t\t\t\"words\": [\"冻结\", \"处罚\"],\r\n\t\t\t\"mediawords\": [\"新浪微博\"],\r\n\t\t\t\"author\": [\"李嘉诚\"]\r\n\t\t}\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/saveMonitorCase/",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"saveMonitorCase",
+						""
+					]
+				},
+				"description": "保存方案接口"
+			},
+			"response": []
+		},
+		{
+			"name": "获取所有监控方案接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n            \"userid\": \"test_3\",\r\n            \"conditions\": {\r\n                \"content\": \"\"\r\n            }\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getAllDataMonitorCase/",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getAllDataMonitorCase",
+						""
+					]
+				},
+				"description": "查询所有方案"
+			},
+			"response": []
+		},
+		{
+			"name": "删除监控方案接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n            \"userid\": \"test_3\",\r\n            \"id\": \"3\"\r\n        }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/delMonitorCase/",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"delMonitorCase",
+						""
+					]
+				},
+				"description": "删除方案接口"
+			},
+			"response": []
+		},
+		{
+			"name": "查询舆情列表信息接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"page\": 1,\r\n        \"rows\": 10,\r\n        \"user_id\": \"test_3\",\r\n        \"conditions\": {\r\n            \"case_id\": \"1\",\r\n            \"type_full_alarm_favorite\": \"全部\",\r\n            \"date\": {\r\n                \"start_date\": 1611127862,\r\n                \"end_date\": 1611129234\r\n            },\r\n            \"media_type\": \"微信公众号\",\r\n            \"relevant_or_precise\": \"精准\",\r\n            \"is_contain_important_events\": 1,\r\n            \"sentiment_type\": \"全部\",\r\n            \"is_repeat\": 1,\r\n            \"time_order_type\": \"desc\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getDataDetailByCondition/",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getDataDetailByCondition",
+						""
+					]
+				},
+				"description": "舆情列表条件查询信息接口"
+			},
+			"response": []
+		},
+		{
+			"name": "获取公司全名接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"中新赛克\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanyFullName",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getCompanyFullName"
+					]
+				},
+				"description": "新建方案模糊匹配公司名称"
+			},
+			"response": []
+		},
+		{
+			"name": "根据公司名称获取公司信息接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"company_name\": \"南京中新赛克科技有限责任公司\"\r\n}"
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanySimpleInfoWithName",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getCompanySimpleInfoWithName"
+					]
+				},
+				"description": "根据公司名称查询对应人员与机构信息"
+			},
+			"response": []
+		},
+		{
+			"name": "根据公司获取公司详细列表接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"5\",\r\n    \"user_id\": \"xxxx\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanyInfoById",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getCompanyInfoById"
+					]
+				},
+				"description": "查询图谱节点企业信息接口"
+			},
+			"response": []
+		}
+	]
+}

@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="tab-content">
-        <component :is="currentComponent"></component>
+        <router-view keep-alive></router-view>
       </div>
     </div>
   </div>
@@ -51,11 +51,21 @@
       }
     },
     mounted() {
+      this.$router.push({ name: 'busigraph' })
     },
     methods: {
+      showdetail(compNames) {
+        if (compNames === 'sentimentcondition') {
+          this.$refs.sentimentcondition.show()
+        } else if (compNames === 'sentimenturl') {
+          this.$refs.sentimenturl.show()
+        } else if (compNames === 'companynodeinfo') {
+          this.$refs.companynodeinfo.show()
+        }
+      },
       selectTab(index, name) {
         this.isSelect = index
-        this.currentComponent = name
+        this.$router.push({ name: name })
       }
     }
   }

@@ -7,7 +7,7 @@
           </div>
           <div class="details">
             <div class="nameJob">
-              <span>张全</span>
+              <span>手机账户</span>
             </div>
             <div class="phoneNum">
               <span>19082317723</span>

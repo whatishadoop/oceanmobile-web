@@ -19,17 +19,28 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view keep-alive></router-view>
+            <router-view keep-alive @showdetail="showdetail" ></router-view>
           </div>
         </div>
       </div>
     </div>
+    <sentimentcondition ref="sentimentcondition"></sentimentcondition>
+    <sentimenturl ref="sentimenturl"></sentimenturl>
+    <industryinfo ref="industryinfo"></industryinfo>
   </div>
 </template>
 
 <script>
   import BScroll from 'better-scroll'
+  import sentimentcondition from './drawer/sentimentcondition'
+  import sentimenturl from './drawer/sentimenturl'
+  import industryinfo from './drawer/industryinfo'
   export default {
+    components: {
+      sentimentcondition,
+      sentimenturl,
+      industryinfo
+    },
     props: {
       passCache:
         {
@@ -75,6 +86,15 @@
       console.log('删除组件!!!!!!!!!!!!!')
     },
     methods: {
+      showdetail(compNames) {
+        if (compNames === 'sentimentcondition') {
+          this.$refs.sentimentcondition.show()
+        } else if (compNames === 'sentimenturl') {
+          this.$refs.sentimenturl.show()
+        } else if (compNames === 'industryinfo') {
+          this.$refs.industryinfo.show()
+        }
+      },
       selectTab(comname, index) {
         this.$router.push({ name: comname })
         this.isActived = index

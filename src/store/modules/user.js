@@ -42,7 +42,16 @@ const user = {
         })
       })
     },
-
+    // 短信登录
+    MessageCodeLogin({ commit }, res) {
+      return new Promise((resolve, reject) => {
+        debugger
+        setToken(res.data.data.access_token, false)
+        commit('SET_TOKEN', res.data.data.access_token)
+        setUserInfo(res.data.data, commit)
+        resolve()
+      })
+    },
     // 获取用户信息
     GetInfo({ commit }) {
       return new Promise((resolve, reject) => {
@@ -74,12 +83,6 @@ const user = {
 }
 
 export const setUserInfo = (res, commit) => {
-  // 如果没有任何权限，则赋予一个默认的权限，避免请求死循环
-  if (res.roles.length === 0) {
-    commit('SET_ROLES', ['ROLE_SYSTEM_DEFAULT'])
-  } else {
-    commit('SET_ROLES', res.roles)
-  }
   commit('SET_USER', res)
 }
 

@@ -1,14 +1,13 @@
 <template>
   <div id="drawers">
     <transition enter-active-class="animated fadeInRight" leave-active-class="animated fadeOutRight">
-      <div v-show="detailShow" class="detail">
+      <div v-if="detailShow" class="detail">
         <div class="main-wrapper">
           <div class="leftarrowtitle" style="background-color: #5584FF;" @click="hideDetail">
             {{title}}
           </div>
           <div ref="contentWrapper" class="contentwrapper">
             <component :is="comName"></component>
-            <!--<company-node-info></company-node-info>-->
           </div>
         </div>
       </div>

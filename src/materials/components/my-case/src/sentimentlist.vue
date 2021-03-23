@@ -51,10 +51,10 @@
   export default {
     methods: {
       showDetails() {
-        this.$bus.$emit('on-drawers', '舆情详情', 'case-detail', true)
+        this.$emit('showdetail', 'sentimenturl')
       },
       showCondition() {
-        this.$bus.$emit('on-drawers', '帅选条件', 'sentiment-condition', true)
+        this.$emit('showdetail', 'sentimentcondition')
       }
     }
   }

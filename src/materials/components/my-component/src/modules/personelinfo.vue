@@ -27,11 +27,11 @@
         personelinfo: [
            {
             'name': '所属部门',
-            'info': '大数据部门'
+            'info': '暂无'
           },
           {
             'name': '岗位',
-            'info': '项目管理'
+            'info': '暂无'
           },
           {
             'name': '修改密码',
@@ -39,7 +39,7 @@
           },
           {
             'name': '邮箱',
-            'info': 'xxxxxxxxx@163.com'
+            'info': '暂无'
           }
         ],
         showEdit: false
