@@ -9,16 +9,16 @@
               <div class="monitor-word">
                 <div class="title">一级行业</div>
                 <div class="condition">
-                  <div v-for="(item, index) in dataType" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(dataType, item)">{{item.value}}</el-tag>
+                  <div v-for="(item, index) in oneLevel" :key="index" class="item">
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectOne(oneLevel, item)">{{item.value}}</el-tag>
                   </div>
                 </div>
               </div>
               <div class="monitor-word">
                 <div class="title">二级行业</div>
                 <div class="condition">
-                  <div v-for="(item, index) in eventType" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(eventType, item)">{{item.value}}</el-tag>
+                  <div v-for="(item, index) in twoLevel" :key="index" class="item">
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectTwo(twoLevel, item)">{{item.value}}</el-tag>
                   </div>
                 </div>
               </div>
@@ -38,66 +38,198 @@
   export default {
     data() {
       return {
-        title: '所属行业22',
+        title: '所属行业',
         showFlag: false,
-        dataType: [
-          {
-            key: 'today',
-            value: '今天',
-            isSelect: false
-          },
-          {
-            key: 'oneday',
-            value: '24小时',
-            isSelect: false
-          },
-          {
-            key: 'threeday',
-            value: '3天',
-            isSelect: false
-          },
-          {
-            key: 'sevenday',
-            value: '7天',
-            isSelect: false
-          },
-          {
-            key: 'fifteenday',
-            value: '15天',
-            isSelect: false
-          },
-          {
-            key: 'threemonth',
-            value: '近三个月',
-            isSelect: false
-          },
-          {
-            key: 'onemonth',
-            value: '近一个月',
-            isSelect: false
-          }
-        ],
-        eventType: [
+        currentOneLevel: '大数据',
+        currentTwoLevel: '',
+        oneLevel: [
           {
             key: '1',
-            value: '全部',
+            value: '大数据',
             isSelect: false
           },
           {
             key: '2',
-            value: '包含',
+            value: '人工智能',
             isSelect: false
           },
           {
             key: '3',
-            value: '不包含',
+            value: '金融',
+            isSelect: false
+          }
+        ],
+        twoLevelOne: [
+          {
+            key: '1_1',
+            value: '相关硬件',
+            isSelect: false
+          },
+          {
+            key: '1_2',
+            value: '基础软件',
+            isSelect: false
+          },
+          {
+            key: '1_3',
+            value: '智能软件',
+            isSelect: false
+          },
+          {
+            key: '1_4',
+            value: '数据资产',
+            isSelect: false
+          },
+          {
+            key: '1_5',
+            value: '云计算',
+            isSelect: false
+          },
+          {
+            key: '1_6',
+            value: '信息安全',
+            isSelect: false
+          },
+          {
+            key: '1_7',
+            value: '数据可视化',
+            isSelect: false
+          },
+          {
+            key: '1_8',
+            value: '智能终端',
+            isSelect: false
+          },
+          {
+            key: '1_9',
+            value: '包含',
+            isSelect: false
+          },
+          {
+            key: '1_10',
+            value: '大数据平台',
+            isSelect: false
+          },
+          {
+            key: '1_11',
+            value: '其它',
+            isSelect: false
+          }
+        ],
+        twoLevelTwo: [
+          {
+            key: '2_1',
+            value: '相关硬件',
+            isSelect: false
+          },
+          {
+            key: '2_2',
+            value: '云计算',
+            isSelect: false
+          },
+          {
+            key: '2_3',
+            value: '生物识别',
+            isSelect: false
+          },
+          {
+            key: '2_4',
+            value: '图像识别',
+            isSelect: false
+          },
+          {
+            key: '2_5',
+            value: '智能制造',
+            isSelect: false
+          },
+          {
+            key: '2_6',
+            value: '智能机器人',
+            isSelect: false
+          },
+          {
+            key: '2_7',
+            value: '智慧金融',
+            isSelect: false
+          },
+          {
+            key: '2_8',
+            value: '智慧医疗',
+            isSelect: false
+          },
+          {
+            key: '2_9',
+            value: '智能教育',
+            isSelect: false
+          },
+          {
+            key: '2_10',
+            value: '智能安防',
+            isSelect: false
+          },
+          {
+            key: '2_11',
+            value: '其它',
+            isSelect: false
+          }
+        ],
+        twoLevelThree: [
+          {
+            key: '3_1',
+            value: '银行',
+            isSelect: false
+          },
+          {
+            key: '3_2',
+            value: '保险',
+            isSelect: false
+          },
+          {
+            key: '3_3',
+            value: '基金',
+            isSelect: false
+          },
+          {
+            key: '3_4',
+            value: '证券',
+            isSelect: false
+          },
+          {
+            key: '3_5',
+            value: '资产管理',
+            isSelect: false
+          },
+          {
+            key: '3_6',
+            value: '交易所',
+            isSelect: false
+          },
+          {
+            key: '3_7',
+            value: '融资租赁',
+            isSelect: false
+          },
+          {
+            key: '3_8',
+            value: '其它',
             isSelect: false
           }
         ]
       }
     },
+    computed: {
+      twoLevel() {
+        if (this.currentOneLevel === '大数据') {
+          return this.twoLevelOne
+        } else if (this.currentOneLevel === '人工智能') {
+          return this.twoLevelTwo
+        } else if (this.currentOneLevel === '金融') {
+          return this.twoLevelThree
+        }
+      }
+    },
     methods: {
-      selectdata(target, item) {
+      selectOne(target, item) {
         target.forEach((currentObj, index, array) => {
           if (currentObj.key === item.key) {
             currentObj.isSelect = true
@@ -105,6 +237,17 @@
             currentObj.isSelect = false
           }
         })
+        this.currentOneLevel = item.value
+      },
+      selectTwo(target, item) {
+        target.forEach((currentObj, index, array) => {
+          if (currentObj.key === item.key) {
+            currentObj.isSelect = true
+          } else {
+            currentObj.isSelect = false
+          }
+        })
+        this.currentTwoLevel = item.value
       },
       show() {
         this.showFlag = true

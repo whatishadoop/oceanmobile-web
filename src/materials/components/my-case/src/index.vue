@@ -19,7 +19,9 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view keep-alive @showdetail="showdetail" ></router-view>
+            <keep-alive>
+              <router-view ref="subcompoent" keep-alive @showdetail="showdetail" ></router-view>
+            </keep-alive>
           </div>
         </div>
       </div>
@@ -86,23 +88,36 @@
       console.log('删除组件!!!!!!!!!!!!!')
     },
     methods: {
-      showdetail(compNames) {
+      showdetail(compNames, param) {
         if (compNames === 'sentimentcondition') {
           this.$refs.sentimentcondition.show()
         } else if (compNames === 'sentimenturl') {
+          this.$refs.sentimenturl.seturl(param.url)
           this.$refs.sentimenturl.show()
         } else if (compNames === 'industryinfo') {
           this.$refs.industryinfo.show()
         }
       },
       selectTab(comname, index) {
+        this.currentComponent = comname
         this.$router.push({ name: comname })
         this.isActived = index
       },
       _initScroll() {
-        this.meunScroll = new BScroll(this.$refs.contentWrapper, {
+        this.scroll = new BScroll(this.$refs.contentWrapper, {
           click: true,
-          propTypes: 3
+          propTypes: 3,
+          pullUpLoad: true
+        })
+        this.scroll.on('pullingUp', () => {
+          if (this.currentComponent === 'sentimentlist') {
+            this.$refs.subcompoent.updateDataDetailByCondition()
+            // 数据加载完渲染列表后再执行如下刷新
+            this.$nextTick(() => {
+              this.scroll.refresh()
+              this.scroll.finishPullUp()
+            })
+          }
         })
       },
       _tabsScroll() {

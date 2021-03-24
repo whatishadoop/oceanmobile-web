@@ -50,6 +50,17 @@
         tabs: [{ id: 0, key: 'busigraph', name: '商业图谱' }, { id: 1, key: 'industrydetail', name: '行业资讯' }, { id: 2, key: 'busidetail', name: '商业资讯' }]
       }
     },
+    // watch: {
+    //   '$route.path': {
+    //     handler: function(newPath, oldPath) {
+    //       if (newPath === '/busigraph') {
+    //         this.isActived = 0
+    //         this.$router.push({ name: 'busigraph' })
+    //       }
+    //     },
+    //     immediate: true // 最初绑定值的时候也执行函数
+    //   }
+    // },
     mounted() {
       this.$router.push({ name: 'busigraph' })
     },

@@ -2,7 +2,9 @@
   <div>
     <div class="home">
       <div class="comp">
-        <router-view keep-alive></router-view>
+        <keep-alive>
+          <router-view keep-alive></router-view>
+        </keep-alive>
       </div>
       <div class="tabs">
         <div class="tab">

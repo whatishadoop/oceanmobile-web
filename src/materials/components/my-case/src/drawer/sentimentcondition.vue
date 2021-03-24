@@ -31,18 +31,18 @@
                 </div>
               </div>
               <div class="monitor-word">
-                <div class="title">噪音过滤</div>
+                <div class="title">精确关联</div>
                 <div class="condition">
-                  <div v-for="(item, index) in filterType" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(filterType, item)">{{item.value}}</el-tag>
+                  <div v-for="(item, index) in relevantType" :key="index" class="item">
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(relevantType, item)">{{item.value}}</el-tag>
                   </div>
                 </div>
               </div>
               <div class="monitor-word">
-                <div class="title">重复信息</div>
+                <div class="title">重大事件</div>
                 <div class="condition">
-                  <div v-for="(item, index) in repeatType" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(repeatType, item)">{{item.value}}</el-tag>
+                  <div v-for="(item, index) in eventType" :key="index" class="item">
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(eventType, item)">{{item.value}}</el-tag>
                   </div>
                 </div>
               </div>
@@ -55,7 +55,7 @@
                 </div>
               </div>
               <div class="btn-wrapper">
-                <el-button style="width: 310px;" type="primary" round>确认</el-button>
+                <el-button style="width: 310px;" type="primary" round @click="queryByConditons" >确认</el-button>
               </div>
             </div>
           </div>
@@ -67,6 +67,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+  import { getTimestamp } from '@/utils/date'
   export default {
     data() {
       return {
@@ -80,33 +81,18 @@
             isSelect: false
           },
           {
-            key: 'oneday',
+            key: '24hours',
             value: '24小时',
             isSelect: false
           },
           {
             key: 'threeday',
-            value: '3天',
+            value: '三天',
             isSelect: false
           },
           {
             key: 'sevenday',
-            value: '7天',
-            isSelect: false
-          },
-          {
-            key: 'fifteenday',
-            value: '15天',
-            isSelect: false
-          },
-          {
-            key: 'threemonth',
-            value: '近三个月',
-            isSelect: false
-          },
-          {
-            key: 'onemonth',
-            value: '近一个月',
+            value: '七天',
             isSelect: false
           }
         ],
@@ -128,32 +114,22 @@
           },
           {
             key: '4',
-            value: '媒体1',
+            value: '网媒',
             isSelect: false
           },
           {
             key: '5',
-            value: '媒体2',
+            value: '微博',
             isSelect: false
           },
           {
             key: '6',
-            value: '媒体3',
-            isSelect: false
-          },
-          {
-            key: '7',
-            value: '媒体4',
+            value: '论坛',
             isSelect: false
           },
           {
             key: '8',
-            value: '媒体5',
-            isSelect: false
-          },
-          {
-            key: '9',
-            value: '媒体6',
+            value: '其它',
             isSelect: false
           }
         ],
@@ -170,56 +146,68 @@
           },
           {
             key: '3',
-            value: '中性',
+            value: '负面',
+            isSelect: false
+          },
+          {
+            key: '4',
+            value: '中立',
             isSelect: false
           }
         ],
-        filterType: [
+        relevantType: [
           {
             key: '1',
-            value: '全部',
+            value: '精确',
             isSelect: false
           },
           {
             key: '2',
-            value: '正向',
-            isSelect: false
-          },
-          {
-            key: '3',
-            value: '中性',
+            value: '关联',
             isSelect: false
           }
         ],
         repeatType: [
           {
-            key: '1',
-            value: '去重',
+            key: 0,
+            value: '不去重',
             isSelect: false
           },
           {
-            key: '2',
-            value: '不去重',
+            key: 1,
+            value: '去重',
             isSelect: false
           }
         ],
         eventType: [
           {
-            key: '1',
+            key: 0,
             value: '全部',
             isSelect: false
           },
           {
-            key: '2',
+            key: 1,
             value: '包含',
             isSelect: false
           },
           {
-            key: '3',
+            key: 2,
             value: '不包含',
             isSelect: false
           }
-        ]
+        ],
+        conditions: {
+          date: {
+            start_date: Math.floor(getTimestamp(-1) / 1000),
+            end_date: Math.floor(new Date().getTime() / 1000)
+          },
+          media_type: '全部',
+          relevant_or_precise: '全部',
+          is_contain_important_events: 0,
+          sentiment_type: '全部',
+          is_repeat: 1,
+          time_order_type: 'desc'
+        }
       }
     },
     methods: {
@@ -247,6 +235,46 @@
       },
       hide() {
         this.showFlag = false
+      },
+      queryByConditons() {
+        const dataTypeItem = this.dataType.find(value => value.isSelect === true)
+        const sourceTypeItem = this.sourceType.find(value => value.isSelect === true)
+        const motionTypeItem = this.motionType.find(value => value.isSelect === true)
+        const repeatTypeItem = this.repeatType.find(value => value.isSelect === true)
+        const eventTypeItem = this.eventType.find(value => value.isSelect === true)
+        const relevantTypeItem = this.relevantType.find(value => value.isSelect === true)
+        this._getDate(dataTypeItem[0].value)
+        this.conditions.media_type = sourceTypeItem[0].value
+        this.conditions.relevant_or_precise = relevantTypeItem[0].value
+        this.conditions.is_contain_important_events = eventTypeItem[0].key
+        this.conditions.sentiment_type = motionTypeItem[0].value
+        this.conditions.is_repeat = repeatTypeItem[0].key
+
+        // 通过总线向sentimentlist.vue传递查询参数条件对象
+        this.$bus.$emit('updateDataByConditons', this.conditions)
+        this.showFlag = false
+      },
+      _getDate(type) {
+        if (type === '今天') {
+          const today = new Date()
+          this.conditions.date.start_date = Math.floor(getTimestamp(-1) / 1000)
+          this.conditions.date.end_date = Math.floor(today.getTime() / 1000)
+        } else if (type === '24小时') {
+          const today = new Date()
+          // 计算24小时前时间
+          this.conditions.date.start_date = Math.floor(getTimestamp(-1) / 1000)
+          this.conditions.date.end_date = Math.floor(today.getTime() / 1000)
+        } else if (type === '三天') {
+          const today = new Date()
+          // 计算24小时前时间
+          this.conditions.date.start_date = Math.floor(getTimestamp(-3) / 1000)
+          this.conditions.date.end_date = Math.floor(today.getTime() / 1000)
+        } else if (type === '七天') {
+          const today = new Date()
+          // 计算24小时前时间
+          this.conditions.date.start_date = Math.floor(getTimestamp(-7) / 1000)
+          this.conditions.date.end_date = Math.floor(today.getTime() / 1000)
+        }
       }
     }
   }

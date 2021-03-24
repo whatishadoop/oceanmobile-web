@@ -4,7 +4,7 @@
       <div class="name">
         <div class="lable">方案名称:</div>
         <div class="input-wrapper">
-          <el-input v-model="input" placeholder="请选择方案名称"/>
+          <el-input v-model="conditons.data.name" placeholder="请选择方案名称" clearable/>
         </div>
       </div>
       <div class="monitor-word">
@@ -13,52 +13,59 @@
           <div class="lable">企业名称:</div>
           <div class="input-wrapper">
             <el-autocomplete
-              v-model="state"
+              v-model="conditionstrs.monitorwords.company_name"
               :fetch-suggestions="querySearchAsync"
               placeholder="请输入内容"
               style="width:100%"
-              @select="handleSelect"
+              @select="selectCompany"
             ></el-autocomplete>
           </div>
         </div>
         <div class="name">
           <div class="lable">主要成员:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" :readonly="true"/>
+            <el-input v-model="conditionstrs.monitorwords.staff" :readonly="true"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">分支机构:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" :readonly="true"/>
+            <el-input v-model="conditionstrs.monitorwords.sub_company" :readonly="true"/>
+          </div>
+          <i class="el-icon-arrow-right" style="font-size: 14px"></i>
+        </div>
+        <div class="name">
+          <div class="lable">竞品选择:</div>
+          <div class="input-wrapper">
+            <el-autocomplete
+              v-model="conditionstrs.monitorwords.competitor_select"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入内容"
+              style="width:100%"
+              @select="selectCompetitor"
+            ></el-autocomplete>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">竞品公司:</div>
           <div class="input-wrapper">
-            <el-autocomplete
-              v-model="state"
-              :fetch-suggestions="querySearchAsync"
-              placeholder="请输入内容"
-              style="width:100%"
-              @select="handleSelect"
-            ></el-autocomplete>
+            <el-input v-model="conditionstrs.monitorwords.competitor_company" clearable placeholder="请选择所属竞品公司"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">所属行业:</div>
           <div class="input-wrapper" @click="showIndusryInfo">
-            <el-input v-model="input" :readonly="true" placeholder="请选择所属行业"/>
+            <el-input v-model="conditionstrs.monitorwords.industry_names" :readonly="true" placeholder="请选择所属行业"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
         <div class="name">
           <div class="lable">技术方案:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入技术方案"/>
+            <el-input v-model="conditionstrs.monitorwords.technology" placeholder="请输入技术方案"/>
           </div>
         </div>
       </div>
@@ -67,7 +74,7 @@
         <div class="name">
           <div class="lable">排除词:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入, 支持批量添加用、分割"/>
+            <el-input v-model="conditionstrs.excludewords.words" placeholder="请输入, 支持批量添加用;分割"/>
           </div>
         </div>
       </div>
@@ -76,19 +83,19 @@
         <div class="name">
           <div class="lable">预警词:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入, 支持批量添加用、分割"/>
+            <el-input v-model="conditionstrs.alarmmode.words" placeholder="请输入, 支持批量添加用;分割"/>
           </div>
         </div>
         <div class="name">
           <div class="lable">媒体预警:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入, 支持批量添加用、分割"/>
+            <el-input v-model="conditionstrs.alarmmode.mediawords" placeholder="请输入, 支持批量添加用;分割"/>
           </div>
         </div>
         <div class="name">
           <div class="lable">作者预警:</div>
           <div class="input-wrapper">
-            <el-input v-model="input" placeholder="请输入, 支持批量添加用、分割" @blur="gotoView" @focus="gotoView"/>
+            <el-input v-model="conditionstrs.alarmmode.author" placeholder="请输入, 支持批量添加用;分割" @blur="gotoView" @focus="gotoView"/>
           </div>
         </div>
       </div>
@@ -100,68 +107,108 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { getCompanyFullName, getCompanySimpleInfoWithName } from '@/api/app'
   export default {
     data() {
       return {
-        input: '',
-        restaurants: [],
-        state: '',
-        timeout: null
+        companys: [],
+        timeout: null,
+        conditionstrs: {
+          monitorwords: {
+            company_name: '',
+            company_id: '1234',
+            staff: '',
+            sub_company: '',
+            competitor_select: '',
+            competitor_company: '',
+            competitor_company_id: '',
+            industry_names: '计算机软件',
+            industry_ids: '',
+            technology: 'java;c++'
+          },
+          excludewords: {
+            words: '排除词1'
+          },
+          alarmmode: {
+            words: '冻结;处罚',
+            mediawords: '新浪微博',
+            author: '李嘉诚'
+          }
+        },
+        conditons: {
+          data: {
+            userid: 'test_3',
+            caseid: '',
+            name: '中新赛克11332',
+            monitorwords: {
+              company_name: '南京中新赛克有限责任有限公司',
+              company_id: '1234',
+              staff: ['凌东胜', '王明意'],
+              sub_company: ['南京中新赛克有限责任公司北京分公司', '南京中新赛克有限责任北京分公司'],
+              competitor_company: ['凯申物流股份有限公司'],
+              competitor_company_id: ['1'],
+              industry_names: ['计算机软件'],
+              industry_ids: ['1'],
+              technology: ['java', 'c++']
+            },
+            excludewords: {
+              words: ['排除词1']
+            },
+            alarmmode: {
+              words: ['冻结', '处罚'],
+              mediawords: ['新浪微博'],
+              author: ['李嘉诚']
+            }
+          }
+        }
       }
     },
     mounted() {
-      this.restaurants = this.loadAll()
     },
     methods: {
       showIndusryInfo() {
         this.$emit('showdetail', 'industryinfo')
       },
-      loadAll() {
-        return [
-          { 'value': '三全鲜食（北新泾店）', 'address': '长宁区新渔路144号' },
-          { 'value': 'Hot honey 首尔炸鸡（仙霞路）', 'address': '上海市长宁区淞虹路661号' },
-          { 'value': '新旺角茶餐厅', 'address': '上海市普陀区真北路988号创邑金沙谷6号楼113' },
-          { 'value': '泷千家(天山西路店)', 'address': '天山西路438号' },
-          { 'value': '胖仙女纸杯蛋糕（上海凌空店）', 'address': '上海市长宁区金钟路968号1幢18号楼一层商铺18-101' },
-          { 'value': '贡茶', 'address': '上海市长宁区金钟路633号' },
-          { 'value': '豪大大香鸡排超级奶爸', 'address': '上海市嘉定区曹安公路曹安路1685号' },
-          { 'value': '茶芝兰（奶茶，手抓饼）', 'address': '上海市普陀区同普路1435号' },
-          { 'value': '十二泷町', 'address': '上海市北翟路1444弄81号B幢-107' },
-          { 'value': '星移浓缩咖啡', 'address': '上海市嘉定区新郁路817号' },
-          { 'value': '阿姨奶茶/豪大大', 'address': '嘉定区曹安路1611号' },
-          { 'value': '新麦甜四季甜品炸鸡', 'address': '嘉定区曹安公路2383弄55号' },
-          { 'value': 'Monica摩托主题咖啡店', 'address': '嘉定区江桥镇曹安公路2409号1F，2383弄62号1F' },
-          { 'value': '浮生若茶（凌空soho店）', 'address': '上海长宁区金钟路968号9号楼地下一层' },
-          { 'value': 'NONO JUICE  鲜榨果汁', 'address': '上海市长宁区天山西路119号' },
-          { 'value': 'CoCo都可(北新泾店）', 'address': '上海市长宁区仙霞西路' },
-          { 'value': '快乐柠檬（神州智慧店）', 'address': '上海市长宁区天山西路567号1层R117号店铺' },
-          { 'value': 'Merci Paul cafe', 'address': '上海市普陀区光复西路丹巴路28弄6号楼819' },
-          { 'value': '猫山王（西郊百联店）', 'address': '上海市长宁区仙霞西路88号第一层G05-F01-1-306' },
-          { 'value': '枪会山', 'address': '上海市普陀区棕榈路' },
-          { 'value': '纵食', 'address': '元丰天山花园(东门) 双流路267号' },
-          { 'value': '钱记', 'address': '上海市长宁区天山西路' },
-          { 'value': '壹杯加', 'address': '上海市长宁区通协路' },
-          { 'value': '唦哇嘀咖', 'address': '上海市长宁区新泾镇金钟路999号2幢（B幢）第01层第1-02A单元' },
-          { 'value': '爱茜茜里(西郊百联)', 'address': '长宁区仙霞西路88号1305室' },
-          { 'value': '爱茜茜里(近铁广场)', 'address': '上海市普陀区真北路818号近铁城市广场北区地下二楼N-B2-O2-C商铺' }
-        ]
-      },
       querySearchAsync(queryString, cb) {
-        var restaurants = this.restaurants
-        var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants
-
-        clearTimeout(this.timeout)
-        this.timeout = setTimeout(() => {
-          cb(results)
-        }, 3000 * Math.random())
+        const _this = this
+        const data = {
+          text: queryString
+        }
+        getCompanyFullName(data).then(res => {
+          res.data.forEach(item => {
+            _this.companys.push({ 'value': item })
+          })
+          console.log(_this.companys)
+          cb(_this.companys)
+        }).catch(err => {
+          console.log(err)
+        })
+        console.log(this.companys)
       },
       createStateFilter(queryString) {
         return (state) => {
           return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
         }
       },
-      handleSelect(item) {
-        console.log(item)
+      selectCompany(item) {
+        const _this = this
+        const data = {
+          company_name: item.value
+        }
+        getCompanySimpleInfoWithName(data).then(res => {
+          debugger
+          res.data.leading_member.forEach(item => {
+            _this.conditionstrs.monitorwords.staff += item + ';'
+          })
+          res.data.sub_companies.forEach(item => {
+            _this.conditionstrs.monitorwords.sub_company += item + ';'
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      selectCompetitor(item) {
+        this.conditionstrs.monitorwords.competitor_company += item.value + ';'
       },
       gotoView(event) {
         const This = event.currentTarget

@@ -31,7 +31,7 @@
       return {
         title: '舆情详情',
         showFlag: false,
-        url: 'https://news.sina.com.cn/c/2021-03-18/doc-ikknscsi7695212.shtml'
+        url: ''
       }
     },
     methods: {
@@ -50,6 +50,9 @@
       },
       hide() {
         this.showFlag = false
+      },
+      seturl(url) {
+        this.url = url
       }
     }
   }
