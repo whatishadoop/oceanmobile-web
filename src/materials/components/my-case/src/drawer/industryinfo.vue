@@ -10,7 +10,7 @@
                 <div class="title">一级行业</div>
                 <div class="condition">
                   <div v-for="(item, index) in oneLevel" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectOne(oneLevel, item)">{{item.value}}</el-tag>
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectOne(oneLevel, item)">{{item.name}}</el-tag>
                   </div>
                 </div>
               </div>
@@ -18,12 +18,12 @@
                 <div class="title">二级行业</div>
                 <div class="condition">
                   <div v-for="(item, index) in twoLevel" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectTwo(twoLevel, item)">{{item.value}}</el-tag>
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectTwo(twoLevel, item)">{{item.name}}</el-tag>
                   </div>
                 </div>
               </div>
               <div class="btn-wrapper">
-                <el-button style="width: 310px;" type="primary" round>确认</el-button>
+                <el-button style="width: 310px;" type="primary" round @click="addIndustry">确认</el-button>
               </div>
             </div>
           </div>
@@ -40,178 +40,182 @@
       return {
         title: '所属行业',
         showFlag: false,
-        currentOneLevel: '大数据',
+        currentOneLevel: {
+          id: '1',
+          name: '大数据',
+          isSelect: false
+        },
         currentTwoLevel: '',
         oneLevel: [
           {
-            key: '1',
-            value: '大数据',
+            id: '1',
+            name: '大数据',
             isSelect: false
           },
           {
-            key: '2',
-            value: '人工智能',
+            id: '2',
+            name: '人工智能',
             isSelect: false
           },
           {
-            key: '3',
-            value: '金融',
+            id: '3',
+            name: '金融',
             isSelect: false
           }
         ],
         twoLevelOne: [
           {
-            key: '1_1',
-            value: '相关硬件',
+            id: '1_1',
+            name: '相关硬件',
             isSelect: false
           },
           {
-            key: '1_2',
-            value: '基础软件',
+            id: '1_2',
+            name: '基础软件',
             isSelect: false
           },
           {
-            key: '1_3',
-            value: '智能软件',
+            id: '1_3',
+            name: '智能软件',
             isSelect: false
           },
           {
-            key: '1_4',
-            value: '数据资产',
+            id: '1_4',
+            name: '数据资产',
             isSelect: false
           },
           {
-            key: '1_5',
-            value: '云计算',
+            id: '1_5',
+            name: '云计算',
             isSelect: false
           },
           {
-            key: '1_6',
-            value: '信息安全',
+            id: '1_6',
+            name: '信息安全',
             isSelect: false
           },
           {
-            key: '1_7',
-            value: '数据可视化',
+            id: '1_7',
+            name: '数据可视化',
             isSelect: false
           },
           {
-            key: '1_8',
-            value: '智能终端',
+            id: '1_8',
+            name: '智能终端',
             isSelect: false
           },
           {
-            key: '1_9',
-            value: '包含',
+            id: '1_9',
+            name: '包含',
             isSelect: false
           },
           {
-            key: '1_10',
-            value: '大数据平台',
+            id: '1_10',
+            name: '大数据平台',
             isSelect: false
           },
           {
-            key: '1_11',
-            value: '其它',
+            id: '1_11',
+            name: '其它',
             isSelect: false
           }
         ],
         twoLevelTwo: [
           {
-            key: '2_1',
-            value: '相关硬件',
+            id: '2_1',
+            name: '相关硬件',
             isSelect: false
           },
           {
-            key: '2_2',
-            value: '云计算',
+            id: '2_2',
+            name: '云计算',
             isSelect: false
           },
           {
-            key: '2_3',
-            value: '生物识别',
+            id: '2_3',
+            name: '生物识别',
             isSelect: false
           },
           {
-            key: '2_4',
-            value: '图像识别',
+            id: '2_4',
+            name: '图像识别',
             isSelect: false
           },
           {
-            key: '2_5',
-            value: '智能制造',
+            id: '2_5',
+            name: '智能制造',
             isSelect: false
           },
           {
-            key: '2_6',
-            value: '智能机器人',
+            id: '2_6',
+            name: '智能机器人',
             isSelect: false
           },
           {
-            key: '2_7',
-            value: '智慧金融',
+            id: '2_7',
+            name: '智慧金融',
             isSelect: false
           },
           {
-            key: '2_8',
-            value: '智慧医疗',
+            id: '2_8',
+            name: '智慧医疗',
             isSelect: false
           },
           {
-            key: '2_9',
-            value: '智能教育',
+            id: '2_9',
+            name: '智能教育',
             isSelect: false
           },
           {
-            key: '2_10',
-            value: '智能安防',
+            id: '2_10',
+            name: '智能安防',
             isSelect: false
           },
           {
-            key: '2_11',
-            value: '其它',
+            id: '2_11',
+            name: '其它',
             isSelect: false
           }
         ],
         twoLevelThree: [
           {
-            key: '3_1',
-            value: '银行',
+            id: '3_1',
+            name: '银行',
             isSelect: false
           },
           {
-            key: '3_2',
-            value: '保险',
+            id: '3_2',
+            name: '保险',
             isSelect: false
           },
           {
-            key: '3_3',
-            value: '基金',
+            id: '3_3',
+            name: '基金',
             isSelect: false
           },
           {
-            key: '3_4',
-            value: '证券',
+            id: '3_4',
+            name: '证券',
             isSelect: false
           },
           {
-            key: '3_5',
-            value: '资产管理',
+            id: '3_5',
+            name: '资产管理',
             isSelect: false
           },
           {
-            key: '3_6',
-            value: '交易所',
+            id: '3_6',
+            name: '交易所',
             isSelect: false
           },
           {
-            key: '3_7',
-            value: '融资租赁',
+            id: '3_7',
+            name: '融资租赁',
             isSelect: false
           },
           {
-            key: '3_8',
-            value: '其它',
+            id: '3_8',
+            name: '其它',
             isSelect: false
           }
         ]
@@ -219,11 +223,11 @@
     },
     computed: {
       twoLevel() {
-        if (this.currentOneLevel === '大数据') {
+        if (this.currentOneLevel.name === '大数据') {
           return this.twoLevelOne
-        } else if (this.currentOneLevel === '人工智能') {
+        } else if (this.currentOneLevel.name === '人工智能') {
           return this.twoLevelTwo
-        } else if (this.currentOneLevel === '金融') {
+        } else if (this.currentOneLevel.name === '金融') {
           return this.twoLevelThree
         }
       }
@@ -231,23 +235,23 @@
     methods: {
       selectOne(target, item) {
         target.forEach((currentObj, index, array) => {
-          if (currentObj.key === item.key) {
+          if (currentObj.id === item.id) {
             currentObj.isSelect = true
           } else {
             currentObj.isSelect = false
           }
         })
-        this.currentOneLevel = item.value
+        this.currentOneLevel = item
       },
       selectTwo(target, item) {
         target.forEach((currentObj, index, array) => {
-          if (currentObj.key === item.key) {
+          if (currentObj.id === item.id) {
             currentObj.isSelect = true
           } else {
             currentObj.isSelect = false
           }
         })
-        this.currentTwoLevel = item.value
+        this.currentTwoLevel = item.name
       },
       show() {
         this.showFlag = true
@@ -263,6 +267,11 @@
         })
       },
       hide() {
+        this.showFlag = false
+      },
+      addIndustry() {
+        // 通过总线向caselist.vue传递查询参数条件对象,todo
+        this.$bus.$emit('setIndustry', this.currentOneLevel)
         this.showFlag = false
       }
     }

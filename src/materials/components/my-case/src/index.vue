@@ -3,8 +3,13 @@
     <div class="head">舆情管家</div>
     <div ref="sentiments" class="sentiments">
       <div ref="sentiment" class="sentiment">
-        <div v-for="index in 8" :key="index" class="sentiment-item">
-          <el-tag type="info" style="background-color: #FFFFFF">南京中新{{index}}</el-tag>
+        <div v-for="(item, index) in allMonitorCase" ref="sliderGroup" :key="index" class="sentiment-item">
+          <el-tag v-if="item.name !== '添加方案'" type="info" closable style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="queryMoniterCase(item.id)" >
+            <span style="font-size: 14px;"> {{item.name}}</span>
+          </el-tag>
+          <el-tag v-else type="info" style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="newMoniterCase" >
+            <span style="font-size: 14px;"> {{item.name}}</span>
+          </el-tag>
         </div>
       </div>
     </div>
@@ -20,7 +25,7 @@
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
             <keep-alive>
-              <router-view ref="subcompoent" keep-alive @showdetail="showdetail" ></router-view>
+              <router-view ref="subcompoent" keep-alive @showdetail="showdetail" @addMonitorCase="addMonitorCase"></router-view>
             </keep-alive>
           </div>
         </div>
@@ -37,6 +42,7 @@
   import sentimentcondition from './drawer/sentimentcondition'
   import sentimenturl from './drawer/sentimenturl'
   import industryinfo from './drawer/industryinfo'
+  import { getAllMonitorCase, delMonitorCase } from '@/api/app'
   export default {
     components: {
       sentimentcondition,
@@ -63,7 +69,14 @@
         }, {
           name: '舆情方案',
           comname: 'caselist'
-        }]
+        }],
+        allMonitorCase: [
+          {
+            id: '-1',
+            name: '添加方案',
+            company_id: '5'
+          }
+        ]
       }
     },
     watch: {
@@ -77,17 +90,72 @@
         immediate: true // 最初绑定值的时候也执行函数
       }
     },
+    created() {
+      this.$nextTick(() => {
+        // 获取所有方案列表信息
+        this.getAllMonitorCase()
+      })
+    },
     mounted: function() {
       this.$nextTick(() => {
-        this._initScroll()
         // this._tabsScroll()
-        this._sentimentsScroll()
+        this._initScroll()
       })
     },
     destroyed() {
       console.log('删除组件!!!!!!!!!!!!!')
     },
     methods: {
+      getAllMonitorCase() {
+        const data = {
+          userid: this.$store.state.user.userId,
+          conditions: {
+            content: ''
+          }
+        }
+        getAllMonitorCase(data).then(res => {
+          this.allMonitorCase = [...res.data.caseinfo, ...this.allMonitorCase]
+            this.$nextTick(() => {
+              this._sentimentsScroll()
+            })
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      addMonitorCase(item) {
+        this.allMonitorCase.push(item)
+        this._sentimentsScroll()
+      },
+      delMonitorCase(tag, caseid) {
+        if (caseid === '-1') {
+          return
+        }
+        const data = {
+          userid: this.$store.state.user.userId,
+          id: caseid + ''
+        }
+        delMonitorCase(data).then(res => {
+          console.log(res)
+          this.allMonitorCase.splice(this.allMonitorCase.indexOf(tag), 1)
+          this._sentimentsScroll()
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      newMoniterCase() {
+        this.selectTab('caselist', 2)
+        // 调用caselist对象的初始化方法
+        this.$nextTick(() => {
+          this.$refs.subcompoent.getMonitorCase('')
+        })
+      },
+      queryMoniterCase(caseId) {
+        this.selectTab('caselist', 2)
+        // 调用caselist对象的根据caseid查询对应详情
+        this.$nextTick(() => {
+          this.$refs.subcompoent.getMonitorCase(caseId + '')
+        })
+      },
       showdetail(compNames, param) {
         if (compNames === 'sentimentcondition') {
           this.$refs.sentimentcondition.show()
@@ -141,8 +209,12 @@
         })
       },
       _sentimentsScroll() {
-        // 默认有六个li子元素，每个子元素的宽度为120px
-        const width = 8 * 80
+        // 动态计算父亲总长度
+        let width = 5
+        this.$refs.sliderGroup.forEach(item => {
+          width += item.clientWidth
+        })
+
         this.$refs.sentiment.style.width = width + 'px'
         // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
         this.$nextTick(() => {
@@ -185,12 +257,12 @@
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        height: 43.5px;
+        margin-top: 5px;
+        height: 36.5px;
         line-height: 43.5px;
         .sentiment-item {
           display: inline-block;
-          width: 80px;
-          text-align: center;
+          text-align: left;
           font-size: 16px;
           color: #333333;
           &:last-child {

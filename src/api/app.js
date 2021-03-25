@@ -62,3 +62,12 @@ export function getCompanyInfoById(data) {
     data
   })
 }
+
+// 8.根据caseid获取监控方案详情
+export function getMonitorCase(data) {
+  return request({
+    url: '/osintelligence/dataset/getMonitorCase',
+    method: 'post',
+    data
+  })
+}
