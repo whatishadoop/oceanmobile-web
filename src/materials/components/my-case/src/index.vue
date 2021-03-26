@@ -4,11 +4,13 @@
     <div ref="sentiments" class="sentiments">
       <div ref="sentiment" class="sentiment">
         <div v-for="(item, index) in allMonitorCase" ref="sliderGroup" :key="index" class="sentiment-item">
-          <el-tag v-if="item.name !== '添加方案'" type="info" closable style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="queryMoniterCase(item.id)" >
+          <el-tag type="info" closable style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="queryMoniterCase(item.id)" @close="delMonitorCase(index, item.id)">
             <span style="font-size: 14px;"> {{item.name}}</span>
           </el-tag>
-          <el-tag v-else type="info" style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="newMoniterCase" >
-            <span style="font-size: 14px;"> {{item.name}}</span>
+        </div>
+        <div v-if="showAddTag" ref="sliderGroup" class="sentiment-item">
+          <el-tag type="info" style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="newMoniterCase" >
+            <span style="font-size: 14px;"><i class="el-icon-s-tools"></i> 新建方案</span>
           </el-tag>
         </div>
       </div>
@@ -24,9 +26,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <keep-alive>
-              <router-view ref="subcompoent" keep-alive @showdetail="showdetail" @addMonitorCase="addMonitorCase"></router-view>
-            </keep-alive>
+            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase"></router-view>
           </div>
         </div>
       </div>
@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        showAddTag: false,
         isActived: 0,
         currentComponent: 'sentimentlist',
         listItem: [{
@@ -70,13 +71,7 @@
           name: '舆情方案',
           comname: 'caselist'
         }],
-        allMonitorCase: [
-          {
-            id: '-1',
-            name: '添加方案',
-            company_id: '5'
-          }
-        ]
+        allMonitorCase: []
       }
     },
     watch: {
@@ -114,19 +109,25 @@
           }
         }
         getAllMonitorCase(data).then(res => {
-          this.allMonitorCase = [...res.data.caseinfo, ...this.allMonitorCase]
-            this.$nextTick(() => {
-              this._sentimentsScroll()
-            })
+          this.allMonitorCase = res.data.caseinfo
+          if (res.data.caseinfo.length === 0) {
+            this.showAddTag = true
+          }
+          this.$nextTick(() => {
+            this._sentimentsScroll()
+          })
         }).catch(err => {
           console.log(err)
         })
       },
       addMonitorCase(item) {
         this.allMonitorCase.push(item)
-        this._sentimentsScroll()
+        this.$nextTick(() => {
+          this._sentimentsScroll()
+        })
       },
       delMonitorCase(tag, caseid) {
+        debugger
         if (caseid === '-1') {
           return
         }
@@ -135,9 +136,17 @@
           id: caseid + ''
         }
         delMonitorCase(data).then(res => {
+          debugger
           console.log(res)
-          this.allMonitorCase.splice(this.allMonitorCase.indexOf(tag), 1)
-          this._sentimentsScroll()
+          console.log(this.allMonitorCase)
+          this.allMonitorCase.splice(tag, 1)
+          console.log(this.allMonitorCase)
+          if (this.allMonitorCase.length === 0) {
+            this.showAddTag = true
+          }
+          this.$nextTick(() => {
+            this._sentimentsScroll()
+          })
         }).catch(err => {
           console.log(err)
         })
@@ -210,7 +219,7 @@
       },
       _sentimentsScroll() {
         // 动态计算父亲总长度
-        let width = 5
+        let width = 8
         this.$refs.sliderGroup.forEach(item => {
           width += item.clientWidth
         })
@@ -255,11 +264,13 @@
       background-color: #F2F3F7;
       .sentiment {
         width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        margin-top: 5px;
         height: 36.5px;
         line-height: 43.5px;
+        padding-left: 4px;
+        padding-right: 8px;
+        margin-top: 5px;
+        overflow: hidden;
+        white-space: nowrap;
         .sentiment-item {
           display: inline-block;
           text-align: left;

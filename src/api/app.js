@@ -71,3 +71,12 @@ export function getMonitorCase(data) {
     data
   })
 }
+
+// 9.根据caseid获取企业详情
+export function getCompanyDetail(data) {
+  return request({
+    url: '/osintelligence/dataset/getCompanyDetail',
+    method: 'post',
+    data
+  })
+}

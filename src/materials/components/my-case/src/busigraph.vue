@@ -11,53 +11,17 @@
   export default {
     data() {
       return {
-        nodesArray: [
-          { id: 1, shape: 'circle', label: '公司名称' },
-          { id: 2, shape: 'circle', label: '公司名称' },
-          { id: 3, shape: 'circle', label: '公司名称' },
-          {
-            id: 4,
-            shape: 'circle',
-            label: '公司名称'
-          },
-          { id: 5, shape: 'circle', label: '公司名称' },
-          { id: 6, shape: 'circle', label: '公司名称' },
-          { id: 7, shape: 'circle', label: '公司名称' },
-          { id: 8, shape: 'circle', label: '公司名称' },
-          { id: 9, shape: 'circle', label: '公司名称' },
-          { id: 10, shape: 'circle', label: '公司名称' },
-          { id: 11, shape: 'circle', label: '公司名称' },
-          { id: 12, shape: 'circle', label: '公司名称' },
-          { id: 13, shape: 'circle', label: '公司名称' },
-          { id: 14, shape: 'circle', label: '公司名称' }
-        ],
-        edgesArray: [
-          { from: 1, to: 2, label: '关系' },
-          { from: 2, to: 3, label: '关系' },
-          { from: 2, to: 4, label: '关系' },
-          { from: 4, to: 5, label: '关系' },
-          { from: 4, to: 10, label: '关系' },
-          { from: 4, to: 6, label: '关系' },
-          { from: 6, to: 7, label: '关系' },
-          { from: 7, to: 8, label: '关系' },
-          { from: 8, to: 9, label: '关系' },
-          { from: 8, to: 10, label: '关系' },
-          { from: 10, to: 11, label: '关系' },
-          { from: 11, to: 12, label: '关系' },
-          { from: 12, to: 13, label: '关系' },
-          { from: 13, to: 14, label: '关系' }
-        ],
         nodes: null,
         edges: null,
-        selectNodeId: '',
-        checkAll: false,
-        checkedCities: ['上海', '北京'],
-        cities: ['上海', '北京', '广州', '深圳'],
-        isIndeterminate: true
+        selectNodeId: ''
       }
     },
+    created() {
+      this.$nextTick(() => {
+        this.create(JSON.parse(this.$route.params.nodes), JSON.parse(this.$route.params.edges))
+      })
+    },
     mounted() {
-      this.create()
     },
     beforeDestroy() {
       if (network !== null) {
@@ -66,15 +30,16 @@
       }
     },
     methods: {
-      create(type) {
+      create(nodesArray, edgesArray) {
+        debugger
         // create an array with nodes
         this.nodes = new DataSet(
-          this.nodesArray
+          nodesArray
         )
 
         // create an array with edges
         this.edges = new DataSet(
-          this.edgesArray
+          edgesArray
         )
 
         const data = {
@@ -82,6 +47,7 @@
           edges: this.edges
         }
         const options = {
+          autoResize: true, // 网络将自动检测其容器的大小调整，并相应地重绘自身
           layout: {
             randomSeed: 2, // 布局的随机种子，如果不设置，每次进来布局都是随机的；这个数值可以任意设置，只要是个数字就行
             improvedLayout: true // 使用【 Kamada Kawai】布局算法；如果不用这个算法，会出现很多交叉的线条
@@ -90,8 +56,12 @@
             enabled: true // 节点不能重叠,整体图回弹效果
           },
           nodes: {
-            borderWidth: 2,
-            size: 30,
+            widthConstraint: 30, // 设置数字，将节点的最小和最大宽度设为该值,当值设为很小的时候，label会换行，节点会保持一个最小值，里边的内容会换行
+            borderWidth: 1, // 节点边框宽度，单位为px
+            borderWidthSelected: 3, // 节点被选中时边框的宽度，单位为px
+            labelHighlightBold: false, // 确定选择节点时标签是否变为粗体
+            size: 46,
+            shadow: false,
             color: {
               border: '#5587FF',
               background: '#e4e4e4',
@@ -101,7 +71,10 @@
                 background: '#D2E5FF'
               }
             },
-            font: { color: '#606c74' }
+            font: {
+              color: '#606c74',
+              size: 8
+            }
           },
           edges: {
             width: 1,
@@ -112,6 +85,9 @@
               hover: '#848484',
               inherit: 'from',
               opacity: 1.0
+            },
+            font: {
+              size: 8
             },
             shadow: true,
             smooth: {
@@ -135,7 +111,6 @@
 
         // initialize your network!
         network = new Network(this.$refs.visualization, data, options)
-
         // add event listeners
         network.on('selectNode', e => {
           this.showDetails()

@@ -4,18 +4,18 @@
       <div class="content-wrapper">
         <div class="desc">
           <div class="logo">
-
+            <img :src="imageUrl" style="width: 56px;height: 55px;border: 1px solid #e2e1e1"/>
           </div>
           <div class="detail">
-            <div class="name">公司名称公司名称</div>
-            <div class="info"><span>法人:凌东胜 </span><span>成立日期:2020-09-19</span></div>
+            <div class="name">{{company_name}}</div>
+            <div class="info"><span style="display: inline-block;width: 100px;">法人: {{legal_person}} </span><span> </span><span>成立日期: {{create_date}}</span></div>
           </div>
         </div>
         <div class="profile-wrapper">
-          <span class="profile">经营范围:软件及通讯产品(不含卫星广播电视地面接收设施)经营范围:软件及通讯产品(不含卫星广播电视地面接收设施)</span>
+          <span class="profile">{{company_profile}}</span>
         </div>
         <div class="lastdate">
-          <span>截止日期: </span><span>2020-01-07 14:13:14</span>
+          <span>截止日期: </span><span>{{data_update_time}}</span>
         </div>
       </div>
       <div class="detailcotent-wrapper">
@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="tab-content">
-        <router-view keep-alive></router-view>
+        <router-view ref="subcompoent2" keep-alive></router-view>
       </div>
     </div>
   </div>
@@ -37,6 +37,7 @@
   import busidetail from './busidetail'
   import busigraph from './busigraph'
   import industrydetail from './industrydetail'
+  import { getCompanyDetail } from '@/api/app'
   export default {
     components: {
       busidetail,
@@ -45,26 +46,43 @@
     },
     data() {
       return {
+        imageUrl: '',
+        company_name: '',
+        legal_person: '',
+        company_profile: '',
+        create_date: '',
+        data_update_time: '',
+        nodesArray: [],
+        edgesArray: [],
         currentComponent: 'busigraph',
         isSelect: 0,
         tabs: [{ id: 0, key: 'busigraph', name: '商业图谱' }, { id: 1, key: 'industrydetail', name: '行业资讯' }, { id: 2, key: 'busidetail', name: '商业资讯' }]
       }
     },
-    // watch: {
-    //   '$route.path': {
-    //     handler: function(newPath, oldPath) {
-    //       if (newPath === '/busigraph') {
-    //         this.isActived = 0
-    //         this.$router.push({ name: 'busigraph' })
-    //       }
-    //     },
-    //     immediate: true // 最初绑定值的时候也执行函数
-    //   }
-    // },
     mounted() {
-      this.$router.push({ name: 'busigraph' })
+      this.getCompanyDetail('1')
     },
     methods: {
+      getCompanyDetail(caseId) {
+        debugger
+        const data = {
+          userid: this.$store.state.user.userId,
+          case_id: caseId
+        }
+        getCompanyDetail(data).then(res => {
+          this.imageUrl = res.data.imageUrl
+          this.company_name = res.data.company_name
+          this.create_date = res.data.create_date
+          this.legal_person = res.data.legal_person
+          this.company_profile = res.data.company_profile
+          this.data_update_time = res.data.data_update_time
+          this.nodesArray = [...this.nodesArray, ...res.data.business_graph.node_array]
+          this.edgesArray = [...this.nodesArray, ...res.data.business_graph.edge_array]
+          this.$router.push({ name: 'busigraph', params: { nodes: JSON.stringify(res.data.business_graph.node_array), edges: JSON.stringify(res.data.business_graph.edge_array) }})
+        }).catch(err => {
+          console.log(err)
+        })
+      },
       showdetail(compNames) {
         if (compNames === 'sentimentcondition') {
           this.$refs.sentimentcondition.show()
@@ -76,7 +94,11 @@
       },
       selectTab(index, name) {
         this.isSelect = index
-        this.$router.push({ name: name })
+        if (index === 0) {
+          this.$router.push({ name: name, params: { nodes: JSON.stringify(this.nodesArray), edges: JSON.stringify(this.edgesArray) }})
+        } else {
+          this.$router.push({ name: name })
+        }
       }
     }
   }
@@ -97,17 +119,19 @@
         .logo {
           flex: 0 1 56px;
           margin: 10px;
-          background-color: #e2e1e1;
         }
         .detail {
           margin: 12px 10px 10px 10px;
           .name {
+            height: 18px;
             text-align: left;
             font-family: PingFangSC-Medium;
             font-size: 16px;
             color: rgba(0,0,0,0.80);
           }
           .info {
+            width: 224px;
+            height: 14px;
             margin-top: 10px;
             text-align: left;
             font-family: PingFangSC-Regular;

@@ -124,38 +124,38 @@
             competitor_ids: '',
             industry_names: '',
             industry_ids: '',
-            technologies: '技术1;技术2'
+            technologies: ''
           },
           excludewords: {
-            words: '排除词1;排除词2'
+            words: ''
           },
           alarmmode: {
-            words: '冻结;处罚',
-            mediawords: '新浪微博;微信',
-            authors: '李嘉诚;作者2'
+            words: '',
+            mediawords: '',
+            authors: ''
           }
         },
         conditons: {
           data: {
             userid: this.$store.state.user.userId,
             caseid: '', // 若为空表示新建，不是''表示修改
-            name: '中新赛克11332',
+            name: '',
             monitorwords: {
               company_name: '南京中新赛克有限责任有限公司',
-              company_id: '1234',
-              staffs: ['凌东胜', '王明意'],
-              sub_companies: ['南京中新赛克有限责任公司北京分公司', '南京中新赛克有限责任北京分公司'],
-              competitor_info: [{ id: '1', name: '凯申物流股份有限公司' }],
-              industry_info: [{ id: '1', name: '大数据' }],
-              technologies: ['java', 'c++']
+              company_id: '',
+              staffs: [],
+              sub_companies: [],
+              competitor_info: [],
+              industry_info: [],
+              technologies: []
             },
             excludewords: {
-              words: ['排除词1']
+              words: []
             },
             alarmmode: {
-              words: ['冻结', '处罚'],
-              mediawords: ['新浪微博'],
-              authors: ['李嘉诚']
+              words: [],
+              mediawords: [],
+              authors: []
             }
           }
         }
@@ -274,6 +274,7 @@
         })
       },
       getMonitorCase(caseId) {
+        debugger
         if (caseId !== '') {
           const data = {
             case_id: caseId,
@@ -283,37 +284,50 @@
             // 根据caseid加载详情
             this.conditons.data.userid = this.$store.state.user.userId
             this.conditons.data.caseid = caseId
-            this.conditons.data.name = res.data.data.name
+            this.conditons.data.name = res.data.name
 
-            this.conditons.data.monitorwords.company_name = res.data.data.monitorwords.company_name
-            this.conditons.data.monitorwords.company_id = res.data.data.monitorwords.company_id + ''
-            this.conditons.data.monitorwords.staffs = res.data.data.monitorwords.staffs
-            this.conditons.data.monitorwords.sub_companies = res.data.data.monitorwords.sub_companies
-            this.conditons.data.monitorwords.competitor_info = res.data.data.monitorwords.competitor_info
-            this.conditons.data.monitorwords.industry_info = res.data.data.monitorwords.industry_info
-            this.conditons.data.monitorwords.technologies = res.data.data.monitorwords.technologies
+            this.conditons.data.monitorwords.company_name = res.data.monitorwords.company_name
+            this.conditons.data.monitorwords.company_id = res.data.monitorwords.company_id + ''
+            this.conditons.data.monitorwords.staffs = res.data.monitorwords.staffs
+            this.conditons.data.monitorwords.sub_companies = res.data.monitorwords.sub_companies
+            this.conditons.data.monitorwords.competitor_info = res.data.monitorwords.competitor_info
+            this.conditons.data.monitorwords.industry_info = res.data.monitorwords.industry_info
+            this.conditons.data.monitorwords.technologies = res.data.monitorwords.technologies
 
-            this.conditons.data.excludewords.words = res.data.data.excludewords.words
+            this.conditons.data.excludewords.words = res.data.excludewords.words
 
-            this.conditons.data.alarmmode.words = res.data.data.alarmmode.words
-            this.conditons.data.alarmmode.mediawords = res.data.data.alarmmode.mediawords
-            this.conditons.data.alarmmode.authors = res.data.data.alarmmode.authors
+            this.conditons.data.alarmmode.words = res.data.alarmmode.words
+            this.conditons.data.alarmmode.mediawords = res.data.alarmmode.mediawords
+            this.conditons.data.alarmmode.authors = res.data.alarmmode.authors
 
             // 处理字符串显示
-            this.conditionstrs.monitorwords.sub_companies = ''
-            this.conditionstrs.monitorwords.company_id = ''
-            this.conditionstrs.monitorwords.staffs = ''
+            this.conditionstrs.monitorwords.company_name = res.data.monitorwords.company_name
+            this.conditionstrs.monitorwords.company_id = res.data.monitorwords.company_id + ''
+            this.conditionstrs.monitorwords.staffs = res.data.monitorwords.staffs.join(';')
+            this.conditionstrs.monitorwords.sub_companies = res.data.monitorwords.sub_companies.join(';')
             this.conditionstrs.monitorwords.competitor_select = ''
+
+            // 拼接字符串
             this.conditionstrs.monitorwords.competitor_company = ''
             this.conditionstrs.monitorwords.competitor_ids = ''
+            res.data.monitorwords.competitor_info.forEach(item => {
+              this.conditionstrs.monitorwords.competitor_company += item.name + ';'
+              this.conditionstrs.monitorwords.competitor_ids += item.id + ';'
+            })
+
             this.conditionstrs.monitorwords.industry_names = ''
             this.conditionstrs.monitorwords.industry_ids = ''
-            this.conditionstrs.monitorwords.technologies = ''
+            res.data.monitorwords.competitor_info.forEach(item => {
+              this.conditionstrs.monitorwords.industry_names += item.name + ';'
+              this.conditionstrs.monitorwords.industry_ids += item.id + ';'
+            })
 
-            this.conditionstrs.excludewords.words = ''
-            this.conditionstrs.alarmmode.words = ''
-            this.conditionstrs.alarmmode.mediawords = ''
-            this.conditionstrs.alarmmode.authors = ''
+            this.conditionstrs.monitorwords.technologies = res.data.monitorwords.technologies.join(';')
+
+            this.conditionstrs.excludewords.words = res.data.excludewords.words.join(';')
+            this.conditionstrs.alarmmode.words = res.data.alarmmode.words.join(';')
+            this.conditionstrs.alarmmode.mediawords = res.data.alarmmode.mediawords.join(';')
+            this.conditionstrs.alarmmode.authors = res.data.alarmmode.authors.join(';')
           }).catch(err => {
             console.log(err)
           })
