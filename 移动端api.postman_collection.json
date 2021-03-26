@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\t\"data\": {\r\n\t\t\"userid\": \"test_3\",\r\n\t\t\"caseid\": \"\",\r\n\t\t\"name\": \"中新赛克11\",\r\n\t\t\"monitorwords\": {\r\n\t\t\t\"company_name\": \"南京中新赛克有限责任有限公司\",\r\n\t\t\t\"company_id\": \"1234\",\r\n\t\t\t\"staff\": [\"凌东胜\", \"王明意\"],\r\n\t\t\t\"sub_company\": [\"南京中新赛克有限责任公司北京分公司\", \"南京中新赛克有限责任北京分公司\"],\r\n\t\t\t\"competitor_company\": [\"凯申物流股份有限公司\"],\r\n\t\t\t\"competitor_company_id\": [\"1\"],\r\n\t\t\t\"industry_names\": [\"计算机软件\"],\r\n\t\t\t\"industry_ids\": [\"1\"],\r\n\t\t\t\"technology\": [\"java\", \"c++\"]\r\n\t\t},\r\n\t\t\"excludewords\": {\r\n\t\t\t\"words\": [\"排除词1\"]\r\n\t\t},\r\n\t\t\"alarmmode\": {\r\n\t\t\t\"words\": [\"冻结\", \"处罚\"],\r\n\t\t\t\"mediawords\": [\"新浪微博\"],\r\n\t\t\t\"author\": [\"李嘉诚\"]\r\n\t\t}\r\n\t}\r\n}",
+					"raw": "{\r\n    \"data\": {\r\n        \"userid\": \"test_3\",\r\n        \"caseid\": \"16\",\r\n        \"name\": \"中新赛克11332556567737888\",\r\n        \"monitorwords\": {\r\n            \"company_name\": \"南京中新赛克有限责任有限公司\",\r\n            \"company_id\": \"1234\",\r\n            \"staffs\": [\r\n                \"凌东胜\",\r\n                \"王明意\"\r\n            ],\r\n            \"sub_companies\": [\r\n                \"南京中新赛克有限责任公司北京分公司\",\r\n                \"南京中新赛克有限责任北京分公司\"\r\n            ],\r\n            \"competitor_info\": [\r\n                {\r\n                    \"id\": \"1\",\r\n                    \"name\": \"凯申物流股份有限公司\"\r\n                }\r\n            ],\r\n            \"industry_info\": [\r\n                {\r\n                    \"id\": \"1\",\r\n                    \"name\": \"大数据\"\r\n                }\r\n            ],\r\n            \"technologies\": [\r\n                \"java\",\r\n                \"c++\"\r\n            ]\r\n        },\r\n        \"excludewords\": {\r\n            \"words\": [\r\n                \"排除词1\"\r\n            ]\r\n        },\r\n        \"alarmmode\": {\r\n            \"words\": [\r\n                \"冻结\",\r\n                \"处罚\"\r\n            ],\r\n            \"mediawords\": [\r\n                \"新浪微博\"\r\n            ],\r\n            \"authors\": [\r\n                \"李嘉诚\"\r\n            ]\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,7 +20,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://218.94.82.249:8089/osintelligence/dataset/saveMonitorCase/",
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/saveMonitorCase",
 					"protocol": "http",
 					"host": [
 						"218",
@@ -32,11 +32,43 @@
 					"path": [
 						"osintelligence",
 						"dataset",
-						"saveMonitorCase",
-						""
+						"saveMonitorCase"
 					]
 				},
 				"description": "保存方案接口"
+			},
+			"response": []
+		},
+		{
+			"name": "查询监控方案配置详情接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"case_id\": \"8164\",\r\n        \"user_id\": \"admin\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getMonitorCase",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getMonitorCase"
+					]
+				}
 			},
 			"response": []
 		},
@@ -47,7 +79,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"data\": {\r\n            \"userid\": \"test_3\",\r\n            \"conditions\": {\r\n                \"content\": \"\"\r\n            }\r\n        }\r\n}",
+					"raw": "{\r\n    \"data\": {\r\n            \"userid\": \"admin\",\r\n            \"conditions\": {\r\n                \"content\": \"\"\r\n            }\r\n        }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,7 +87,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getAllDataMonitorCase/",
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getAllDataMonitorCase",
 					"protocol": "http",
 					"host": [
 						"218",
@@ -67,8 +99,7 @@
 					"path": [
 						"osintelligence",
 						"dataset",
-						"getAllDataMonitorCase",
-						""
+						"getAllDataMonitorCase"
 					]
 				},
 				"description": "查询所有方案"
@@ -90,7 +121,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://218.94.82.249:8089/osintelligence/dataset/delMonitorCase/",
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/delMonitorCase",
 					"protocol": "http",
 					"host": [
 						"218",
@@ -102,8 +133,7 @@
 					"path": [
 						"osintelligence",
 						"dataset",
-						"delMonitorCase",
-						""
+						"delMonitorCase"
 					]
 				},
 				"description": "删除方案接口"
@@ -117,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"data\": {\r\n        \"page\": 1,\r\n        \"rows\": 10,\r\n        \"user_id\": \"test_3\",\r\n        \"conditions\": {\r\n            \"case_id\": \"1\",\r\n            \"type_full_alarm_favorite\": \"全部\",\r\n            \"date\": {\r\n                \"start_date\": 1611127862,\r\n                \"end_date\": 1611129234\r\n            },\r\n            \"media_type\": \"微信公众号\",\r\n            \"relevant_or_precise\": \"精准\",\r\n            \"is_contain_important_events\": 1,\r\n            \"sentiment_type\": \"全部\",\r\n            \"is_repeat\": 1,\r\n            \"time_order_type\": \"desc\"\r\n        }\r\n    }\r\n}",
+					"raw": "{\r\n    \"data\": {\r\n        \"page\": 1,\r\n        \"rows\": 10,\r\n        \"user_id\": \"admin\",\r\n        \"conditions\": {\r\n            \"case_id\": \"8164\",\r\n            \"type_full_alarm_favorite\": \"全部\",\r\n            \"date\": {\r\n                \"start_date\": 1,\r\n                \"end_date\": 1612714239515\r\n            },\r\n            \"media_type\": \"\",\r\n            \"relevant_or_precise\": \"全部\",\r\n            \"is_contain_important_events\": 0,\r\n            \"sentiment_type\": \"全部\",\r\n            \"is_repeat\": 1,\r\n            \"time_order_type\": \"\"\r\n        }\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +155,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getDataDetailByCondition/",
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getDataDetailByCondition",
 					"protocol": "http",
 					"host": [
 						"218",
@@ -137,11 +167,77 @@
 					"path": [
 						"osintelligence",
 						"dataset",
-						"getDataDetailByCondition",
-						""
+						"getDataDetailByCondition"
 					]
 				},
 				"description": "舆情列表条件查询信息接口"
+			},
+			"response": []
+		},
+		{
+			"name": "查询企业详情信息接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"user_id\": \"admin\",\r\n        \"case_id\": \"8164\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanyDetail",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getCompanyDetail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "根据公司获取公司详细列表接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"id\": \"5\",\r\n        \"user_id\": \"xxxx\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanyInfoById",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getCompanyInfoById"
+					]
+				},
+				"description": "查询图谱节点企业信息接口"
 			},
 			"response": []
 		},
@@ -152,7 +248,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"text\": \"中新赛克\"\r\n}",
+					"raw": "{\r\n    \"data\": {\r\n        \"text\": \"中新赛克\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -186,7 +282,12 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"company_name\": \"南京中新赛克科技有限责任公司\"\r\n}"
+					"raw": "{\r\n     \"data\": {\r\n        \"company_name\": \"南京中新赛克科技有限责任公司\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanySimpleInfoWithName",
@@ -209,13 +310,113 @@
 			"response": []
 		},
 		{
-			"name": "根据公司获取公司详细列表接口",
+			"name": "发送短信验证码接口",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://124.70.94.207:8201/authority/sendSMSVerifiCode?receiver=13770957423&uuid=a12abe5f2cef4b018198abfb12bfe29d",
+					"protocol": "http",
+					"host": [
+						"124",
+						"70",
+						"94",
+						"207"
+					],
+					"port": "8201",
+					"path": [
+						"authority",
+						"sendSMSVerifiCode"
+					],
+					"query": [
+						{
+							"key": "receiver",
+							"value": "13770957423"
+						},
+						{
+							"key": "uuid",
+							"value": "a12abe5f2cef4b018198abfb12bfe29d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "短信登录接口",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA=="
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "phoneNumber",
+							"value": "13770957423",
+							"type": "text"
+						},
+						{
+							"key": "smsVerifiCode",
+							"value": "618493",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "phone",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "all",
+							"type": "text"
+						},
+						{
+							"key": "imgCode",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "uuid",
+							"value": "a11abe5f2cef4b018198abfb12bfe29d",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://124.70.94.207:8201/oauth/token",
+					"protocol": "http",
+					"host": [
+						"124",
+						"70",
+						"94",
+						"207"
+					],
+					"port": "8201",
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询竞争公司商业资讯信息接口",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"5\",\r\n    \"user_id\": \"xxxx\"\r\n}",
+					"raw": "{\r\n    \"data\": {\r\n        \"page\": 1,\r\n        \"rows\": 10,\r\n        \"user_id\": \"admin\",\r\n        \"case_id\": \"8164\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -223,7 +424,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompanyInfoById",
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getCompetiterBusinessDetail",
 					"protocol": "http",
 					"host": [
 						"218",
@@ -235,10 +436,42 @@
 					"path": [
 						"osintelligence",
 						"dataset",
-						"getCompanyInfoById"
+						"getCompetiterBusinessDetail"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询本方案行业资讯信息接口",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data\": {\r\n        \"page\": 1,\r\n        \"rows\": 10,\r\n        \"user_id\": \"admin\",\r\n        \"case_id\": \"8164\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
-				"description": "查询图谱节点企业信息接口"
+				"url": {
+					"raw": "http://218.94.82.249:8089/osintelligence/dataset/getIndustryInfoDetail",
+					"protocol": "http",
+					"host": [
+						"218",
+						"94",
+						"82",
+						"249"
+					],
+					"port": "8089",
+					"path": [
+						"osintelligence",
+						"dataset",
+						"getIndustryInfoDetail"
+					]
+				}
 			},
 			"response": []
 		}

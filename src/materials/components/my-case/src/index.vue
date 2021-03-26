@@ -103,7 +103,7 @@
     methods: {
       getAllMonitorCase() {
         const data = {
-          userid: this.$store.state.user.userId,
+          userid: this.$store.state.user.user.userId,
           conditions: {
             content: ''
           }
@@ -132,7 +132,7 @@
           return
         }
         const data = {
-          userid: this.$store.state.user.userId,
+          userid: this.$store.state.user.user.userId,
           id: caseid + ''
         }
         delMonitorCase(data).then(res => {

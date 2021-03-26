@@ -80,3 +80,12 @@ export function getCompanyDetail(data) {
     data
   })
 }
+
+// 10.根据caseid获取查询竞争公司行业资讯信息接口
+export function getIndustryInfoDetail(data) {
+  return request({
+    url: '/osintelligence/dataset/getIndustryInfoDetail',
+    method: 'post',
+    data
+  })
+}

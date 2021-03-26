@@ -20,12 +20,12 @@
           <span v-else>登 录 中...</span>
         </el-button>
       </el-form-item>
-      <p class="login-tip">系统默认用户名：admin，密码：123456</p>
     </el-form>
   </div>
 </template>
 
 <script>
+  import qs from 'qs'
   export default {
     name: 'Login',
     data() {
@@ -34,8 +34,8 @@
         disabled: false, // 是否可点击,
         uuid: '',
         loginForm: {
-          username: '17512563286',
-          password: '1234',
+          username: '',
+          password: '',
           rememberMe: false
         },
         loginRules: {
@@ -59,7 +59,7 @@
     },
     methods: {
       getVerifyCode() {
-        const messageCodeUrl = 'http://10.45.176.53:8201'
+        const messageCodeUrl = 'http://124.70.94.207:8201'
         if (this.disabled === false) {
           debugger
           this.disabled = true
@@ -78,7 +78,6 @@
           }).then(res => {
             debugger
             console.log(res)
-            this.loginForm.password = '1234'
           }).catch(err => {
             this.$notify({ title: '错误', message: err, type: 'warning' })
             return false
@@ -104,7 +103,7 @@
       },
       validateBtn() {
         // 倒计时
-        let time = 10
+        let time = 60
         const timer = setInterval(() => {
           if (time === 0) {
             clearInterval(timer)
@@ -120,57 +119,41 @@
         this.$router.push({ path: this.redirect || '/index' })
         this.$refs.loginForm.validate(valid => {
           this.loading = false
-          const res = {
-            data: {
-              data: {
-                access_token: '12367899',
-                phoneNumber: '13770957423',
-                userId: 'FDDFDDFF',
-                departmentName: '大数据业务部门'
-              }
+          const messageCodeUrl = 'http://101.200.152.50'
+          const url = messageCodeUrl + '/oauth/token'
+          if (valid) {
+            this.loading = true
+            debugger
+            const formData = {
+              phoneNumber: this.loginForm.username,
+              smsVerifiCode: this.loginForm.password,
+              grant_type: 'phone',
+              scope: 'all',
+              imgCode: '',
+              uuid: this.uuid
             }
+            this.$axios.post(url, qs.stringify(formData), {
+              headers: {
+                Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA==',
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            }).then(res => {
+              debugger
+              this.loading = false
+              this.$store.dispatch('MessageCodeLogin', res).then(() => {
+                this.loading = false
+                this.$router.push({ path: this.redirect || '/' })
+              }).catch(() => {
+                this.loading = false
+              })
+            }).catch(err => {
+              this.$notify({ title: '错误', message: err, type: 'warning' })
+              return false
+            })
+          } else {
+            console.log('error submit!!')
+            return false
           }
-          this.$store.dispatch('MessageCodeLogin', res).then(() => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
-          }).catch(() => {
-            this.loading = false
-          })
-          // const messageCodeUrl = 'http://localhost:8013'
-          // const url = messageCodeUrl + '/oauth/token'
-          // if (valid) {
-          //   this.loading = true
-          //   debugger
-          //   const formData = {
-          //     phoneNumber: '17512563286',
-          //     smsVerifiCode: '1234',
-          //     grant_type: 'phone',
-          //     scope: 'all',
-          //     imgCode: '',
-          //     uuid: '242abe5f2cef4b018198abfb63bfe29d'
-          //   }
-          //   this.$axios.post(url, qs.stringify(formData), {
-          //     headers: {
-          //       Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA==',
-          //       'Content-Type': 'application/x-www-form-urlencoded'
-          //     }
-          //   }).then(res => {
-          //     debugger
-          //     this.loading = false
-          //     this.$store.dispatch('MessageCodeLogin', res).then(() => {
-          //       this.loading = false
-          //       this.$router.push({ path: this.redirect || '/' })
-          //     }).catch(() => {
-          //       this.loading = false
-          //     })
-          //   }).catch(err => {
-          //     this.$notify({ title: '错误', message: err, type: 'warning' })
-          //     return false
-          //   })
-          // } else {
-          //   console.log('error submit!!')
-          //   return false
-          // }
         })
       },
       _uuid() {
@@ -184,7 +167,6 @@
         s[8] = s[13] = s[18] = s[23] = ''
 
         this.uuidA = s.join('')
-        console.log(s.join(''), 's.join("")')
         return this.uuidA
       }
     }

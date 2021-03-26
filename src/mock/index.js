@@ -25,3 +25,5 @@ Mock.mock(/\/osintelligence\/dataset\/getCompanyInfoById/, 'post', dataSetApi.ge
 Mock.mock(/\/osintelligence\/dataset\/getMonitorCase/, 'post', dataSetApi.getData08())
 // 9.根据caseid获取企业详情接口 http://218.94.82.249:8089/osintelligence/dataset/getCompanyDetail
 Mock.mock(/\/osintelligence\/dataset\/getCompanyDetail/, 'post', dataSetApi.getData09())
+// 10.根据caseid获取查询竞争公司行业资讯信息接口 http://218.94.82.249:8089/osintelligence/dataset/getIndustryInfoDetail
+Mock.mock(/\/osintelligence\/dataset\/getIndustryInfoDetail/, 'post', dataSetApi.getData10())

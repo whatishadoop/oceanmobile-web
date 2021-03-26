@@ -137,7 +137,7 @@
         },
         conditons: {
           data: {
-            userid: this.$store.state.user.userId,
+            userid: this.$store.state.user.user.userId,
             caseid: '', // 若为空表示新建，不是''表示修改
             name: '',
             monitorwords: {
@@ -278,11 +278,11 @@
         if (caseId !== '') {
           const data = {
             case_id: caseId,
-            user_id: this.$store.state.user.userId
+            user_id: this.$store.state.user.user.userId
           }
           getMonitorCase(data).then(res => {
             // 根据caseid加载详情
-            this.conditons.data.userid = this.$store.state.user.userId
+            this.conditons.data.userid = this.$store.state.user.user.userId
             this.conditons.data.caseid = caseId
             this.conditons.data.name = res.data.name
 

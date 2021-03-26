@@ -3,39 +3,66 @@
     <div class="industrycase-wrapper">
       <ul class="case">
         <li
-          v-for="(value,index) in [1,2,3,4,6,7,8]"
+          v-for="(item, index) in contentItem"
           :key="index"
           class="case-item">
           <div class="content">
-            <div class="name">行业资讯标题</div>
+            <div class="name">{{item.title}}</div>
             <div class="motion-type">
               <el-tag style="margin-right: 6px;" size="mini">自动驾驶</el-tag>
               <el-tag style="margin-right: 6px;" size="mini">物联网</el-tag>
             </div>
             <div class="text-wrapper" @click="showDetails">
-              <span class="text">这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要这里说新闻信息的摘要，可能很长很长很这里说新闻信息的要，可能很长很长很这里说新闻信息的摘要，可能很长很长很这里说新闻信息的摘要
+              <span class="text">{{item.content}}
               </span>
               <div class="detail">
                 <i class="el-icon-arrow-right" style="font-size: 14px;"></i>
               </div>
             </div>
             <div class="desct">
-              <span class="source">环球网  张良菊</span>
-              <span class="date">2018.04.23 12:00:00</span>
+              <span class="source">{{item.website_name}}  {{item.publisher}}</span>
+              <span class="date">{{item.date}}</span>
             </div>
           </div>
         </li>
       </ul>
     </div>
-
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import { getIndustryInfoDetail } from '@/api/app'
   export default {
+    data() {
+      return {
+        total: 0,
+        contentItem: []
+      }
+    },
+    created() {
+      this.$nextTick(() => {
+        debugger
+        this.getIndustryInfoDetail('1')
+      })
+    },
     methods: {
+      getIndustryInfoDetail() {
+        debugger
+        const data = {
+          page: 1,
+          rows: 10,
+          user_id: this.$store.state.user.user.userId,
+          case_id: '8164'
+        }
+        getIndustryInfoDetail(data).then(res => {
+          this.total = res.data.total
+          this.contentItem = [...this.contentItem, ...res.data.rows]
+        }).catch(err => {
+          console.log(err)
+        })
+      },
       showDetails() {
-        this.$bus.$emit('on-drawers', '行业资讯', 'case-detail', true)
+        this.$bus.$emit('on-drawers', '商业资讯', 'case-detail', true)
       }
     }
   }

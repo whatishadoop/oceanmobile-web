@@ -66,7 +66,7 @@
       getCompanyDetail(caseId) {
         debugger
         const data = {
-          userid: this.$store.state.user.userId,
+          userid: this.$store.state.user.user.userId,
           case_id: caseId
         }
         getCompanyDetail(data).then(res => {

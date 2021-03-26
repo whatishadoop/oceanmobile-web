@@ -17,10 +17,10 @@
             <div class="name">{{item.title}}</div>
             <div class="motion-type">
               <el-tag style="margin-right: 6px;" size="mini">{{item.text_sentiment}}</el-tag>
-              <el-tag type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[0]}}</el-tag>
-              <el-tag type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
-              <el-tag type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[0]}}</el-tag>
-              <el-tag type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
+              <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[0]}}</el-tag>
+              <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
+              <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[0]}}</el-tag>
+              <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
             </div>
             <div class="text-wrapper" @click="showDetails(item.url)">
               <span class="text">{{item.content}}</span>
@@ -56,7 +56,7 @@
           data: {
             page: 1,
             rows: 10,
-            user_id: 'admin',
+            user_id: this.$store.state.user.user.userId,
             conditions: {
               case_id: '194',
               type_full_alarm_favorite: '全部',

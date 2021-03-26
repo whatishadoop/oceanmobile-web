@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/oauth': {
-        target: 'http://10.45.176.53:8201', // 此处可以换成自己需要的地址
+        target: 'http://124.70.94.207:8201', // 此处可以换成自己需要的地址
         changeOrigin: true,
         pathRewrite: {
           '^/oauth': 'oauth'
