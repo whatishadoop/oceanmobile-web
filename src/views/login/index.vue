@@ -15,7 +15,7 @@
         </el-input>
       </el-form-item>
       <el-form-item style="width:100%;margin-top: 50px">
-        <el-button :loading="loading" size="medium" type="primary" style="width:100%;" round @click.native.prevent="handleLogin">
+        <el-button :loading="loading" size="medium" type="primary" style="width:100%;background-color: #5584FF;" round @click.native.prevent="handleLogin">
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
@@ -119,8 +119,11 @@
         this.$router.push({ path: this.redirect || '/index' })
         this.$refs.loginForm.validate(valid => {
           this.loading = false
+          // const messageCodeUrl = 'http://localhost:8013'
+          // const url = messageCodeUrl + '/oauth/token'
+          // nginx配置
           const messageCodeUrl = 'http://101.200.152.50'
-          const url = messageCodeUrl + '/oauth/token'
+          const url = messageCodeUrl + '/oauth'
           if (valid) {
             this.loading = true
             debugger

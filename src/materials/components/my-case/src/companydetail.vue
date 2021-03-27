@@ -4,7 +4,7 @@
       <div class="content-wrapper">
         <div class="desc">
           <div class="logo">
-            <img :src="imageUrl" style="width: 56px;height: 55px;border: 1px solid #e2e1e1"/>
+            <img :src="imageUrl" class="img"/>
           </div>
           <div class="detail">
             <div class="name">{{company_name}}</div>
@@ -119,6 +119,24 @@
         .logo {
           flex: 0 1 56px;
           margin: 10px;
+          img {
+            position: relative;
+            width: 56px;
+            height: 55px;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+            &::after {
+              content: "";
+              position: absolute;
+              z-index: 2;
+              top: 0;
+              left: 0;
+              width: 56px;
+              height: 55px;
+              /*background: url("../../../../assets/images/defaultImg.png") no-repeat;*/
+              background-size: 100% 100%;
+              background-color: #fff;
+            }
+          }
         }
         .detail {
           margin: 12px 10px 10px 10px;

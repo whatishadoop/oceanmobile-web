@@ -10,7 +10,7 @@
                 <div class="title">一级行业</div>
                 <div class="condition">
                   <div v-for="(item, index) in oneLevel" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectOne(oneLevel, item)">{{item.name}}</el-tag>
+                    <el-tag :class="{'active':item.isSelect}" style="width: 80px;text-align: center" size="medium" type="info" @click="selectOne(oneLevel, item)">{{item.name}}</el-tag>
                   </div>
                 </div>
               </div>
@@ -18,12 +18,12 @@
                 <div class="title">二级行业</div>
                 <div class="condition">
                   <div v-for="(item, index) in twoLevel" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectTwo(twoLevel, item)">{{item.name}}</el-tag>
+                    <el-tag :class="{'active':item.isSelect}" style="width: 80px;text-align: center" size="medium" type="info" @click="selectTwo(twoLevel, item)">{{item.name}}</el-tag>
                   </div>
                 </div>
               </div>
               <div class="btn-wrapper">
-                <el-button style="width: 310px;" type="primary" round @click="addIndustry">确认</el-button>
+                <el-button style="width: 310px;background-color: #5584FF;" type="primary" round @click="addIndustry">确认</el-button>
               </div>
             </div>
           </div>
@@ -347,7 +347,7 @@
               text-align: left;
             }
             .condition {
-              padding-left: 8px;
+              padding-left: 20px;
               display: flex;
               justify-content: flex-start;
               flex-wrap: wrap;

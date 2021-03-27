@@ -47,16 +47,16 @@
                 </div>
               </div>
               <div class="monitor-word">
-                <div class="title">重大事件</div>
+                <div class="title">是否重复</div>
                 <div class="condition">
-                  <div v-for="(item, index) in eventType" :key="index" class="item">
-                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(eventType, item)">{{item.value}}</el-tag>
+                  <div v-for="(item, index) in repeatType" :key="index" class="item">
+                    <el-tag :class="{'active':item.isSelect}" style="width: 70px;text-align: center" size="medium" type="info" @click="selectdata(repeatType, item)">{{item.value}}</el-tag>
                   </div>
                 </div>
               </div>
               <div class="btn-wrapper">
-                <el-button style="width: 310px;" type="primary" round @click="queryByConditons" >确认</el-button>
-              </div>
+                <el-button style="width: 310px;background-color: #5584FF;" type="primary" round @click="queryByConditons" >确认</el-button>
+              </div>#5584FF
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@
           {
             key: 'today',
             value: '今天',
-            isSelect: false
+            isSelect: true
           },
           {
             key: '24hours',
@@ -100,7 +100,7 @@
           {
             key: '1',
             value: '全部',
-            isSelect: false
+            isSelect: true
           },
           {
             key: '2',
@@ -137,7 +137,7 @@
           {
             key: '1',
             value: '全部',
-            isSelect: false
+            isSelect: true
           },
           {
             key: '2',
@@ -159,7 +159,7 @@
           {
             key: '1',
             value: '精确',
-            isSelect: false
+            isSelect: true
           },
           {
             key: '2',
@@ -170,12 +170,12 @@
         repeatType: [
           {
             key: 0,
-            value: '不去重',
-            isSelect: false
+            value: '去重',
+            isSelect: true
           },
           {
             key: 1,
-            value: '去重',
+            value: '不去重',
             isSelect: false
           }
         ],
@@ -183,7 +183,7 @@
           {
             key: 0,
             value: '全部',
-            isSelect: false
+            isSelect: true
           },
           {
             key: 1,
@@ -237,22 +237,22 @@
         this.showFlag = false
       },
       queryByConditons() {
+        debugger
         const dataTypeItem = this.dataType.find(value => value.isSelect === true)
         const sourceTypeItem = this.sourceType.find(value => value.isSelect === true)
         const motionTypeItem = this.motionType.find(value => value.isSelect === true)
         const repeatTypeItem = this.repeatType.find(value => value.isSelect === true)
         const eventTypeItem = this.eventType.find(value => value.isSelect === true)
         const relevantTypeItem = this.relevantType.find(value => value.isSelect === true)
-        this._getDate(dataTypeItem[0].value)
-        this.conditions.media_type = sourceTypeItem[0].value
-        this.conditions.relevant_or_precise = relevantTypeItem[0].value
-        this.conditions.is_contain_important_events = eventTypeItem[0].key
-        this.conditions.sentiment_type = motionTypeItem[0].value
-        this.conditions.is_repeat = repeatTypeItem[0].key
-
+        this._getDate(dataTypeItem.value)
+        this.conditions.media_type = sourceTypeItem.value
+        this.conditions.relevant_or_precise = relevantTypeItem.value
+        this.conditions.is_contain_important_events = eventTypeItem.key
+        this.conditions.sentiment_type = motionTypeItem.value
+        this.conditions.is_repeat = repeatTypeItem.key
+        this.hide()
         // 通过总线向sentimentlist.vue传递查询参数条件对象
         this.$bus.$emit('updateDataByConditons', this.conditions)
-        this.showFlag = false
       },
       _getDate(type) {
         if (type === '今天') {

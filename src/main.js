@@ -43,7 +43,8 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 // 开发环境，引入mock
-process.env.NODE_ENV === 'development' && require('@/mock/index.js')
+// process.env.NODE_ENV === 'development' && require('@/mock/index.js')
+require('@/mock/index.js')
 
 new Vue({
   el: '#app',

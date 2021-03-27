@@ -143,6 +143,10 @@
           console.log(this.allMonitorCase)
           if (this.allMonitorCase.length === 0) {
             this.showAddTag = true
+            this.$nextTick(() => {
+              this.$refs.sentiment.style.width = '100%'
+            })
+            return
           }
           this.$nextTick(() => {
             this._sentimentsScroll()
