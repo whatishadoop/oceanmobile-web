@@ -142,7 +142,7 @@
           // 往数组的末尾压入查询出来的数据
           this.contentItems = [...this.contentItems, ...res.data.rows]
           console.log(this.contentItems)
-          this.$emit('refreshSentiment')
+          this.$emit('refreshInitScroll')
         }).catch(res => {
           console.log(res)
         })

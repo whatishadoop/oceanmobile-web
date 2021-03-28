@@ -26,7 +26,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase" @refreshSentiment="refreshSentiment"></router-view>
+            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase" @refreshInitScroll="refreshInitScroll"></router-view>
           </div>
         </div>
       </div>
@@ -97,6 +97,10 @@
       this.$nextTick(() => {
         // this._tabsScroll()
         this._initScroll()
+      })
+      // 根据帅选条件进行查询
+      this.$bus.$on('refreshIndustryInfo', () => {
+        this.refreshInitScroll()
       })
     },
     destroyed() {
@@ -175,7 +179,7 @@
           this.$refs.subcompoent.getMonitorCase(caseId + '')
         })
       },
-      refreshSentiment() {
+      refreshInitScroll() {
         // 数据加载完渲染列表后再执行如下刷新
         this.$nextTick(() => {
           this.scroll.refresh()
@@ -200,17 +204,23 @@
       },
       _initScroll() {
         const _this = this
-        this.scroll = new BScroll(this.$refs.contentWrapper, {
-          click: true,
-          propTypes: 3,
-          pullUpLoad: true
-        })
-        this.scroll.on('pullingUp', () => {
-          debugger
-          if (_this.currentComponent === 'sentimentlist') {
-            this.$refs.subcompoent.updateDataDetailByCondition()
-          }
-        })
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$refs.contentWrapper, {
+            click: true,
+            propTypes: 3,
+            pullUpLoad: true
+          })
+          this.scroll.on('pullingUp', () => {
+            debugger
+            if (_this.currentComponent === 'sentimentlist') {
+              this.$refs.subcompoent.updateDataDetailByCondition()
+            } else if (_this.currentComponent === 'companydetail') {
+              this.$refs.subcompoent.updateDetailInfo()
+            }
+          })
+        } else {
+          this.scroll.refresh()
+        }
       },
       _tabsScroll() {
         // 默认有六个li子元素，每个子元素的宽度为120px
@@ -218,8 +228,8 @@
         this.$refs.tab.style.width = width + 'px'
         // this.$nextTick 是一个异步函数，为了确保 DOM 已经渲染
         this.$nextTick(() => {
-          if (!this.scroll) {
-            this.scroll = new BScroll(this.$refs.tabs, {
+          if (!this.tabscroll) {
+            this.tabscroll = new BScroll(this.$refs.tabs, {
               startX: 0,
               click: true,
               scrollX: true,
@@ -228,7 +238,7 @@
               eventPassthrough: 'vertical'
             })
           } else {
-            this.scroll.refresh()
+            this.tabscroll.refresh()
           }
         })
       },

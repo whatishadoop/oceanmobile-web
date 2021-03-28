@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div ref="visualization" style="width: 100%;height: 500px" />
+      <div ref="visualization" style="width: 100%;height: 400px" />
     </div>
 </template>
 

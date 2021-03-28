@@ -175,9 +175,12 @@
       querySearchAsync(queryString, cb) {
         const _this = this
         const data = {
-          text: queryString
+          data: {
+            text: queryString
+          }
         }
         getCompanyFullName(data).then(res => {
+          _this.companys.length = 0
           res.data.forEach(item => {
             _this.companys.push({ 'value': item })
           })
@@ -193,7 +196,9 @@
         debugger
         const _this = this
         const data = {
-          company_name: item.value
+          data: {
+            company_name: item.value
+          }
         }
         // 1.组装公司名
         _this.conditionstrs.monitorwords.company_name = item.value
@@ -217,7 +222,9 @@
       selectCompetitor(item) {
         const _this = this
         const data = {
-          company_name: item.value
+          data: {
+            company_name: item.value
+          }
         }
         // 5.组装竞品公司
         _this.conditionstrs.monitorwords.competitor_company += item.value + ';'
@@ -246,10 +253,10 @@
         this.conditons.data.monitorwords.competitor_info = competitor_info
 
         // 组装行业信息
-        this.conditons.data.monitorwords.industy_info = {
+        this.conditons.data.monitorwords.industry_info = [{
           id: this.conditionstrs.monitorwords.industry_ids,
           name: this.conditionstrs.monitorwords.industry_names
-        }
+        }]
         this.conditons.data.monitorwords.technologies = this.conditionstrs.monitorwords.technologies.split(';')
 
         this.conditons.data.excludewords.words = this.conditionstrs.excludewords.words.split(';')
@@ -286,7 +293,7 @@
             // 根据caseid加载详情
             this.conditons.data.userid = this.$store.state.user.user.userId
             this.conditons.data.caseid = caseId
-            this.conditons.data.name = res.data.name
+            this.conditons.data.name = res.data.data.name
 
             this.conditons.data.monitorwords.company_name = res.data.data.monitorwords.company_name
             this.conditons.data.monitorwords.company_id = res.data.data.monitorwords.company_id + ''
@@ -319,9 +326,9 @@
 
             this.conditionstrs.monitorwords.industry_names = ''
             this.conditionstrs.monitorwords.industry_ids = ''
-            res.data.data.monitorwords.competitor_info.forEach(item => {
-              this.conditionstrs.monitorwords.industry_names += item.name + ';'
-              this.conditionstrs.monitorwords.industry_ids += item.id + ';'
+            res.data.data.monitorwords.industry_info.forEach(item => {
+              this.conditionstrs.monitorwords.industry_names += item.name
+              this.conditionstrs.monitorwords.industry_ids += item.id
             })
 
             this.conditionstrs.monitorwords.technologies = res.data.data.monitorwords.technology.join(';')
@@ -344,7 +351,7 @@
           this.conditons.data.monitorwords.staffs = []
           this.conditons.data.monitorwords.sub_company = []
           this.conditons.data.monitorwords.competitor_info = []
-          this.conditons.data.monitorwords.industy_info = []
+          this.conditons.data.monitorwords.industry_info = []
           this.conditons.data.monitorwords.technologies = []
 
           this.conditons.data.excludewords.words = []

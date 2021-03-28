@@ -21,7 +21,7 @@ export function delMonitorCase(data) {
 // 3.保存监控方案接口
 export function saveMonitorCase(data) {
   return request({
-    url: 'osintelligence/dataset/delMonitorCase',
+    url: 'osintelligence/dataset/saveMonitorCase',
     method: 'post',
     data
   })

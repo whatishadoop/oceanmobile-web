@@ -27,7 +27,9 @@
         </div>
       </div>
       <div class="tab-content">
-        <router-view ref="subcompoent2"></router-view>
+        <keep-alive>
+          <router-view ref="subcompoent2"></router-view>
+        </keep-alive>
       </div>
     </div>
   </div>
@@ -103,6 +105,12 @@
           this.$router.push({ name: name, params: { nodes: JSON.stringify(this.nodesArray), edges: JSON.stringify(this.edgesArray) }})
         } else {
           this.$router.push({ name: name })
+          this.$bus.$emit('refreshIndustryInfo')
+        }
+      },
+      updateDetailInfo() {
+        if (this.isSelect === 1 || this.isSelect === 2) {
+          this.$refs.subcompoent2.updateDataDetailByCondition()
         }
       }
     }
@@ -224,7 +232,6 @@
     }
     .tab-content {
       width: 100%;
-      height: 700px;
     }
   }
 </style>

@@ -3,7 +3,7 @@
     <div class="industrycase-wrapper">
       <ul class="case">
         <li
-          v-for="(item, index) in contentItem"
+          v-for="(item, index) in contentItems"
           :key="index"
           class="case-item">
           <div class="content">
@@ -35,31 +35,62 @@
     data() {
       return {
         total: 0,
-        contentItem: []
+        contentItems: [],
+        caseId: '8164',
+        page: 1
       }
     },
     created() {
       this.$nextTick(() => {
         debugger
-        this.getIndustryInfoDetail('1')
+        this.getIndustryInfoDetail(this.caseId)
       })
     },
     methods: {
-      getIndustryInfoDetail() {
+      getIndustryInfoDetail(caseId) {
         debugger
         const data = {
           data: {
-            page: 1,
+            page: this.page,
             rows: 10,
             user_id: this.$store.state.user.user.userId,
-            case_id: '8164'
+            case_id: caseId
           }
         }
         getIndustryInfoDetail(data).then(res => {
           this.total = res.data.total
-          this.contentItem = [...this.contentItem, ...res.data.rows]
+          this.contentItems = res.data.rows
         }).catch(err => {
           console.log(err)
+        })
+      },
+      updateDataDetailByCondition() {
+        debugger
+        // 页码加1
+        this.page += 1
+        // // 如果加1后的页码乘以每页展示条数大于等于总条数
+        // if (this.contentItems.length === this.totalPage) {
+        //   return
+        // }
+        // 初始化默认查询
+        const data = {
+          data: {
+            page: this.page,
+            rows: 10,
+            user_id: this.$store.state.user.user.userId,
+            case_id: this.caseId
+          }
+        }
+        // 初始化默认查询
+        getIndustryInfoDetail(data).then(res => {
+          debugger
+          // 往数组的末尾压入查询出来的数据
+          res.data.rows.forEach(item => {
+            this.contentItems.push(item)
+          })
+          this.$bus.$emit('refreshIndustryInfo')
+        }).catch(res => {
+          console.log(res)
         })
       },
       showDetails() {
