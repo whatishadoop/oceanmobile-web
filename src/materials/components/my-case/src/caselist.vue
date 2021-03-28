@@ -277,8 +277,10 @@
         debugger
         if (caseId !== '') {
           const data = {
-            case_id: caseId,
-            user_id: this.$store.state.user.user.userId
+            data: {
+              case_id: caseId,
+              user_id: this.$store.state.user.user.userId
+            }
           }
           getMonitorCase(data).then(res => {
             // 根据caseid加载详情
@@ -286,48 +288,48 @@
             this.conditons.data.caseid = caseId
             this.conditons.data.name = res.data.name
 
-            this.conditons.data.monitorwords.company_name = res.data.monitorwords.company_name
-            this.conditons.data.monitorwords.company_id = res.data.monitorwords.company_id + ''
-            this.conditons.data.monitorwords.staffs = res.data.monitorwords.staffs
-            this.conditons.data.monitorwords.sub_companies = res.data.monitorwords.sub_companies
-            this.conditons.data.monitorwords.competitor_info = res.data.monitorwords.competitor_info
-            this.conditons.data.monitorwords.industry_info = res.data.monitorwords.industry_info
-            this.conditons.data.monitorwords.technologies = res.data.monitorwords.technologies
+            this.conditons.data.monitorwords.company_name = res.data.data.monitorwords.company_name
+            this.conditons.data.monitorwords.company_id = res.data.data.monitorwords.company_id + ''
+            this.conditons.data.monitorwords.staffs = res.data.data.monitorwords.staffs
+            this.conditons.data.monitorwords.sub_companies = res.data.data.monitorwords.sub_companies
+            this.conditons.data.monitorwords.competitor_info = res.data.data.monitorwords.competitor_info
+            this.conditons.data.monitorwords.industry_info = res.data.data.monitorwords.industry_info
+            this.conditons.data.monitorwords.technologies = res.data.data.monitorwords.technology
 
-            this.conditons.data.excludewords.words = res.data.excludewords.words
+            this.conditons.data.excludewords.words = res.data.data.excludewords.words
 
-            this.conditons.data.alarmmode.words = res.data.alarmmode.words
-            this.conditons.data.alarmmode.mediawords = res.data.alarmmode.mediawords
-            this.conditons.data.alarmmode.authors = res.data.alarmmode.authors
+            this.conditons.data.alarmmode.words = res.data.data.alarmmode.words
+            this.conditons.data.alarmmode.mediawords = res.data.data.alarmmode.mediawords
+            this.conditons.data.alarmmode.authors = res.data.data.alarmmode.authors
 
             // 处理字符串显示
-            this.conditionstrs.monitorwords.company_name = res.data.monitorwords.company_name
-            this.conditionstrs.monitorwords.company_id = res.data.monitorwords.company_id + ''
-            this.conditionstrs.monitorwords.staffs = res.data.monitorwords.staffs.join(';')
-            this.conditionstrs.monitorwords.sub_companies = res.data.monitorwords.sub_companies.join(';')
+            this.conditionstrs.monitorwords.company_name = res.data.data.monitorwords.company_name
+            this.conditionstrs.monitorwords.company_id = res.data.data.monitorwords.company_id + ''
+            this.conditionstrs.monitorwords.staffs = res.data.data.monitorwords.staffs.join(';')
+            this.conditionstrs.monitorwords.sub_companies = res.data.data.monitorwords.sub_companies.join(';')
             this.conditionstrs.monitorwords.competitor_select = ''
 
             // 拼接字符串
             this.conditionstrs.monitorwords.competitor_company = ''
             this.conditionstrs.monitorwords.competitor_ids = ''
-            res.data.monitorwords.competitor_info.forEach(item => {
+            res.data.data.monitorwords.competitor_info.forEach(item => {
               this.conditionstrs.monitorwords.competitor_company += item.name + ';'
               this.conditionstrs.monitorwords.competitor_ids += item.id + ';'
             })
 
             this.conditionstrs.monitorwords.industry_names = ''
             this.conditionstrs.monitorwords.industry_ids = ''
-            res.data.monitorwords.competitor_info.forEach(item => {
+            res.data.data.monitorwords.competitor_info.forEach(item => {
               this.conditionstrs.monitorwords.industry_names += item.name + ';'
               this.conditionstrs.monitorwords.industry_ids += item.id + ';'
             })
 
-            this.conditionstrs.monitorwords.technologies = res.data.monitorwords.technologies.join(';')
+            this.conditionstrs.monitorwords.technologies = res.data.data.monitorwords.technology.join(';')
 
-            this.conditionstrs.excludewords.words = res.data.excludewords.words.join(';')
-            this.conditionstrs.alarmmode.words = res.data.alarmmode.words.join(';')
-            this.conditionstrs.alarmmode.mediawords = res.data.alarmmode.mediawords.join(';')
-            this.conditionstrs.alarmmode.authors = res.data.alarmmode.authors.join(';')
+            this.conditionstrs.excludewords.words = res.data.data.excludewords.words.join(';')
+            this.conditionstrs.alarmmode.words = res.data.data.alarmmode.words.join(';')
+            this.conditionstrs.alarmmode.mediawords = res.data.data.alarmmode.mediawords.join(';')
+            this.conditionstrs.alarmmode.authors = res.data.data.alarmmode.authors.join(';')
           }).catch(err => {
             console.log(err)
           })

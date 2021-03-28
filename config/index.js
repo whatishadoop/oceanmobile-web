@@ -20,6 +20,13 @@ module.exports = {
           Authorization: 'Basic cnVpcWlfYXBwOnJ1aXFpX2FwcA==',
           'Content-Type': 'application/x-www-form-urlencoded'
         }
+      },
+      '/osintelligence': {
+        target: 'http://218.94.82.249:8089', // 此处可以换成自己需要的地址
+        changeOrigin: true,
+        pathRewrite: {
+          '^/osintelligence': 'osintelligence'
+        }
       }
     },
 

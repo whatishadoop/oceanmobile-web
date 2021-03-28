@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 1.获取所有监控方案接口
 export function getAllMonitorCase(data) {
   return request({
-    url: 'osintelligence/dataset/getAllDataMonitorCase/',
+    url: 'osintelligence/dataset/getAllDataMonitorCase',
     method: 'post',
     data
   })
@@ -12,7 +12,7 @@ export function getAllMonitorCase(data) {
 // 2.删除监控方案接口
 export function delMonitorCase(data) {
   return request({
-    url: 'osintelligence/dataset/delMonitorCase/',
+    url: 'osintelligence/dataset/delMonitorCase',
     method: 'post',
     data
   })
@@ -21,7 +21,7 @@ export function delMonitorCase(data) {
 // 3.保存监控方案接口
 export function saveMonitorCase(data) {
   return request({
-    url: 'osintelligence/dataset/delMonitorCase/',
+    url: 'osintelligence/dataset/delMonitorCase',
     method: 'post',
     data
   })
@@ -30,7 +30,7 @@ export function saveMonitorCase(data) {
 // 4.根据条件查询舆情列表接口
 export function getDataDetailByCondition(data) {
   return request({
-    url: 'osintelligence/dataset/getDataDetailByCondition/',
+    url: 'osintelligence/dataset/getDataDetailByCondition',
     method: 'post',
     data
   })

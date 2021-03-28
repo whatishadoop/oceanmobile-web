@@ -336,6 +336,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: '大数据精选',
         date: '2019-10-12 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/76650.html'
       },
       {
@@ -345,6 +346,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: '大数据精选',
         date: '2019-10-09 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/76475.html'
       },
       {
@@ -354,6 +356,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: '大数据精选',
         date: '2019-10-08 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/76427.html'
       },
       {
@@ -363,6 +366,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: '大数据精选',
         date: '2019-09-27 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/76370.html'
       },
       {
@@ -372,6 +376,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: 'Afenxi朋友们',
         date: '2019-09-26 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/76021.html'
       },
       {
@@ -381,6 +386,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: 'Afenxi朋友们',
         date: '2019-09-26 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/75854.html'
       },
       {
@@ -390,6 +396,7 @@ const data10 = {
         website_name: '数据分析网',
         publisher: '小胖',
         date: '2018-05-18 00:00:00',
+        industries: ['自动驾驶', '物联网'],
         url: 'https://www.afenxi.com/52745.html'
       }
     ]

@@ -18,9 +18,9 @@
             <div class="motion-type">
               <el-tag style="margin-right: 6px;" size="mini">{{item.text_sentiment}}</el-tag>
               <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[0]}}</el-tag>
-              <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
+              <el-tag v-if="item.important_events.length > 1" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
               <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[0]}}</el-tag>
-              <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
+              <el-tag v-show="item.match_key_words.length > 1" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
             </div>
             <div class="text-wrapper" @click="showDetails(item.url)">
               <span class="text">{{item.content}}</span>
@@ -58,10 +58,10 @@
             rows: 10,
             user_id: this.$store.state.user.user.userId,
             conditions: {
-              case_id: '194',
+              case_id: '8164',
               type_full_alarm_favorite: '全部',
               date: {
-                start_date: Math.floor(getTimestamp(-1) / 1000),
+                start_date: 1,  // 测试
                 end_date: Math.floor(new Date().getTime() / 1000)
               },
               media_type: '全部',
@@ -79,10 +79,12 @@
     },
     created() {
       this.$nextTick(() => {
+        debugger
         this.getDataDetailByCondition()
       })
     },
     mounted() {
+      debugger
       // 根据帅选条件进行查询
       this.$bus.$on('updateDataByConditons', (conditonObj) => {
         this.conditions.date.start_date = conditonObj.date.start_date
@@ -98,7 +100,10 @@
     methods: {
       getDataDetailByCondition() {
         // 初始化默认查询
-        getDataDetailByCondition(this.conditions).then(res => {
+        const data = {
+          data: this.conditions.data
+        }
+        getDataDetailByCondition(data).then(res => {
           debugger
           // for(var i = 0; i <res.data.rows. length; i++){
           //   this.contentItems.push(res.data.rows[i])
@@ -120,91 +125,27 @@
         this.$emit('showdetail', 'sentimentcondition')
       },
       updateDataDetailByCondition() {
-        // // 页码加1
-        // this.conditions.data.page += 1
+        debugger
+        // 页码加1
+        this.conditions.data.page += 1
         // // 如果加1后的页码乘以每页展示条数大于等于总条数
-        // if (this.conditions.data.page * 10 >= this.totalPage) {
+        // if (this.contentItems.length === this.totalPage) {
         //   return
         // }
-        // // 初始化默认查询
-        // getDataDetailByCondition(this.conditions).then(res => {
-        //   debugger
-        //   // 往数组的末尾压入查询出来的数据
-        //   this.contentItems = [...this.contentItems, ...res]
-        // }).catch(res => {
-        //   console.log(res)
-        // })
-        const res = [
-          {
-            id: 267,
-            text_sentiment: '正面',
-            title: '=======任正非:需要盯着做事的干部,而不是会做人的干部!',
-            sim_text_count: 0,
-            content: '任正非头图:新华网01华为大学的办学方针要从“培养制”转变为“选拔制”,干部员工有偿学习,自我提高恭喜大家成为华为大学第...',
-            important_events: [
-              ''
-            ],
-            match_key_words: [
-              '任正非',
-              '华为'
-            ],
-            website_name: '搜狗微信',
-            publisher: '',
-            date: '2021-03-23 07:23:40'
-          },
-          {
-            id: 268,
-            text_sentiment: '正面',
-            title: '任正非:需要盯着做事的干部,而不是会做人的干部!',
-            sim_text_count: 0,
-            content: '任正非头图:新华网01华为大学的办学方针要从“培养制”转变为“选拔制”,干部员工有偿学习,自我提高恭喜大家成为华为大学第...',
-            important_events: [
-              ''
-            ],
-            match_key_words: [
-              '任正非',
-              '华为'
-            ],
-            website_name: '搜狗微信',
-            publisher: '',
-            date: '2021-03-23 07:23:40'
-          },
-          {
-            id: 269,
-            text_sentiment: '正面',
-            title: '任正非:需要盯着做事的干部,而不是会做人的干部!',
-            sim_text_count: 0,
-            content: '任正非头图:新华网01华为大学的办学方针要从“培养制”转变为“选拔制”,干部员工有偿学习,自我提高恭喜大家成为华为大学第...',
-            important_events: [
-              ''
-            ],
-            match_key_words: [
-              '任正非',
-              '华为'
-            ],
-            website_name: '搜狗微信',
-            publisher: '',
-            date: '2021-03-23 07:23:40'
-          },
-          {
-            id: 270,
-            text_sentiment: '正面',
-            title: '任正非:需要盯着做事的干部,而不是会做人的干部!',
-            sim_text_count: 0,
-            content: '任正非头图:新华网01华为大学的办学方针要从“培养制”转变为“选拔制”,干部员工有偿学习,自我提高恭喜大家成为华为大学第...',
-            important_events: [
-              ''
-            ],
-            match_key_words: [
-              '任正非',
-              '华为'
-            ],
-            website_name: '搜狗微信',
-            publisher: '',
-            date: '2021-03-23 07:23:40'
-          }
-        ]
-        this.contentItems = [...this.contentItems, ...res]
+        // 初始化默认查询
+        const data = {
+          data: this.conditions.data
+        }
+        // 初始化默认查询
+        getDataDetailByCondition(data).then(res => {
+          debugger
+          // 往数组的末尾压入查询出来的数据
+          this.contentItems = [...this.contentItems, ...res.data.rows]
+          console.log(this.contentItems)
+          this.$emit('refreshSentiment')
+        }).catch(res => {
+          console.log(res)
+        })
       }
     }
   }
@@ -287,9 +228,11 @@
           }
           .text-wrapper {
             position: relative;
+            height: 44px;
             .text {
               color: #828283;
               font-size: 12px;
+              line-height: 16px;
               text-align: left;
               font-family: PingFangSC-regular;
               padding-right: 28px;

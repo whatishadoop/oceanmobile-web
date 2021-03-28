@@ -35,7 +35,7 @@ const user = {
         login(username, password).then(res => {
           setToken(res.token, rememberMe)
           commit('SET_TOKEN', res.token)
-          setUserInfo(res.user, commit)
+          setUserInfo(res.data, commit)
           resolve()
         }).catch(error => {
           reject(error)
@@ -48,6 +48,8 @@ const user = {
         debugger
         setToken(res.data.data.access_token, false)
         commit('SET_TOKEN', res.data.data.access_token)
+        // 临时
+        res.data.data.userId = 'admin'
         setUserInfo(res.data.data, commit)
         resolve()
       })

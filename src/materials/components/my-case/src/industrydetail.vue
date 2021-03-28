@@ -9,8 +9,7 @@
           <div class="content">
             <div class="name">{{item.title}}</div>
             <div class="motion-type">
-              <el-tag style="margin-right: 6px;" size="mini">自动驾驶</el-tag>
-              <el-tag style="margin-right: 6px;" size="mini">物联网</el-tag>
+              <el-tag v-for="(value,index) in item.industries" :key="index" style="margin-right: 6px;" size="mini">{{value}}</el-tag>
             </div>
             <div class="text-wrapper" @click="showDetails">
               <span class="text">{{item.content}}
@@ -49,10 +48,12 @@
       getIndustryInfoDetail() {
         debugger
         const data = {
-          page: 1,
-          rows: 10,
-          user_id: this.$store.state.user.user.userId,
-          case_id: '8164'
+          data: {
+            page: 1,
+            rows: 10,
+            user_id: this.$store.state.user.user.userId,
+            case_id: '8164'
+          }
         }
         getIndustryInfoDetail(data).then(res => {
           this.total = res.data.total

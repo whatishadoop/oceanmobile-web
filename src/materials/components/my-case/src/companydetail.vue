@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="tab-content">
-        <router-view ref="subcompoent2" keep-alive></router-view>
+        <router-view ref="subcompoent2"></router-view>
       </div>
     </div>
   </div>
@@ -59,17 +59,22 @@
         tabs: [{ id: 0, key: 'busigraph', name: '商业图谱' }, { id: 1, key: 'industrydetail', name: '行业资讯' }, { id: 2, key: 'busidetail', name: '商业资讯' }]
       }
     },
-    mounted() {
-      this.getCompanyDetail('1')
+    created() {
+      this.$nextTick(() => {
+        this.getCompanyDetail('8164')
+      })
     },
     methods: {
       getCompanyDetail(caseId) {
         debugger
         const data = {
-          userid: this.$store.state.user.user.userId,
-          case_id: caseId
+          data: {
+            userid: this.$store.state.user.user.userId,
+            case_id: caseId
+          }
         }
         getCompanyDetail(data).then(res => {
+          debugger
           this.imageUrl = res.data.imageUrl
           this.company_name = res.data.company_name
           this.create_date = res.data.create_date

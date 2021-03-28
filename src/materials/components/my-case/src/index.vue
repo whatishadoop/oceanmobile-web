@@ -26,7 +26,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase"></router-view>
+            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase" @refreshSentiment="refreshSentiment"></router-view>
           </div>
         </div>
       </div>
@@ -86,12 +86,14 @@
       }
     },
     created() {
+      debugger
       this.$nextTick(() => {
         // 获取所有方案列表信息
         this.getAllMonitorCase()
       })
     },
     mounted: function() {
+      debugger
       this.$nextTick(() => {
         // this._tabsScroll()
         this._initScroll()
@@ -102,10 +104,13 @@
     },
     methods: {
       getAllMonitorCase() {
+        debugger
         const data = {
-          userid: this.$store.state.user.user.userId,
-          conditions: {
-            content: ''
+          data: {
+            userid: this.$store.state.user.user.userId,
+            conditions: {
+              content: ''
+            }
           }
         }
         getAllMonitorCase(data).then(res => {
@@ -163,10 +168,19 @@
         })
       },
       queryMoniterCase(caseId) {
+        this.currentComponent = 'caselist'
         this.selectTab('caselist', 2)
         // 调用caselist对象的根据caseid查询对应详情
         this.$nextTick(() => {
           this.$refs.subcompoent.getMonitorCase(caseId + '')
+        })
+      },
+      refreshSentiment() {
+        // 数据加载完渲染列表后再执行如下刷新
+        this.$nextTick(() => {
+          this.scroll.refresh()
+          this.scroll.finishPullUp()
+          console.log('====数据加载完渲染列表后再执行如下刷新====')
         })
       },
       showdetail(compNames, param) {
@@ -180,24 +194,21 @@
         }
       },
       selectTab(comname, index) {
+        this.isActived = index
         this.currentComponent = comname
         this.$router.push({ name: comname })
-        this.isActived = index
       },
       _initScroll() {
+        const _this = this
         this.scroll = new BScroll(this.$refs.contentWrapper, {
           click: true,
           propTypes: 3,
           pullUpLoad: true
         })
         this.scroll.on('pullingUp', () => {
-          if (this.currentComponent === 'sentimentlist') {
+          debugger
+          if (_this.currentComponent === 'sentimentlist') {
             this.$refs.subcompoent.updateDataDetailByCondition()
-            // 数据加载完渲染列表后再执行如下刷新
-            this.$nextTick(() => {
-              this.scroll.refresh()
-              this.scroll.finishPullUp()
-            })
           }
         })
       },
