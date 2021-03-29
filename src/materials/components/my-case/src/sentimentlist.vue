@@ -58,10 +58,10 @@
             rows: 10,
             user_id: this.$store.state.user.user.userId,
             conditions: {
-              case_id: '8164',
+              case_id: this.$route.query.currentCaseId,
               type_full_alarm_favorite: '全部',
               date: {
-                start_date: 1,  // 测试
+                start_date: Math.floor(getTimestamp(-1) / 1000),
                 end_date: Math.floor(new Date().getTime() / 1000)
               },
               media_type: '全部',

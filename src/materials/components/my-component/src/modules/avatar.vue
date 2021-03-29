@@ -10,7 +10,7 @@
               <span>手机账户</span>
             </div>
             <div class="phoneNum">
-              <span>19082317723</span>
+              <span>{{phoneNum}}</span>
             </div>
           </div>
         </div>
@@ -24,6 +24,7 @@
     props: {},
     data() {
       return {
+        phoneNum: this.$store.state.user.user.phoneNumber
       }
     },
     methods: {

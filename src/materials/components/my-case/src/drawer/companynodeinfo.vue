@@ -86,6 +86,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { getDataDetailByCondition } from '@/api/app'
   export default {
     data() {
       return {

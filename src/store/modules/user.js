@@ -48,8 +48,8 @@ const user = {
         debugger
         setToken(res.data.data.access_token, false)
         commit('SET_TOKEN', res.data.data.access_token)
-        // 临时
-        res.data.data.userId = 'admin'
+        // // 临时
+        // res.data.data.userId = 'admin'
         setUserInfo(res.data.data, commit)
         resolve()
       })

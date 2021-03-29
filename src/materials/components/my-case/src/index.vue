@@ -4,12 +4,12 @@
     <div ref="sentiments" class="sentiments">
       <div ref="sentiment" class="sentiment">
         <div v-for="(item, index) in allMonitorCase" ref="sliderGroup" :key="index" class="sentiment-item">
-          <el-tag type="info" closable style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="queryMoniterCase(item.id)" @close="delMonitorCase(index, item.id)">
+          <el-tag :type="isSelectCaseId === index ? '' : 'info'" closable style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="queryMoniterCase(item.id, index)" @close="delMonitorCase(index, item.id)">
             <span style="font-size: 14px;"> {{item.name}}</span>
           </el-tag>
         </div>
-        <div v-if="showAddTag" ref="sliderGroup" class="sentiment-item">
-          <el-tag type="info" style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="newMoniterCase" >
+        <div ref="addTag" class="sentiment-item">
+          <el-tag :type=" isshow ? '' : 'info'" style="background-color: #FFFFFF;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" @click="newMoniterCase" >
             <span style="font-size: 14px;"><i class="el-icon-s-tools"></i> 新建方案</span>
           </el-tag>
         </div>
@@ -26,7 +26,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view ref="subcompoent" @showdetail="showdetail" @addMonitorCase="addMonitorCase" @refreshInitScroll="refreshInitScroll"></router-view>
+            <router-view ref="subcompoent" @showdetail="showdetail" @getAllMonitorCase="getAllMonitorCase" @refreshInitScroll="refreshInitScroll"></router-view>
           </div>
         </div>
       </div>
@@ -58,7 +58,9 @@
     },
     data() {
       return {
-        showAddTag: false,
+        isshow: false,
+        currentCaseId: '',
+        isSelectCaseId: 0,
         isActived: 0,
         currentComponent: 'sentimentlist',
         listItem: [{
@@ -74,17 +76,18 @@
         allMonitorCase: []
       }
     },
-    watch: {
-      '$route.path': {
-        handler: function(newPath, oldPath) {
-          if (newPath === '/my-case') {
-            this.isActived = 0
-            this.$router.push({ name: 'sentimentlist' })
-          }
-        },
-        immediate: true // 最初绑定值的时候也执行函数
-      }
-    },
+    // watch: {
+    //   '$route.path': {
+    //     handler: function(newPath, oldPath) {
+    //       debugger
+    //       if (newPath === '/my-case') {
+    //         this.isActived = 0
+    //         this.$router.push({ name: 'sentimentlist', query: { currentCaseId: this.currentCaseId } })
+    //       }
+    //     },
+    //     immediate: true // 最初绑定值的时候也执行函数
+    //   }
+    // },
     created() {
       debugger
       this.$nextTick(() => {
@@ -101,6 +104,10 @@
       // 根据帅选条件进行查询
       this.$bus.$on('refreshIndustryInfo', () => {
         this.refreshInitScroll()
+      })
+      // 根据帅选条件进行查询
+      this.$bus.$on('showdetail', (compNames, param) => {
+        this.showdetail(compNames, param)
       })
     },
     destroyed() {
@@ -119,8 +126,9 @@
         }
         getAllMonitorCase(data).then(res => {
           this.allMonitorCase = res.data.caseinfo
-          if (res.data.caseinfo.length === 0) {
-            this.showAddTag = true
+          if (this.allMonitorCase.length > 0) {
+            this.queryMoniterCase(this.allMonitorCase[0].id, 0)
+            this.selectTab('sentimentlist', 0)
           }
           this.$nextTick(() => {
             this._sentimentsScroll()
@@ -136,26 +144,22 @@
         })
       },
       delMonitorCase(tag, caseid) {
-        debugger
-        if (caseid === '-1') {
-          return
-        }
         const data = {
-          userid: this.$store.state.user.user.userId,
-          id: caseid + ''
+          data: {
+            userid: this.$store.state.user.user.userId,
+            id: caseid + ''
+          }
         }
         delMonitorCase(data).then(res => {
           debugger
-          console.log(res)
-          console.log(this.allMonitorCase)
           this.allMonitorCase.splice(tag, 1)
-          console.log(this.allMonitorCase)
           if (this.allMonitorCase.length === 0) {
-            this.showAddTag = true
-            this.$nextTick(() => {
-              this.$refs.sentiment.style.width = '100%'
-            })
-            return
+            this.newMoniterCase()
+          } else {
+            if (this.allMonitorCase[0] !== undefined) {
+              const tmpCaseId = this.allMonitorCase[0].id
+              this.queryMoniterCase(tmpCaseId, 0)
+            }
           }
           this.$nextTick(() => {
             this._sentimentsScroll()
@@ -165,19 +169,32 @@
         })
       },
       newMoniterCase() {
+        this.isSelectCaseId = -1
+        this.currentCaseId = ''
+        this.isshow = true
+        if (this.allMonitorCase.length === 3) {
+          return
+        }
         this.selectTab('caselist', 2)
         // 调用caselist对象的初始化方法
         this.$nextTick(() => {
+          this.$refs.subcompoent.setReadOnly(false)
           this.$refs.subcompoent.getMonitorCase('')
         })
       },
-      queryMoniterCase(caseId) {
-        this.currentComponent = 'caselist'
-        this.selectTab('caselist', 2)
-        // 调用caselist对象的根据caseid查询对应详情
-        this.$nextTick(() => {
-          this.$refs.subcompoent.getMonitorCase(caseId + '')
-        })
+      queryMoniterCase(caseId, index) {
+        this.isshow = false
+        this.isSelectCaseId = index
+        this.currentCaseId = caseId
+        if (this.currentComponent === 'caselist') {
+          // 调用caselist对象的根据caseid查询对应详情
+          this.$nextTick(() => {
+            this.$refs.subcompoent.setReadOnly(true)
+            this.$refs.subcompoent.getMonitorCase(caseId + '')
+          })
+        } else {
+          this.selectTab('sentimentlist', 0)
+        }
       },
       refreshInitScroll() {
         // 数据加载完渲染列表后再执行如下刷新
@@ -198,9 +215,10 @@
         }
       },
       selectTab(comname, index) {
+        debugger
         this.isActived = index
         this.currentComponent = comname
-        this.$router.push({ name: comname })
+        this.$router.push({ name: comname, query: { currentCaseId: this.currentCaseId } })
       },
       _initScroll() {
         const _this = this
@@ -244,7 +262,7 @@
       },
       _sentimentsScroll() {
         // 动态计算父亲总长度
-        let width = 8
+        let width = 8 + this.$refs.addTag.clientWidth
         this.$refs.sliderGroup.forEach(item => {
           width += item.clientWidth
         })

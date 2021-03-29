@@ -48,6 +48,7 @@
     },
     data() {
       return {
+        currentCaseId: this.$route.query.currentCaseId,
         imageUrl: '',
         company_name: '',
         legal_person: '',
@@ -63,16 +64,16 @@
     },
     created() {
       this.$nextTick(() => {
-        this.getCompanyDetail('8164')
+        this.getCompanyDetail()
       })
     },
     methods: {
-      getCompanyDetail(caseId) {
+      getCompanyDetail() {
         debugger
         const data = {
           data: {
             userid: this.$store.state.user.user.userId,
-            case_id: caseId
+            case_id: this.currentCaseId
           }
         }
         getCompanyDetail(data).then(res => {
@@ -104,7 +105,8 @@
         if (index === 0) {
           this.$router.push({ name: name, params: { nodes: JSON.stringify(this.nodesArray), edges: JSON.stringify(this.edgesArray) }})
         } else {
-          this.$router.push({ name: name })
+          debugger
+          this.$router.push({ name: name, query: { currentCaseId: this.currentCaseId}})
           this.$bus.$emit('refreshIndustryInfo')
         }
       },
@@ -155,10 +157,14 @@
           margin: 12px 10px 10px 10px;
           .name {
             height: 18px;
+            width: 226px;
             text-align: left;
             font-family: PingFangSC-Medium;
             font-size: 16px;
             color: rgba(0,0,0,0.80);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
           .info {
             width: 224px;

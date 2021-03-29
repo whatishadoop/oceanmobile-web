@@ -11,7 +11,7 @@
             <div class="motion-type">
               <el-tag v-for="(value,index) in item.industries" :key="index" style="margin-right: 6px;" size="mini">{{value}}</el-tag>
             </div>
-            <div class="text-wrapper" @click="showDetails">
+            <div class="text-wrapper" @click="showDetails(item.url)">
               <span class="text">{{item.content}}
               </span>
               <div class="detail">
@@ -36,25 +36,25 @@
       return {
         total: 0,
         contentItems: [],
-        caseId: '8164',
+        caseId: this.$route.query.currentCaseId,
         page: 1
       }
     },
     created() {
       this.$nextTick(() => {
         debugger
-        this.getIndustryInfoDetail(this.caseId)
+        this.getIndustryInfoDetail()
       })
     },
     methods: {
-      getIndustryInfoDetail(caseId) {
+      getIndustryInfoDetail() {
         debugger
         const data = {
           data: {
             page: this.page,
             rows: 10,
             user_id: this.$store.state.user.user.userId,
-            case_id: caseId
+            case_id: this.caseId
           }
         }
         getIndustryInfoDetail(data).then(res => {
@@ -93,8 +93,11 @@
           console.log(res)
         })
       },
-      showDetails() {
-        this.$bus.$emit('on-drawers', '商业资讯', 'case-detail', true)
+      showDetails(url) {
+        const params = {
+          url: url
+        }
+        this.$bus.$emit('showdetail', 'sentimenturl', params)
       }
     }
   }

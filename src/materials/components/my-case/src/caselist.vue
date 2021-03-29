@@ -4,7 +4,7 @@
       <div class="name">
         <div class="lable">方案名称:</div>
         <div class="input-wrapper">
-          <el-input v-model="conditons.data.name" placeholder="请选择方案名称" clearable/>
+          <el-input v-model="conditons.data.name" :readonly="isReadOnly" placeholder="请选择方案名称" clearable/>
         </div>
       </div>
       <div class="monitor-word">
@@ -111,6 +111,7 @@
   export default {
     data() {
       return {
+        isReadOnly: false,
         companys: [],
         timeout: null,
         conditionstrs: {
@@ -138,7 +139,7 @@
         conditons: {
           data: {
             userid: this.$store.state.user.user.userId,
-            caseid: '', // 若为空表示新建，不是''表示修改
+            caseid: this.$route.query.currentCaseId, // 若为空表示新建，不是''表示修改
             name: '',
             monitorwords: {
               company_name: '南京中新赛克有限责任有限公司',
@@ -161,6 +162,11 @@
         }
       }
     },
+    created() {
+      this.$nextTick(() => {
+        this.getMonitorCase(this.$route.query.currentCaseId)
+      })
+    },
     mounted() {
       // 根据帅选条件进行查询
       this.$bus.$on('setIndustry', (params) => {
@@ -181,11 +187,13 @@
         }
         getCompanyFullName(data).then(res => {
           _this.companys.length = 0
-          res.data.forEach(item => {
-            _this.companys.push({ 'value': item })
-          })
-          console.log(_this.companys)
-          cb(_this.companys)
+          if (res.data.length > 0) {
+            res.data.forEach(item => {
+              _this.companys.push({ 'value': item })
+            })
+            console.log(_this.companys)
+            cb(_this.companys)
+          }
         }).catch(err => {
           console.log(err)
         })
@@ -242,6 +250,7 @@
       savemonitor() {
         debugger
         console.log(this.conditionstrs)
+        this.conditons.data.userid = this.$store.state.user.user.userId
         this.conditons.data.monitorwords.company_name = this.conditionstrs.monitorwords.company_name
         this.conditons.data.monitorwords.company_id = this.conditionstrs.monitorwords.company_id + ''
         this.conditons.data.monitorwords.staffs = this.conditionstrs.monitorwords.staffs.split(';').filter(item => item !== '')
@@ -268,14 +277,8 @@
         // 保存监控方案
         saveMonitorCase(this.conditons).then(res => {
           debugger
-          console.log(res)
-          // 保存成功后，往横向滚动区域添加一个方案
-          const item = {
-            id: 100,
-            name: this.conditons.data.name,
-            company_id: this.conditionstrs.monitorwords.company_id
-          }
-          this.$emit('addMonitorCase', item)
+          this.setReadOnly(true)
+          this.$emit('getAllMonitorCase')
         }).catch(err => {
           console.log(err)
         })
@@ -375,6 +378,9 @@
           this.conditionstrs.alarmmode.mediawords = ''
           this.conditionstrs.alarmmode.authors = ''
         }
+      },
+      setReadOnly(flag) {
+        this.isReadOnly = flag
       }
     }
   }
