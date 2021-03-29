@@ -140,7 +140,7 @@
             margin: 2px 0 8px 0;
             left: 19px;
             top: 139px;
-            width: 180px;
+            width: 300px;
             height: 20px;
             color: rgba(16, 16, 16, 100);
             font-size: 14px;

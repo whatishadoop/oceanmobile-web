@@ -86,7 +86,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getDataDetailByCondition } from '@/api/app'
+  import { getCompanyInfoById } from '@/api/app'
   export default {
     data() {
       return {
@@ -100,6 +100,20 @@
         this.isShow = true
       },
       showMoreEvents() {
+      },
+      getCompanyInfoById(companyId) {
+        debugger
+        const data = {
+          data: {
+            id: companyId,
+            user_id: this.$store.state.user.user.userId
+          }
+        }
+        getCompanyInfoById(data).then(res => {
+
+        }).catch(err => {
+          console.log(err)
+        })
       }
     }
   }
