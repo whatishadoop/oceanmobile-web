@@ -171,11 +171,18 @@
       },
       newMoniterCase() {
         this.isSelectCaseId = -1
-        this.currentCaseId = ''
         this.isshow = true
         if (this.allMonitorCase.length === 3) {
+          this.$notify({
+            title: '提示',
+            message: '目前只能创建三个方案！',
+            duration: 1500,
+            offset: 100,
+            showClose: false
+          })
           return
         }
+        this.currentCaseId = ''
         this.selectTab('caselist', 2)
         // 调用caselist对象的初始化方法
         this.$nextTick(() => {
@@ -236,7 +243,9 @@
           this.scroll.on('pullingUp', () => {
             debugger
             if (_this.currentComponent === 'sentimentlist') {
-              this.$refs.subcompoent.updateDataDetailByCondition()
+              this.$nextTick(() => {
+                this.$refs.subcompoent.updateDataDetailByCondition()
+              })
             } else if (_this.currentComponent === 'companydetail') {
               this.$refs.subcompoent.updateDetailInfo()
             }
@@ -391,7 +400,7 @@
           top: 0px;
           bottom: 60px;
           width: 100%;
-          height: calc(100vh - 194px);
+          height: calc(100vh - 186px);
           overflow: hidden;
 
           .classify-wrapper {
