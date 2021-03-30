@@ -1,35 +1,40 @@
 <template>
   <div>
     <div class="main-content">
-      <div class="content-wrapper">
-        <div class="desc">
-          <div class="logo">
-            <img :src="imageUrl" class="img"/>
+      <div v-if="hasData">
+        <div class="content-wrapper">
+          <div class="desc">
+            <div class="logo">
+              <img :src="imageUrl" class="img"/>
+            </div>
+            <div class="detail">
+              <div class="name">{{company_name}}</div>
+              <div class="info"><span style="display: inline-block;width: 100px;">法人: {{legal_person}} </span><span> </span><span>成立日期: {{create_date}}</span></div>
+            </div>
           </div>
-          <div class="detail">
-            <div class="name">{{company_name}}</div>
-            <div class="info"><span style="display: inline-block;width: 100px;">法人: {{legal_person}} </span><span> </span><span>成立日期: {{create_date}}</span></div>
+          <div class="profile-wrapper">
+            <span class="profile">{{company_profile}}</span>
+          </div>
+          <div class="lastdate">
+            <span>截止日期: </span><span>{{data_update_time}}</span>
           </div>
         </div>
-        <div class="profile-wrapper">
-          <span class="profile">{{company_profile}}</span>
+        <div class="detailcotent-wrapper">
+          <div class="tabs">
+            <div v-for="(value, index) in tabs" :key="value.id" :class="['tab-item', isSelect === index ? 'active' : '']" @click="selectTab(index, value.key)">
+              <div class="icon"><i class="el-icon-document"/></div>
+              <div :class="['text', isSelect === index ? 'active' : '']"><span>{{value.name}}</span></div>
+            </div>
+          </div>
         </div>
-        <div class="lastdate">
-          <span>截止日期: </span><span>{{data_update_time}}</span>
+        <div class="tab-content">
+          <keep-alive>
+            <router-view ref="subcompoent2"></router-view>
+          </keep-alive>
         </div>
       </div>
-      <div class="detailcotent-wrapper">
-        <div class="tabs">
-          <div v-for="(value, index) in tabs" :key="value.id" :class="['tab-item', isSelect === index ? 'active' : '']" @click="selectTab(index, value.key)">
-            <div class="icon"><i class="el-icon-document"/></div>
-            <div :class="['text', isSelect === index ? 'active' : '']"><span>{{value.name}}</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-content">
-        <keep-alive>
-          <router-view ref="subcompoent2"></router-view>
-        </keep-alive>
+      <div v-if="!hasData" class="nodata">
+        <img :src="backgroundImage" class="image-size">
       </div>
     </div>
   </div>
@@ -40,6 +45,7 @@
   import busigraph from './busigraph'
   import industrydetail from './industrydetail'
   import { getCompanyDetail } from '@/api/app'
+  import backgroundImage from '@/assets/image/shuju.png'
   export default {
     components: {
       busidetail,
@@ -48,6 +54,8 @@
     },
     data() {
       return {
+        hasData: false,
+        backgroundImage: backgroundImage,
         currentCaseId: this.$route.query.currentCaseId,
         imageUrl: '',
         company_name: '',
@@ -78,15 +86,18 @@
         }
         getCompanyDetail(data).then(res => {
           debugger
-          this.imageUrl = res.data.imageUrl
-          this.company_name = res.data.company_name
-          this.create_date = res.data.create_date
-          this.legal_person = res.data.legal_person
-          this.company_profile = res.data.company_profile
-          this.data_update_time = res.data.data_update_time
-          this.nodesArray = [...this.nodesArray, ...res.data.business_graph.node_array]
-          this.edgesArray = [...this.nodesArray, ...res.data.business_graph.edge_array]
-          this.$router.push({ name: 'busigraph', params: { nodes: JSON.stringify(res.data.business_graph.node_array), edges: JSON.stringify(res.data.business_graph.edge_array) }})
+          if (res.data !== null && res.data.company_name !== '' && res.data.company_name !== null) {
+            this.hasData = true
+            this.imageUrl = res.data.imageUrl
+            this.company_name = res.data.company_name
+            this.create_date = res.data.create_date
+            this.legal_person = res.data.legal_person
+            this.company_profile = res.data.company_profile
+            this.data_update_time = res.data.data_update_time
+            this.nodesArray = [...this.nodesArray, ...res.data.business_graph.node_array]
+            this.edgesArray = [...this.nodesArray, ...res.data.business_graph.edge_array]
+            this.$router.push({ name: 'busigraph', params: { nodes: JSON.stringify(res.data.business_graph.node_array), edges: JSON.stringify(res.data.business_graph.edge_array) }})
+          }
         }).catch(err => {
           console.log(err)
         })
@@ -101,12 +112,13 @@
         }
       },
       selectTab(index, name) {
+        debugger
         this.isSelect = index
         if (index === 0) {
           this.$router.push({ name: name, params: { nodes: JSON.stringify(this.nodesArray), edges: JSON.stringify(this.edgesArray) }})
         } else {
           debugger
-          this.$router.push({ name: name, query: { currentCaseId: this.currentCaseId}})
+          this.$router.push({ name: name, query: { currentCaseId: this.currentCaseId }})
           this.$bus.$emit('refreshIndustryInfo')
         }
       },
@@ -123,6 +135,16 @@
   .main-content {
     padding-left: 15px;
     padding-right: 15px;
+    .nodata {
+      height: calc(100vh - 300px);
+      display: flex;
+      align-items: center;
+      .image-size {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
     .content-wrapper {
       height: 146px;
       background: #FFFFFF;

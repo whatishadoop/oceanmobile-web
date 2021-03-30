@@ -51,7 +51,7 @@
         <div class="name">
           <div class="lable">竞品公司:</div>
           <div class="input-wrapper">
-            <el-input v-model="conditionstrs.monitorwords.competitor_company" clearable placeholder="请选择所属竞品公司"/>
+            <el-input v-model="conditionstrs.monitorwords.competitor_company" :readonly="true" clearable placeholder="请选择所属竞品公司"/>
           </div>
           <i class="el-icon-arrow-right" style="font-size: 14px"></i>
         </div>
@@ -215,10 +215,12 @@
           // 2.组装公司id
           _this.conditionstrs.monitorwords.company_id = res.data.id
           // 3. 组装组织人员
+          _this.conditionstrs.monitorwords.staffs = ''
           res.data.leading_member.forEach(item => {
             _this.conditionstrs.monitorwords.staffs += item + ';'
           })
           // 4. 组装子机构
+          _this.conditionstrs.monitorwords.sub_companies = ''
           res.data.sub_companies.forEach(item => {
             _this.conditionstrs.monitorwords.sub_companies += item + ';'
           })
@@ -366,6 +368,7 @@
           this.conditionstrs.monitorwords.company_name = ''
           this.conditionstrs.monitorwords.company_id = ''
           this.conditionstrs.monitorwords.staffs = ''
+          this.conditionstrs.monitorwords.sub_companies = ''
           this.conditionstrs.monitorwords.competitor_select = ''
           this.conditionstrs.monitorwords.competitor_company = ''
           this.conditionstrs.monitorwords.competitor_ids = ''

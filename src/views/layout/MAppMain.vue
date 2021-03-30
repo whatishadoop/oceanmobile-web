@@ -10,7 +10,7 @@
             <div><svg-icon :icon-class="icon_qtts" class="icon"/></div>
             <p class="name">监控</p>
           </div>
-          <div class="tab-item" @click="changeView('sentimentlog')">
+          <div class="tab-item">
             <div><svg-icon :icon-class="icon_case" class="icon"/></div>
             <p class="name">报告</p>
           </div>

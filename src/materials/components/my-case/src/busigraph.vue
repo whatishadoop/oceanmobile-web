@@ -18,6 +18,7 @@
     },
     created() {
       this.$nextTick(() => {
+        debugger
         this.create(JSON.parse(this.$route.params.nodes), JSON.parse(this.$route.params.edges))
       })
     },

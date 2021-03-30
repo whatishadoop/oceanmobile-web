@@ -26,7 +26,7 @@
       <div class="tab1">
         <div ref="contentWrapper" class="content">
           <div class="content-wrapper">
-            <router-view ref="subcompoent" @showdetail="showdetail" @getAllMonitorCase="getAllMonitorCase" @refreshInitScroll="refreshInitScroll"></router-view>
+            <router-view v-if="isRouterAlive" ref="subcompoent" @showdetail="showdetail" @getAllMonitorCase="getAllMonitorCase" @refreshInitScroll="refreshInitScroll"></router-view>
           </div>
         </div>
       </div>
@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        isRouterAlive: true,
         isshow: false,
         currentCaseId: '',
         isSelectCaseId: 0,
@@ -193,7 +194,11 @@
             this.$refs.subcompoent.getMonitorCase(caseId + '')
           })
         } else {
-          this.selectTab('sentimentlist', 0)
+          this.isRouterAlive = false
+          this.$nextTick(() => {
+            this.isRouterAlive = true
+            this.selectTab('sentimentlist', 0)
+          })
         }
       },
       refreshInitScroll() {
@@ -218,7 +223,7 @@
         debugger
         this.isActived = index
         this.currentComponent = comname
-        this.$router.push({ name: comname, query: { currentCaseId: this.currentCaseId } })
+        this.$router.push({ name: comname, query: { currentCaseId: this.currentCaseId }})
       },
       _initScroll() {
         const _this = this

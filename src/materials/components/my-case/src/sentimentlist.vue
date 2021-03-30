@@ -1,46 +1,51 @@
 <template>
   <div>
     <div class="situationcase-wrapper">
-      <div class="situationcase-title">
-        <el-tag type="info" class="item">全部 {{totalPage}}</el-tag>
-        <el-tag type="info" class="item">预警 0</el-tag>
-        <el-tag type="info" class="item">收藏 0</el-tag>
-        <el-tag type="info" class="item" @click="showCondition" >帅选 <i class="el-icon-search"></i></el-tag>
-      </div>
-      <ul class="case">
-        <li
-          v-for="(item,index) in contentItems"
-          :key="index"
-          class="case-item"
-          style="height: 160px;">
-          <div class="content">
-            <div class="name">{{item.title}}</div>
-            <div class="motion-type">
-              <el-tag style="margin-right: 6px;" size="mini">{{item.text_sentiment}}</el-tag>
-              <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[0]}}</el-tag>
-              <el-tag v-if="item.important_events.length > 1" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
-              <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[0]}}</el-tag>
-              <el-tag v-show="item.match_key_words.length > 1" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
-            </div>
-            <div class="text-wrapper" @click="showDetails(item.url)">
-              <span class="text">{{item.content}}</span>
-              <div class="detail">
-                <i class="el-icon-arrow-right" style="font-size: 14px;"></i>
+      <div v-if="hasData">
+        <div class="situationcase-title">
+          <el-tag type="info" class="item">全部 {{totalPage}}</el-tag>
+          <el-tag type="info" class="item">预警 0</el-tag>
+          <el-tag type="info" class="item">收藏 0</el-tag>
+          <el-tag type="info" class="item" @click="showCondition" >帅选 <i class="el-icon-search"></i></el-tag>
+        </div>
+        <ul class="case">
+          <li
+            v-for="(item,index) in contentItems"
+            :key="index"
+            class="case-item"
+            style="height: 160px;">
+            <div class="content">
+              <div class="name">{{item.title}}</div>
+              <div class="motion-type">
+                <el-tag style="margin-right: 6px;" size="mini">{{item.text_sentiment}}</el-tag>
+                <el-tag v-if="item.important_events.length > 0" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[0]}}</el-tag>
+                <el-tag v-if="item.important_events.length > 1" type="danger" style="margin-right: 6px;" size="mini">{{item.important_events[1]}}</el-tag>
+                <el-tag v-show="item.match_key_words.length > 0" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[0]}}</el-tag>
+                <el-tag v-show="item.match_key_words.length > 1" type="success" style="margin-right: 6px;" size="mini">{{item.match_key_words[1]}}</el-tag>
+              </div>
+              <div class="text-wrapper" @click="showDetails(item.url)">
+                <span class="text">{{item.content}}</span>
+                <div class="detail">
+                  <i class="el-icon-arrow-right" style="font-size: 14px;"></i>
+                </div>
+              </div>
+              <div class="desct">
+                <span class="source">{{item.website_name}}  吴云芬</span>
+                <span class="date">{{item.date}}</span>
+              </div>
+              <div class="actions">
+                <div class="item"><span><i class="el-icon-delete"></i> 忽略</span></div>
+                <div class="item"><span><i class="el-icon-delete"></i> 预警</span></div>
+                <div class="item"><span><i class="el-icon-delete"></i> 收藏</span></div>
+                <div class="item"><span><i class="el-icon-delete"></i> 更多</span></div>
               </div>
             </div>
-            <div class="desct">
-              <span class="source">{{item.website_name}}  吴云芬</span>
-              <span class="date">{{item.date}}</span>
-            </div>
-            <div class="actions">
-              <div class="item"><span><i class="el-icon-delete"></i> 忽略</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 预警</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 收藏</span></div>
-              <div class="item"><span><i class="el-icon-delete"></i> 更多</span></div>
-            </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
+      <div v-if="!hasData" class="nodata">
+        <img :src="backgroundImage" class="image-size">
+      </div>
     </div>
 
   </div>
@@ -49,9 +54,12 @@
 <script type="text/ecmascript-6">
   import { getDataDetailByCondition } from '@/api/app'
   import { getTimestamp } from '@/utils/date'
+  import backgroundImage from '@/assets/image/shuju.png'
   export default {
     data() {
       return {
+        hasData: false,
+        backgroundImage: backgroundImage,
         conditions: {
           data: {
             page: 1,
@@ -78,23 +86,25 @@
       }
     },
     created() {
+      debugger
       this.$nextTick(() => {
-        debugger
         this.getDataDetailByCondition()
       })
     },
     mounted() {
-      debugger
+      const _this = this
       // 根据帅选条件进行查询
       this.$bus.$on('updateDataByConditons', (conditonObj) => {
-        this.conditions.date.start_date = conditonObj.date.start_date
-        this.conditions.date.end_date = conditonObj.date.start_date.date.end_date
-        this.conditions.media_type = conditonObj.media_type
-        this.conditions.relevant_or_precise = conditonObj.relevant_or_precise
-        this.conditions.is_contain_important_events = conditonObj.is_contain_important_events
-        this.conditions.sentiment_type = conditonObj.sentiment_type
-        this.conditions.is_repeat = conditonObj.is_repeat
-        this.getDataDetailByCondition()
+        debugger
+        _this.conditions.data.page = 1
+        _this.conditions.data.conditions.date.start_date = conditonObj.date.start_date
+        _this.conditions.data.conditions.date.end_date = conditonObj.date.end_date
+        _this.conditions.data.conditions.media_type = conditonObj.media_type
+        _this.conditions.data.conditions.relevant_or_precise = conditonObj.relevant_or_precise
+        _this.conditions.data.conditions.is_contain_important_events = conditonObj.is_contain_important_events
+        _this.conditions.data.conditions.sentiment_type = conditonObj.sentiment_type
+        _this.conditions.data.conditions.is_repeat = conditonObj.is_repeat
+        _this.getDataDetailByCondition()
       })
     },
     methods: {
@@ -104,6 +114,9 @@
           data: this.conditions.data
         }
         getDataDetailByCondition(data).then(res => {
+          if (res.data.rows.length > 0) {
+            this.hasData = true
+          }
           debugger
           // for(var i = 0; i <res.data.rows. length; i++){
           //   this.contentItems.push(res.data.rows[i])
@@ -154,6 +167,16 @@
 <style type="text/scss" rel="stylesheet/scss" lang="scss" scoped>
 @import "~@/styles/mixin.scss";
 .situationcase-wrapper {
+    .nodata {
+      height: calc(100vh - 300px);
+      display: flex;
+      align-items: center;
+      .image-size {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
     .situationcase-title {
       padding-left: 20px;
       padding-right: 16px;
@@ -212,7 +235,7 @@
             margin: 2px 0 6px 0;
             left: 19px;
             top: 139px;
-            width: 180px;
+            width: 320px;
             height: 20px;
             color: rgba(16, 16, 16, 100);
             font-size: 14px;

@@ -78,7 +78,7 @@
           {
             key: 'today',
             value: '今天',
-            isSelect: true
+            isSelect: false
           },
           {
             key: '24hours',
@@ -93,7 +93,7 @@
           {
             key: 'sevenday',
             value: '七天',
-            isSelect: false
+            isSelect: true
           }
         ],
         sourceType: [
@@ -198,7 +198,7 @@
         ],
         conditions: {
           date: {
-            start_date: Math.floor(getTimestamp(-1) / 1000),
+            start_date: Math.floor(getTimestamp(-7) / 1000),
             end_date: Math.floor(new Date().getTime() / 1000)
           },
           media_type: '全部',

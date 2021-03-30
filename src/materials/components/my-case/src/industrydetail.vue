@@ -109,8 +109,8 @@
     margin-top: 20px;
     .case {
       margin: 0;
-      padding-left: 20px;
-      padding-right: 16px;
+      padding-left: 10px;
+      padding-right: 10px;
 
       .case-item {
         display: flex;

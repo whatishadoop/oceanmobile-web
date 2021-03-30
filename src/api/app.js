@@ -89,3 +89,4 @@ export function getIndustryInfoDetail(data) {
     data
   })
 }
+
