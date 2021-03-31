@@ -52,7 +52,7 @@
 
       .case-item {
         display: flex;
-        height: 134px;
+        height: 140px;
         margin: 14px 0px 14px 0px;
         list-style: none;
         overflow: hidden;
@@ -95,6 +95,8 @@
           .text-wrapper {
             position: relative;
             .text {
+              height: 48px;
+              line-height: 16px;
               color: #828283;
               font-size: 12px;
               text-align: left;
@@ -152,7 +154,7 @@
               float: left;
             }
             .date {
-              width: 118px;
+              width: 120px;
               height: 17px;
               margin-left: 12px;
               color: rgba(174, 174, 174, 100);

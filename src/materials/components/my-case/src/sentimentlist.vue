@@ -123,6 +123,7 @@
           // }
           this.contentItems = res.data.rows
           this.totalPage = res.data.filter_total
+          this.$emit('refreshInitScroll')
           console.log(res)
         }).catch(res => {
           console.log(res)

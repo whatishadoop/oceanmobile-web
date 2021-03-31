@@ -1,14 +1,17 @@
 import router from './routers'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
-import { getToken } from '@/utils/auth' // getToken from cookie
-
+import { getToken, removeToken } from '@/utils/auth' // getToken from cookie
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
 const whiteList = ['/login']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
+  // 如果处于非登录页，state值丢失则删除token，重新登录
+  // if (sessionStorage.getItem('state') === null && to.path !== '/login' && to.path !== '/index') {
+  //   removeToken()
+  // }
   // 移动端登陆逻辑配置
   if (getToken()) {
     // 已登录且要跳转的页面是登录页

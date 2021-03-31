@@ -252,6 +252,7 @@
           })
         } else {
           this.scroll.refresh()
+          this.scroll.finishPullUp()
         }
       },
       _tabsScroll() {

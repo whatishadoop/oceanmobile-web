@@ -22,7 +22,7 @@
         <div class="detailcotent-wrapper">
           <div class="tabs">
             <div v-for="(value, index) in tabs" :key="value.id" :class="['tab-item', isSelect === index ? 'active' : '']" @click="selectTab(index, value.key)">
-              <div class="icon"><i class="el-icon-document"/></div>
+              <div class="icon"><i :class="value.icon"/></div>
               <div :class="['text', isSelect === index ? 'active' : '']"><span>{{value.name}}</span></div>
             </div>
           </div>
@@ -67,7 +67,7 @@
         edgesArray: [],
         currentComponent: 'busigraph',
         isSelect: 0,
-        tabs: [{ id: 0, key: 'busigraph', name: '商业图谱' }, { id: 1, key: 'industrydetail', name: '行业资讯' }, { id: 2, key: 'busidetail', name: '商业资讯' }]
+        tabs: [{ id: 0, key: 'busigraph', name: '商业图谱', icon: 'el-icon-share' }, { id: 1, key: 'industrydetail', name: '行业资讯', icon: 'el-icon-tickets' }, { id: 2, key: 'busidetail', name: '商业资讯', icon: 'el-icon-data-line' }]
       }
     },
     created() {
@@ -210,6 +210,7 @@
           overflow: hidden;
           font-family: PingFangSC-Regular;
           font-size: 12px;
+          line-height: 16px;
           color: rgba(0,0,0,0.60);
         }
       }

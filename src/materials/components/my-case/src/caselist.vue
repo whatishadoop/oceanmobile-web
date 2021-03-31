@@ -453,6 +453,7 @@
       width: 100%;
       padding-top: 15px;
       padding-bottom: 15px;
+      padding-bottom: 50px;
       padding-left: 10px;
     }
   }

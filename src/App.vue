@@ -16,12 +16,12 @@ export default {
 
     // 页面刷新时将state数据存储到sessionStorage中
     window.addEventListener('beforeunload', () => {
-      sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+       sessionStorage.setItem('state', JSON.stringify(this.$store.state))
     })
-    // // ios 处理
-    // window.addEventListener('pagehide', () => {
-    //   sessionStorage.setItem('state', JSON.stringify(this.$store.state))
-    // })
+    // ios 处理
+     window.addEventListener('pagehide', () => {
+       sessionStorage.setItem('state', JSON.stringify(this.$store.state))
+     })
   },
   methods: {
   }

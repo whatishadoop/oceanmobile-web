@@ -68,7 +68,6 @@ export const constantRouterMap = [
   {
     name: 'login',
     path: '/login',
-    meta: { noCache: true },
     component: () => import('@/views/login/index')
   }
 ]
