@@ -23,3 +23,8 @@ vue解决刷新页面vuex数据、params参数消失的问题（params传递多�
 vue如何在页面刷新时保留状态信息
 https://www.jianshu.com/p/d3d8cbee46c0
 
+// 如果处于非登录页，state值丢失则删除token，重新登录
+  // if (sessionStorage.getItem('state') === null && to.path !== '/login' && to.path !== '/index') {
+  //   removeToken()
+  // }
+

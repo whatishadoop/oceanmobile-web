@@ -4,24 +4,32 @@
       <div class="content-wrapper">
         <div class="desc">
           <div class="logo">
-
+            <img :src="data.logo" class="img"/>
           </div>
           <div class="detail">
-            <div class="name">公司名称公司名称</div>
-            <div class="info"><span>成立日期:2020-09-19</span></div>
+            <div class="name">{{data.company_name}}</div>
+            <div class="info"><span>成立日期: {{data.start_date}}</span></div>
           </div>
         </div>
         <div class="profile-wrapper">
-          <span class="profile">经营范围:软件及通讯产品(不含卫星广播电视地面接收设施)经营范围:软件及通讯产品(不含卫星广播电视地面接收设施)</span>
+          <span class="profile">{{data.company_profile}}</span>
         </div>
         <div class="tabs">
-          <div v-for="index in 3" :key="index" class="tab-item">
+          <div class="tab-item">
+            <div class="text-one"><span>法人</span></div>
+            <div class="text-two"><span>{{data.legal_person}}</span></div>
+          </div>
+          <div class="tab-item">
             <div class="text-one"><span>社会统一信用代码</span></div>
-            <div class="text-two"><span>91320114663</span></div>
+            <div class="text-two"><span>{{data.credit_code}}</span></div>
+          </div>
+          <div class="tab-item">
+            <div class="text-one"><span>注册号</span></div>
+            <div class="text-two"><span>{{data.registration_number}}</span></div>
           </div>
         </div>
         <div class="lastdate">
-          <span>数据更新: </span><span>2020-01-07 14:13:14</span>
+          <span>数据更新: </span><span>{{data.data_update_time}}</span>
         </div>
       </div>
       <div class="divider"></div>
@@ -90,8 +98,15 @@
   export default {
     data() {
       return {
-        isShow: false
+        isShow: false,
+        data: {}
       }
+    },
+    created() {
+      this.$nextTick(() => {
+        // 获取所有方案列表信息
+        this.getCompanyInfoById(5)
+      })
     },
     mounted() {
     },
@@ -106,11 +121,12 @@
         const data = {
           data: {
             id: companyId,
-            user_id: this.$store.state.user.user.userId
+            user_id: 'admin'
           }
         }
         getCompanyInfoById(data).then(res => {
-
+          debugger
+           this.data = res.data
         }).catch(err => {
           console.log(err)
         })
@@ -132,11 +148,28 @@
         height: 75px;
         .logo {
           flex: 0 1 56px;
-          margin: 10px 10px 10px 0px;
-          background-color: #e2e1e1;
+          margin: 10px;
+          img {
+            position: relative;
+            width: 56px;
+            height: 55px;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+            &::after {
+              content: "";
+              position: absolute;
+              z-index: 2;
+              top: 0;
+              left: 0;
+              width: 56px;
+              height: 55px;
+              /*background: url("../../../../assets/images/defaultImg.png") no-repeat;*/
+              background-size: 100% 100%;
+              background-color: #fff;
+            }
+          }
         }
         .detail {
-          margin: 10px;
+          margin: 12px 10px 10px 10px;
           .name {
             text-align: left;
             font-family: PingFangSC-Medium;
@@ -156,12 +189,14 @@
         height: 40px;
         padding: 2px 10px 0px 0px;
         .profile {
+          height: 32px;
           /*多行文本溢出*/
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           overflow: hidden;
           font-family: PingFangSC-Regular;
+          line-height: 16px;
           font-size: 12px;
           color: rgba(0,0,0,0.60);
         }

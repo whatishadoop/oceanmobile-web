@@ -118,11 +118,11 @@
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           this.loading = false
-          // const messageCodeUrl = 'http://localhost:8013'
-          // const url = messageCodeUrl + '/oauth/token'
+          const messageCodeUrl = 'http://localhost:8013'
+          const url = messageCodeUrl + '/oauth/token'
           // nginx配置
-          const messageCodeUrl = 'http://101.200.152.50'
-          const url = messageCodeUrl + '/oauth'
+          // const messageCodeUrl = 'http://101.200.152.50'
+          // const url = messageCodeUrl + '/oauth'
           if (valid) {
             this.loading = true
             debugger
