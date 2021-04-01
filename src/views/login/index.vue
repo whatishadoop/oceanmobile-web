@@ -34,7 +34,7 @@
         disabled: false, // 是否可点击,
         uuid: '',
         loginForm: {
-          username: '13770957423',
+          username: '',
           password: '',
           rememberMe: false
         },
@@ -118,11 +118,14 @@
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           this.loading = false
-          const messageCodeUrl = 'http://localhost:8013'
-          const url = messageCodeUrl + '/oauth/token'
+          // const messageCodeUrl = 'http://localhost:8013'
+          // const url = messageCodeUrl + '/oauth/token'
           // nginx配置
           // const messageCodeUrl = 'http://101.200.152.50'
           // const url = messageCodeUrl + '/oauth'
+          // 微信cosint.s-oceanmind.com:8002
+          const messageCodeUrl = 'http://cosint.s-oceanmind.com:8002'
+          const url = messageCodeUrl + '/oauth'
           if (valid) {
             this.loading = true
             debugger

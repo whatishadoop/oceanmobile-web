@@ -53,6 +53,9 @@
       },
       seturl(url) {
         this.url = url
+      },
+      settitle(title) {
+        this.title = title
       }
     }
   }

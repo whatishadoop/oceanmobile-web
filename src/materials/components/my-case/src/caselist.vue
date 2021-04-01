@@ -176,7 +176,7 @@
     },
     methods: {
       showIndusryInfo() {
-        this.$emit('showdetail', 'industryinfo')
+        this.$emit('showdetail', 'industrytype')
       },
       querySearchAsync(queryString, cb) {
         const _this = this

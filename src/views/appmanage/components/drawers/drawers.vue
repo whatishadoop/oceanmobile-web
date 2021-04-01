@@ -7,7 +7,7 @@
             {{title}}
           </div>
           <div ref="contentWrapper" class="contentwrapper">
-            <component :is="comName"></component>
+            <component :is="comName" :company-id="companyId"></component>
           </div>
         </div>
       </div>
@@ -20,6 +20,7 @@
   export default {
     data() {
       return {
+        companyId: '',
         title: '',
         comName: 'company-node-info',
         detailShow: false
@@ -31,20 +32,35 @@
         this.title = title
         this.comName = comName
         this.detailShow = isdetailShow
+      })
+      this.$bus.$on('on-companynodeinfo', (title, comName, isdetailShow, companyId) => {
+        // 显示右侧弹出框
+        this.title = title
+        this.companyId = companyId
+        this.comName = comName
+        this.detailShow = isdetailShow
+      })
+      this.$bus.$on('on-hideSecondaryPage', () => {
+        this.detailShow = false
+      })
+    },
+    updated() {
+      this._initScroll()
+    },
+    methods: {
+      sleep() {
+        console.log('')
+      },
+      hideDetail() {
+        this.detailShow = false
+      },
+      _initScroll() {
         this.$nextTick(() => {
           this.scroll = new BScroll(this.$refs.contentWrapper, {
             click: true,
             propTypes: 3
           })
         })
-      })
-      this.$bus.$on('on-hideSecondaryPage', () => {
-        this.detailShow = false
-      })
-    },
-    methods: {
-      hideDetail() {
-        this.detailShow = false
       }
     }
   }

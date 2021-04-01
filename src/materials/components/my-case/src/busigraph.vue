@@ -113,8 +113,9 @@
         // initialize your network!
         network = new Network(this.$refs.visualization, data, options)
         // add event listeners
-        network.on('selectNode', e => {
-          this.showDetails()
+        network.on('selectNode', params => {
+          const companyId = params.nodes[0] + ''
+          this.showDetails(companyId)
         })
         network.on('selectEdge', params => {
           // 简化写法，上述逻辑在对话框点击确定后进行回调
@@ -127,8 +128,8 @@
           network = null
         }
       },
-      showDetails() {
-        this.$bus.$emit('on-drawers', '公司详情', 'company-node-info', true)
+      showDetails(companyId) {
+        this.$bus.$emit('on-companynodeinfo', '公司详情', 'company-node-info', true, companyId)
       }
     }
   }

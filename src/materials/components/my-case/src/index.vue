@@ -218,11 +218,17 @@
       },
       showdetail(compNames, param) {
         if (compNames === 'sentimentcondition') {
+          this.$refs.sentimenturl.settitle('舆情详情')
           this.$refs.sentimentcondition.show()
         } else if (compNames === 'sentimenturl') {
+          this.$refs.sentimenturl.settitle('舆情详情')
           this.$refs.sentimenturl.seturl(param.url)
           this.$refs.sentimenturl.show()
         } else if (compNames === 'industryinfo') {
+          this.$refs.sentimenturl.settitle('行业咨询')
+          this.$refs.sentimenturl.seturl(param.url)
+          this.$refs.sentimenturl.show()
+        } else if (compNames === 'industrytype') {
           this.$refs.industryinfo.show()
         }
       },

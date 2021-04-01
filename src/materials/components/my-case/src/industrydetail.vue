@@ -97,7 +97,7 @@
         const params = {
           url: url
         }
-        this.$bus.$emit('showdetail', 'sentimenturl', params)
+        this.$bus.$emit('showdetail', 'industryinfo', params)
       }
     }
   }

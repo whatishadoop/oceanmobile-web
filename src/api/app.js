@@ -90,3 +90,12 @@ export function getIndustryInfoDetail(data) {
   })
 }
 
+// 11.查询重大事件信息接口
+export function getImportantEvents(data) {
+  return request({
+    url: '/osintelligence/dataset/getImportantEvents',
+    method: 'post',
+    data
+  })
+}
+
